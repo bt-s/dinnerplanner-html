@@ -3,29 +3,31 @@
 }
 
 .dish-items-wrapper {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 140px);
+  grid-gap: 1rem;
   justify-content: space-between;
 
   a {
-    position: relative;
     margin-bottom: $padding-xl;
+    max-width: 140px;
 
     img {
       border: 3px solid $black;
       border-bottom: none;
+      min-height: 100%;
+      max-width: 100%;
     }
 
     h3 {
-      position: absolute;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       background: $grey;
       font-size: 14px;
       border: 3px solid $black;
       padding: 4px;
-      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
     }
   }
 }

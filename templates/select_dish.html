@@ -16,8 +16,12 @@
     <div>
       <h1>Dinner planner</h1>
       <div class="select-dish container">
-        <div id="sideBarView" class="col-3">
-          <h2>My Dinner</h2>
+        <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3">
+          <div class="side-bar-header">
+            <h2>My Dinner</h2>
+            <i class="fa fa-bars"></i>
+            <i class="fa fa-times"></i>
+          </div>
           <div class="people-container">
             <span>People</span>
             <div class="people-selector-button">
@@ -42,18 +46,18 @@
 
           <div id="totalPrice"></div>
 
-          <button id="confirmationButton" class="btn">
+          <button id="confirmationButton" class="btn btn-orange">
             <span>Confirm Dinner</span>
           </button>
         </div>
 
-        <div id="dishSearchView" class="col-9">
+        <div id="dishSearchView" class="col-xs-12 col-sm-12 col-md-9">
           <div class="search-bar">
               <h2>Find a dish</h2>
               <div class="search-bar-container">
                 <input id="keywordInput" placeholder="Enter key word"></input>
                 <select id="dishTypeSelect"></select>
-                <button type="submit" id="searchDishButton">Search</button>
+                <button type="submit" id="searchDishButton" class="btn btn-orange">Search</button>
             </div>
           </div>
           <div class="dish-items-container" id="dishItemsView">
