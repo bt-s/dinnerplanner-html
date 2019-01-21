@@ -1,0 +1,16 @@
+#welcomeView {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    max-width: 500px;
+    margin: $padding-lg;
+    flex: 1 0 auto;
+    text-align: center;
+  }
+
+  button {
+    flex: 1 0 auto;
+  }
+}
