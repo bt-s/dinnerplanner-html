@@ -5,9 +5,13 @@
 
   p {
     max-width: 500px;
-    margin: $padding-lg;
+    margin: $padding-sm;
     flex: 1 0 auto;
     text-align: center;
+
+    @include media-breakpoint-up(sm) {
+      margin: $padding-lg;
+    }
   }
 
   button {
