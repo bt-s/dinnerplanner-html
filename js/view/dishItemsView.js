@@ -1,11 +1,10 @@
 var DishItemsView = function (container, model) {
-  var dishes = model.getAllDishes();
-
   var searchedDishes = container.find("#searchedDishes");
 
-  var displaySearchedDishes = function () {
+  this.displaySearchedDishes = function () {
+    var dishes = model.getAllDishes(model.getTypeFilter(), model.getKeywordFilter());
     searchedDishes.html("");
-    dishes.forEach(function(dish) {
+    dishes.forEach(function (dish) {
       var dishItem = $("<a/>");
       var heading = $("<h3/>");
       var image = $("<img/>");
@@ -22,6 +21,6 @@ var DishItemsView = function (container, model) {
     });
   }
 
-  displaySearchedDishes();
-}
+  this.displaySearchedDishes();
 
+}
