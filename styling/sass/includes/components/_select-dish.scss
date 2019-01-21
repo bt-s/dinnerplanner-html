@@ -1,5 +1,9 @@
 .select-dish {
   display: flex;
-  flex-direction: row;
   padding-top: $padding-sm;
+  flex-direction: column;
+
+  @include media-breakpoint-up(sm) {
+    flex-direction: row;
+  }
 }

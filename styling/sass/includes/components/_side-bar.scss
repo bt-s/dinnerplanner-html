@@ -10,7 +10,7 @@
   }
 
   > button {
-    margin-bottom: $padding-xxs;
+    margin: $padding-sm 0 $padding-xs;
   }
 
   ul {
@@ -50,6 +50,8 @@
     justify-content: center;
     align-items: center;
     height: 15px;
+    border: none;
+    box-shadow: none;
   }
 
   .btn {
@@ -57,6 +59,26 @@
   }
 }
 
+.side-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .fa {
+    font-size: 25px;
+  }
+
+  .fa-bars {
+    display: none;
+  }
+
+  @include media-breakpoint-up(sm) {
+    .fa-times,
+    .fa-bars {
+      display: none;
+    }
+  }
+}
 
 .side-bar-sub-header {
   width: calc(100% + 30px);

@@ -1,5 +1,11 @@
 #dishSearchView {
-  padding-left: $padding-md;
+  padding: 0;
+  margin-top: $padding-md;
+
+  @include media-breakpoint-up(sm) {
+    padding-left: $padding-md;
+    margin-top: 0;
+  }
 }
 
 .search-bar {
@@ -11,16 +17,29 @@
   }
 
   .search-bar-container {
-    margin-bottom: 10px;
+    margin-bottom: $padding-xs;
   }
 }
 
 #keywordInput,
-#dishTypeSelect,
-#searchDishButton {
+#dishTypeSelect {
   background: none;
   border: 3px solid $black;
   padding-left: $padding-xs;
   margin-right: $padding-xs;
   height: 32px;
+}
+
+#searchDishButton {
+  height: 32px;
+  padding: 0 $padding-xs;
+  margin-top: -4px;
+}
+
+#keywordInput {
+  margin-bottom: $padding-xxs;
+
+  @include media-breakpoint-up(sm) {
+    margin-bottom: 0;
+  }
 }
