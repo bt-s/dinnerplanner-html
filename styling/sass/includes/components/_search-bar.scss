@@ -1,0 +1,26 @@
+#dishSearchView {
+  padding-left: $padding-md;
+}
+
+.search-bar {
+  border: 4px solid $black;
+  padding: 0 $padding-xs;
+
+  h2 {
+    margin-top: 6px;
+  }
+
+  .search-bar-container {
+    margin-bottom: 10px;
+  }
+}
+
+#keywordInput,
+#dishTypeSelect,
+#searchDishButton {
+  background: none;
+  border: 3px solid $black;
+  padding-left: $padding-xs;
+  margin-right: $padding-xs;
+  height: 32px;
+}
