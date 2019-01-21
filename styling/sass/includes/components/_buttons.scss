@@ -26,3 +26,6 @@
    @include button-bg($orange);
 }
 
+.btn-pointy {
+  border-radius: 50px 0 0 50px;
+}
