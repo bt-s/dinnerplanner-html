@@ -32,13 +32,38 @@ a {
   font-weight: 400;
   font-size: 16px; }
 
+.dish-items-container {
+  margin-top: 32px; }
+
+.dish-items-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; }
+  .dish-items-wrapper a {
+    position: relative;
+    margin-bottom: 64px; }
+    .dish-items-wrapper a img {
+      border: 3px solid #000000;
+      border-bottom: none; }
+    .dish-items-wrapper a h3 {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #E5E5E5;
+      font-size: 14px;
+      border: 3px solid #000000;
+      padding: 4px;
+      width: 100%; }
+
 h1 {
   background: #E5E5E5;
   color: #000000;
   text-align: center;
   padding: 32px;
   font-size: 40px;
-  font-weight: 700; }
+  font-weight: 700;
+  margin: 0; }
 
 #welcomeView {
   display: flex;
@@ -51,3 +76,90 @@ h1 {
     text-align: center; }
   #welcomeView button {
     flex: 1 0 auto; }
+
+.select-dish {
+  display: flex;
+  flex-direction: row;
+  padding-top: 24px; }
+
+#sideBarView {
+  display: flex;
+  flex-direction: column;
+  border: 4px solid #000000;
+  overflow: auto;
+  height: 100%; }
+  #sideBarView h2 {
+    margin-top: 6px; }
+  #sideBarView > button {
+    margin-bottom: 6px; }
+  #sideBarView ul {
+    list-style: none;
+    padding: 0; }
+    #sideBarView ul li {
+      display: flex;
+      justify-content: space-between; }
+
+.people-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center; }
+
+.people-selector-button {
+  border: 3px solid #000000;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 16px;
+  padding: 0 5px;
+  min-width: 50px; }
+
+.up-down-buttons {
+  display: flex;
+  flex-direction: column; }
+  .up-down-buttons button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15px; }
+  .up-down-buttons .btn {
+    padding: 0; }
+
+.side-bar-sub-header {
+  width: calc(100% + 30px);
+  margin-left: -15px;
+  border: 2px solid black;
+  border-right: none;
+  border-left: none;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  background-color: #E5E5E5;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px;
+  align-items: center; }
+  .side-bar-sub-header span {
+    font-weight: 500; }
+
+#totalPrice {
+  align-self: end; }
+
+#dishSearchView {
+  padding-left: 32px; }
+
+.search-bar {
+  border: 4px solid #000000;
+  padding: 0 16px; }
+  .search-bar h2 {
+    margin-top: 6px; }
+  .search-bar .search-bar-container {
+    margin-bottom: 10px; }
+
+#keywordInput,
+#dishTypeSelect,
+#searchDishButton {
+  background: none;
+  border: 3px solid #000000;
+  padding-left: 16px;
+  margin-right: 16px;
+  height: 32px; }
