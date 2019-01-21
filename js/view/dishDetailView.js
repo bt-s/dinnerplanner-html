@@ -22,23 +22,21 @@ var DishDetailView = function (container, model) {
   var loadIngredients = () => {
     var dishPrice = 0;
     model.currentViewingDish.ingredients.forEach(e => {
-      var volumeSpan = $("<span/>");
-      var unitSpan = $("<span/>");
-      var nameSpan = $("<span/>");
-      var monetarySpan = $("<span/>");
-      var priceSpan = $("<span/>");
-      var listItem = $("<li/>");
+      var volumeSpan = $("<td/>");
+      var nameSpan = $("<td/>");
+      var monetarySpan = $("<td/>");
+      var priceSpan = $("<td/>");
+      var tableItem = $("<tr/>");
 
       dishPrice += e.price;
-      listItem.append(volumeSpan.text(e.quantity));
-      listItem.append(unitSpan.text(e.unit));
-      listItem.append(nameSpan.text(e.name));
-      listItem.append(monetarySpan.text("SEK"));
-      listItem.append(priceSpan.text(e.price));
-      ingredientList.append(listItem);
+      tableItem.append(volumeSpan.text(e.quantity + e.unit));
+      tableItem.append(nameSpan.text(e.name));
+      tableItem.append(monetarySpan.text("SEK"));
+      tableItem.append(priceSpan.text(e.price));
+      ingredientList.append(tableItem);
     });
 
-    container.find("#dishPrice").text(dishPrice);
+    container.find("#dishPrice").text("SEK    " + dishPrice);
   }
 
   loadDishInfo();

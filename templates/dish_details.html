@@ -10,74 +10,72 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
       crossorigin="anonymous">
     <link rel="stylesheet" href="../styling/css/style.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
 
   </head>
 
   <body>
-    <div class="container">
-      <h1>Dinner planner</h1>
-      <div class="inner-container">
-        <div id="sideBarView">
-          <h2>My Dinner</h2>
-          <div>
-            <span>People</span>
-            <div class="people-selector-button">
-              <span id="numberOfGuests"></span>
-              <div class="up-down-buttons">
-                <button id="minusGuest" class="btn">
-                  <span class="glyphicon glyphicon-minus"></span>
-                </button>
-                <button id="plusGuest" class="btn">
-                  <span class="glyphicon glyphicon-plus"></span>
-                </button>
-              </div>
+    <h1>Dinner planner</h1>
+    <div class="dish-details container">
+      <div id="sideBarView" class="col-3">
+        <h2>My Dinner</h2>
+        <div class="people-container">
+          <span>People</span>
+          <div class="people-selector-button">
+            <span id="numberOfGuests"></span>
+            <div class="up-down-buttons">
+              <button id="plusGuest" class="btn">
+                <i class="fas fa-angle-up"></i>
+              </button>
+              <button id="minusGuest" class="btn">
+                <i class="fas fa-angle-down"></i>
+              </button>
             </div>
           </div>
-
-          <div>
-            <span>Dish Name</span>
-            <span>Cost</span>
-          </div>
-
-          <ul id="selectedDishes"></ul>
-          <div id="totalPrice"></div>
-
-          <button id="confirmationButton" class="btn">
-            <span>Confirm Dinner</span>
-          </button>
         </div>
 
-        <div id="dishDetailView">
-          <div>
-            <div class="image-description-button">
-              <h2 id="dishTitle"></h2>
-              <img id="detailImg" src="" alt="">
-              <p id="detailDescription"></p>
-              <button id="backToSearchButton" class="btn">back to search</button>
+        <div class="side-bar-sub-header">
+          <span>Dish Name</span>
+          <span>Cost</span>
+        </div>
+
+        <ul id="selectedDishes"></ul>
+
+        <div id="totalPrice"></div>
+
+        <button id="confirmationButton" class="btn">
+          <span>Confirm Dinner</span>
+        </button>
+      </div>
+
+      <div id="dishDetailView" class="col-9">
+        <div class="dish-details-overview">
+          <div class="dish-description col-6">
+            <h2 id="dishTitle"></h2>
+            <img id="detailImg" src="" alt="">
+            <p id="detailDescription"></p>
+            <button id="backToSearchButton" class="btn">back to search</button>
+          </div>
+          <div class="dish-ingredients col-6">
+             <div class="dish-ingredients-heading">
+              <span>Ingredients For </span>
+              <span class="numberOfGuests"></span>
+              <span> People</span>
             </div>
-            <div class="ingredients">
-              <div>
-                <span>Ingredients For</span>
-                <span class="numberOfGuests"></span>
-                <span>People</span>
-              </div>
-              <!-- cutting line should be modified -->
-              <span class="cuttingLine"></span>
-              <ul id="listOfIngredients"></ul>
-              <span class="cuttingLine"></span>
-              <div id="ingredientTotal">
-                <button id="addToMenuButton" class="btn">Add to menu</button>
-                <span>SEK</span>
-                <span id="dishPrice"></span>
-              </div>
+            <hr/>
+            <table id="listOfIngredients"></table>
+            <hr/>
+            <div id="ingredientTotal">
+              <button id="addToMenuButton" class="btn">Add to menu</button>
+              <span id="dishPrice"></span>
             </div>
           </div>
-          <section id="prepSection">
-            <h2>Preparation</h2>
-            <p id="prepText"></p>
-          </section>
-
         </div>
+        <section id="prepSection">
+          <h2>Preparation</h2>
+          <p id="prepText"></p>
+        </section>
+
       </div>
     </div>
 
