@@ -131,6 +131,9 @@ a {
 #dinnerOverviewView {
   display: flex;
   flex-direction: column; }
+  #dinnerOverviewView hr {
+    border-top: 3px solid #000000;
+    width: calc(100% - 100px); }
 
 #containerForDishAndPrice {
   align-items: flex-end;
@@ -139,25 +142,41 @@ a {
 
 #selectedDishesOverview {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   border-right: 3px solid #000000;
   padding-right: 16px; }
+  @media (min-width: 768px) {
+    #selectedDishesOverview {
+      flex-direction: row; } }
+  #selectedDishesOverview img {
+    border: 3px solid #000000;
+    border-bottom: none;
+    height: 150px;
+    width: 150px;
+    object-fit: cover; }
+  #selectedDishesOverview h3 {
+    display: flex;
+    justify-content: center;
+    background: #E5E5E5;
+    font-size: 14px;
+    border: 3px solid #000000;
+    padding: 4px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center; }
   #selectedDishesOverview a {
     display: flex;
     flex-direction: column;
-    padding: 0 16px;
-    justify-content: flex-end; }
-    #selectedDishesOverview a img {
-      border: 3px solid #000000;
-      border-bottom: none; }
-    #selectedDishesOverview a h3 {
-      display: flex;
-      justify-content: center;
-      background: #E5E5E5;
-      font-size: 14px;
-      border: 3px solid #000000;
-      padding: 4px;
-      width: 100%; }
+    margin: 0 16px;
+    justify-content: flex-end;
+    max-width: 150px;
+    margin-bottom: 16px; }
+    @media (min-width: 768px) {
+      #selectedDishesOverview a {
+        margin-bottom: 0; } }
     #selectedDishesOverview a span {
       align-self: flex-end; }
 
