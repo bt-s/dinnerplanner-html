@@ -21,7 +21,7 @@ var DinnerModel = function() {
     'name':'Baked Brie with Peaches',
     'type':'starter',
     'image':'bakedbrie.jpg',
-    'description':"Here is how you make it... Lore ipsum...",
+    'description':"Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     'ingredients':[{
       'name':'round Brie cheese',
       'quantity':10,
@@ -43,7 +43,7 @@ var DinnerModel = function() {
     'name':'MD 2',
     'type':'main dish',
     'image':'bakedbrie.jpg',
-    'description':"Here is how you make it... Lore ipsum...",
+    'description':"Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     'ingredients':[{
       'name':'ingredient 1',
       'quantity':1,
@@ -65,7 +65,7 @@ var DinnerModel = function() {
     'name':'Chocolat Ice cream',
     'type':'dessert',
     'image':'icecream.jpg',
-    'description':"Here is how you make it... Lore ipsum...",
+    'description':"Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     'ingredients':[{
       'name':'ice cream',
       'quantity':100,
@@ -267,7 +267,7 @@ var DinnerModel = function() {
     'name':'Sourdough Starter',
     'type':'starter',
     'image':'sourdough.jpg',
-    'description':"Here is how you make it... Lore ipsum...",
+    'description':"Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     'ingredients':[{
       'name':'active dry yeast',
       'quantity':0.5,
@@ -289,7 +289,7 @@ var DinnerModel = function() {
     'name':'Baked Brie with Peaches',
     'type':'starter',
     'image':'bakedbrie.jpg',
-    'description':"Here is how you make it... Lore ipsum...",
+    'description':"Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     'ingredients':[{
       'name':'round Brie cheese',
       'quantity':10,
@@ -373,7 +373,7 @@ var DinnerModel = function() {
     'name':'MD 2',
     'type':'main dish',
     'image':'bakedbrie.jpg',
-    'description':"Here is how you make it... Lore ipsum...",
+    'description':"Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     'ingredients':[{
       'name':'ingredient 1',
       'quantity':1,
@@ -395,7 +395,7 @@ var DinnerModel = function() {
     'name':'MD 3',
     'type':'main dish',
     'image':'meatballs.jpg',
-    'description':"Here is how you make it... Lore ipsum...",
+    'description':"Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     'ingredients':[{
       'name':'ingredient 1',
       'quantity':2,
@@ -417,7 +417,7 @@ var DinnerModel = function() {
     'name':'MD 4',
     'type':'main dish',
     'image':'meatballs.jpg',
-    'description':"Here is how you make it... Lore ipsum...",
+    'description':"Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     'ingredients':[{
       'name':'ingredient 1',
       'quantity':1,
@@ -439,7 +439,7 @@ var DinnerModel = function() {
     'name':'Chocolat Ice cream',
     'type':'dessert',
     'image':'icecream.jpg',
-    'description':"Here is how you make it... Lore ipsum...",
+    'description':"Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     'ingredients':[{
       'name':'ice cream',
       'quantity':100,
@@ -451,7 +451,7 @@ var DinnerModel = function() {
     'name':'Vanilla Ice cream',
     'type':'dessert',
     'image':'icecream.jpg',
-    'description':"Here is how you make it... Lore ipsum...",
+    'description':"Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     'ingredients':[{
       'name':'ice cream',
       'quantity':100,
@@ -463,7 +463,7 @@ var DinnerModel = function() {
     'name':'Strawberry',
     'type':'dessert',
     'image':'icecream.jpg',
-    'description':"Here is how you make it... Lore ipsum...",
+    'description':"Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     'ingredients':[{
       'name':'ice cream',
       'quantity':100,
