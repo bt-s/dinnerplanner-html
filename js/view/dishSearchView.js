@@ -13,10 +13,10 @@ var DishSearchView = function (container, model) {
   var listDishesTypes = function () {
     dishTypeSelect.html("");
     var option = $("<option/>");
-    option.text("Please select an option")
+    option.text("All");
     dishTypeSelect.append(option);
 
-    dishesTypes.forEach(function(type) {
+    dishesTypes.forEach(function (type) {
       var option = $("<option/>");
       option.text(titalizeWords(type));
       option.prop("value", type);
