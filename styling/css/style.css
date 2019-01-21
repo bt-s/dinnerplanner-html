@@ -50,6 +50,9 @@ a {
   .btn-orange:active, .btn-orange:focus {
     background: #d5730d; }
 
+.btn-pointy {
+  border-radius: 50px 0 0 50px; }
+
 .dish-details {
   display: flex;
   flex-direction: row;
@@ -170,6 +173,7 @@ a {
 
 h1 {
   background: #E5E5E5;
+  border-bottom: 4px solid #A5A5A5;
   color: #000000;
   text-align: center;
   padding: 16px;
@@ -184,10 +188,13 @@ h1 {
 .title-bar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 4px solid #000000;
-  padding: 8px 16px;
+  padding: 16px;
   margin-bottom: 32px;
   padding-left: 32px; }
+  .title-bar h2 {
+    margin: 0; }
 
 #welcomeView {
   display: flex;
@@ -329,3 +336,43 @@ h1 {
   padding: 16px; }
   #prepSection h2 {
     text-transform: uppercase; }
+
+.printout-dishes {
+  list-style: none;
+  padding: 0; }
+
+.printout-dish {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 32px; }
+  @media (min-width: 768px) {
+    .printout-dish {
+      flex-direction: row;
+      justify-content: flex-space-between;
+      align-items: flex-start; } }
+  .printout-dish:last-child {
+    padding-bottom: 0; }
+  .printout-dish img {
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    border: 3px solid #000000;
+    margin-bottom: 16px; }
+    @media (min-width: 768px) {
+      .printout-dish img {
+        margin-bottom: 0; } }
+  .printout-dish section {
+    padding-left: 0; }
+    @media (min-width: 768px) {
+      .printout-dish section {
+        padding-left: 32px; } }
+  .printout-dish h2, .printout-dish h3 {
+    text-transform: uppercase;
+    font-weight: 500;
+    line-height: 30px; }
+  .printout-dish h3 {
+    font-size: 18px; }
+  .printout-dish p {
+    font-size: 14px; }

@@ -18,6 +18,8 @@ var PrintView = function (container, model) {
       var midPart = $("<section/>");
       var rightPart = $("<section/>");
       var listItem = $("<li/>");
+
+      listItem.prop("class", "printout-dish");
       imgAtLeft.prop("src", "../images/" + dish.image);
       name.text(dish.name);
       description.text(dish.description);
