@@ -1,0 +1,57 @@
+#dinnerOverviewView {
+  display: flex;
+  flex-direction: column;
+}
+
+#containerForDishAndPrice {
+  align-items: flex-end;
+  display: flex;
+  justify-content: center;
+
+}
+
+#selectedDishesOverview {
+  display: flex;
+  justify-content: center;
+  border-right: 3px solid $black;
+  padding-right: $padding-xs;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    padding: 0 $padding-xs;
+    justify-content: flex-end;
+
+    img {
+      border: 3px solid $black;
+      border-bottom: none;
+    }
+
+    h3 {
+      display: flex;
+      justify-content: center;
+      background: $grey;
+      font-size: 14px;
+      border: 3px solid $black;
+      padding: 4px;
+      width: 100%;
+    }
+
+    span {
+      align-self: flex-end;
+    }
+
+  }
+}
+
+#cuttingLineAndPrice {
+  padding-left: $padding-xs;
+  display: flex;
+  flex-direction: column;
+}
+
+#printRecipeButton {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: $padding-md;
+}
