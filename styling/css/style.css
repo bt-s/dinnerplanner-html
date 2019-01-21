@@ -32,6 +32,24 @@ a {
   font-weight: 400;
   font-size: 16px; }
 
+.btn {
+  color: #000000;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: 500;
+  border: 3px solid #000000;
+  box-shadow: 1px 2px 0px 0px rgba(0, 0, 0, 0.8); }
+
+.btn-orange {
+  background: #F6B26B; }
+  .btn-orange:hover {
+    background: #f49e45;
+    transition: all 0.3s ease; }
+  .btn-orange:active, .btn-orange:focus {
+    background: #d5730d; }
+
 .dish-details {
   display: flex;
   flex-direction: row;
@@ -50,7 +68,7 @@ a {
   min-width: 100%; }
 
 .dish-description p {
-  padding-top: 6px; }
+  padding-top: 8px; }
 
 .dish-ingredients {
   background: #FFE599;
@@ -109,10 +127,14 @@ h1 {
   background: #E5E5E5;
   color: #000000;
   text-align: center;
-  padding: 32px;
-  font-size: 40px;
+  padding: 16px;
+  font-size: 24px;
   font-weight: 700;
   margin: 0; }
+  @media (min-width: 576px) {
+    h1 {
+      font-size: 40px;
+      padding: 32px; } }
 
 #welcomeView {
   display: flex;
@@ -120,9 +142,12 @@ h1 {
   align-items: center; }
   #welcomeView p {
     max-width: 500px;
-    margin: 48px;
+    margin: 24px;
     flex: 1 0 auto;
     text-align: center; }
+    @media (min-width: 576px) {
+      #welcomeView p {
+        margin: 48px; } }
   #welcomeView button {
     flex: 1 0 auto; }
 
@@ -138,9 +163,9 @@ h1 {
   overflow: auto;
   height: 100%; }
   #sideBarView h2 {
-    margin-top: 6px; }
+    margin-top: 8px; }
   #sideBarView > button {
-    margin-bottom: 6px; }
+    margin-bottom: 8px; }
   #sideBarView ul {
     list-style: none;
     padding: 0; }
@@ -200,7 +225,7 @@ h1 {
   border: 4px solid #000000;
   padding: 0 16px; }
   .search-bar h2 {
-    margin-top: 6px; }
+    margin-top: 8px; }
   .search-bar .search-bar-container {
     margin-bottom: 10px; }
 

@@ -2,8 +2,13 @@ h1 {
   background: $grey;
   color: $black;
   text-align: center;
-  padding: $padding-md;
-  font-size: 40px;
+  padding: $padding-xs;
+  font-size: 24px;
   font-weight: 700;
   margin: 0;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 40px;
+    padding: $padding-md;
+  }
 }
