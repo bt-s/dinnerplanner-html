@@ -5,7 +5,8 @@
  */
 var DishSearchView = function (container, model) {
   var dishesTypes = model.getDishesTypes();
-
+  var searchedDishes;
+  var searchedDishesContainer = container.find("#searchedDishes");
   var dishTypeSelect = container.find("#dishTypeSelect");
   var keywordInput = container.find("#keywordInput");
 
@@ -38,6 +39,22 @@ var DishSearchView = function (container, model) {
   this.updateFilters = () => {
     model.setTypeFilter(dishTypeSelect.prop("value"));
     model.setKeywordFilter(keywordInput.prop("value"));
-    console.log(keywordInput.prop("value"));
   };
+
+  this.operateSearch = () => {
+    this.updateFilters();
+    //clear all dish in DOM before search
+    searchedDishesContainer.html("");
+    searchedDishes = model.getAllDishes(model.getTypeFilter(), model.getKeywordFilter());
+    //create views for each items
+    searchedDishes.forEach(function (dish) {
+      var tmpDishItem = $("<a/>");
+      tmpDishItem.prop("id", dish.id);
+      var dishItemView = new DishItemView(dish.id, tmpDishItem, model);
+      searchedDishesContainer.append(dishItemView.getDomObj());
+    });
+  }
+
+  this.operateSearch();
+
 }
