@@ -1,16 +1,33 @@
 .dish-details {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding-top: $padding-sm;
+
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+  }
 }
 
 .dish-details-overview {
-   display: flex;
-   flex-direction: row;
-   justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+  }
 }
 
 .dish-description {
+  display: flex;
+  flex-direction: column;
+  margin: $padding-sm 0 $padding-md;
+
+  @include media-breakpoint-up(md) {
+    display: block;
+    margin: 0;
+  }
+
   h2 {
     text-transform: uppercase;
     padding-top: 10px;
@@ -22,6 +39,10 @@
 
   p {
     padding-top: $padding-xxs;
+  }
+
+  button {
+    text-align: center;
   }
 }
 

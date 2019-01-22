@@ -55,23 +55,37 @@ a {
 
 .dish-details {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding-top: 24px; }
+  @media (min-width: 768px) {
+    .dish-details {
+      flex-direction: row; } }
 
 .dish-details-overview {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between; }
+  @media (min-width: 768px) {
+    .dish-details-overview {
+      flex-direction: row; } }
 
-.dish-description h2 {
-  text-transform: uppercase;
-  padding-top: 10px; }
-
-.dish-description img {
-  min-width: 100%; }
-
-.dish-description p {
-  padding-top: 8px; }
+.dish-description {
+  display: flex;
+  flex-direction: column;
+  margin: 24px 0 32px; }
+  @media (min-width: 768px) {
+    .dish-description {
+      display: block;
+      margin: 0; } }
+  .dish-description h2 {
+    text-transform: uppercase;
+    padding-top: 10px; }
+  .dish-description img {
+    min-width: 100%; }
+  .dish-description p {
+    padding-top: 8px; }
+  .dish-description button {
+    text-align: center; }
 
 .dish-ingredients {
   background: #FFE599;
