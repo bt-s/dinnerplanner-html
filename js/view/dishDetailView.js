@@ -17,7 +17,7 @@ var DishDetailView = function (container, model) {
 
   var loadDishInfo = () => {
     dishTitle.text(model.currentViewingDish.name);
-    detailImg.prop("src", "../images/" + model.currentViewingDish.image);
+    detailImg.prop("src", "images/" + model.currentViewingDish.image);
     detailImg.prop("alt", model.currentViewingDish.name);
     detailDescription.text(model.currentViewingDish.description);
     //no data for preparation, so reuse description

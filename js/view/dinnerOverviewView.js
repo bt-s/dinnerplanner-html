@@ -21,7 +21,7 @@ var DinnerOverviewView = function (container, model) {
       var priceSpan = $("<span/>");
 
       image.prop("alt", dish["name"]);
-      image.prop("src", "../images/" + dish["image"]);
+      image.prop("src", "images/" + dish["image"]);
 
       heading.text(dish["name"]);
 

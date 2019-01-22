@@ -6,7 +6,7 @@ var DishItemView = function (id, dishItem, model) {
   heading.text(dish["name"]);
 
   image.prop("alt", dish["name"]);
-  image.prop("src", "../images/" + dish["image"]);
+  image.prop("src", "images/" + dish["image"]);
 
   dishItem.append(image);
   dishItem.append(heading);

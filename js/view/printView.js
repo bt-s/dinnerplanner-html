@@ -20,7 +20,7 @@ var PrintView = function (container, model) {
       var listItem = $("<li/>");
 
       listItem.prop("class", "printout-dish");
-      imgAtLeft.prop("src", "../images/" + dish.image);
+      imgAtLeft.prop("src", "images/" + dish.image);
       name.text(dish.name);
       description.text(dish.description);
       preparation.text("Preparation");
