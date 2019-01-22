@@ -13,56 +13,54 @@
 
   </head>
   <body>
-    <div>
-      <h1>Dinner planner</h1>
-      <div class="select-dish container">
-        <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3">
-          <div class="side-bar-header">
-            <h2>My Dinner</h2>
-            <i class="fa fa-bars"></i>
-            <i class="fa fa-times"></i>
-          </div>
-          <div class="people-container">
-            <span>People</span>
-            <div class="people-selector-button">
-              <span id="numberOfGuests"></span>
-              <div class="up-down-buttons">
-                <button id="plusGuest" class="btn">
-                  <i class="fas fa-angle-up"></i>
-                </button>
-                <button id="minusGuest" class="btn">
-                  <i class="fas fa-angle-down"></i>
-                </button>
-              </div>
+    <h1>Dinner planner</h1>
+    <div class="select-dish container">
+      <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3">
+        <div class="side-bar-header">
+          <h2>My Dinner</h2>
+          <i class="fa fa-bars"></i>
+          <i class="fa fa-times"></i>
+        </div>
+        <div class="people-container">
+          <span>People</span>
+          <div class="people-selector-button">
+            <span id="numberOfGuests"></span>
+            <div class="up-down-buttons">
+              <button id="plusGuest" class="btn">
+                <i class="fas fa-angle-up"></i>
+              </button>
+              <button id="minusGuest" class="btn">
+                <i class="fas fa-angle-down"></i>
+              </button>
             </div>
           </div>
-
-          <div class="side-bar-sub-header">
-            <span>Dish Name</span>
-            <span>Cost</span>
-          </div>
-
-          <ul id="selectedDishes"></ul>
-
-          <div id="totalPrice"></div>
-
-          <button id="confirmationButton" class="btn btn-orange">
-            <span>Confirm Dinner</span>
-          </button>
         </div>
 
-        <div id="dishSearchView" class="col-xs-12 col-sm-12 col-md-9">
-          <div class="search-bar">
-              <h2>Find a dish</h2>
-              <div class="search-bar-container">
-                <input id="keywordInput" placeholder="Enter key word"></input>
-                <select id="dishTypeSelect"></select>
-                <button type="submit" id="searchDishButton" class="btn btn-orange">Search</button>
-            </div>
+        <div class="side-bar-sub-header">
+          <span>Dish Name</span>
+          <span>Cost</span>
+        </div>
+
+        <ul id="selectedDishes"></ul>
+
+        <div id="totalPrice"></div>
+
+        <button id="confirmationButton" class="btn btn-orange">
+          <span>Confirm Dinner</span>
+        </button>
+      </div>
+
+      <div id="dishSearchView" class="col-xs-12 col-sm-12 col-md-9">
+        <div class="search-bar">
+          <h2>Find a dish</h2>
+          <div class="search-bar-container">
+            <input id="keywordInput" placeholder="Enter key word"></input>
+            <select id="dishTypeSelect"></select>
+            <button type="submit" id="searchDishButton" class="btn btn-orange">Search</button>
           </div>
-          <div class="dish-items-container" id="dishItemsView">
-            <div class="dish-items-wrapper" id="searchedDishes"></div>
-          </div>
+        </div>
+        <div class="dish-items-container" id="dishItemsView">
+          <div class="dish-items-wrapper" id="searchedDishes"></div>
         </div>
       </div>
     </div>
@@ -77,7 +75,6 @@
     <!-- The application JavaScript code -->
     <script src="../js/app.js"></script>
     <script src="../js/model/dinnerModel.js"></script>
-    <script src="../js/view/exampleView.js"></script>
     <script src="../js/view/welcomeView.js"></script>
     <script src="../js/view/sideBarView.js"></script>
     <script src="../js/view/dishSearchView.js"></script>
