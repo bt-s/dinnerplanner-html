@@ -5,8 +5,7 @@ $(function () {
   // Create the instances of our view
   var welcomeView = new WelcomeView($("#welcomeView"), model);
   var sideBarView = new SideBarView($("#sideBarView"), model);
-  var dishSearchView = new DishSearchView($("#dishSearchView"), model); // should be initialized before dishItemsView
-  var dishItemsView = new DishItemsView($("#dishItemsView"), model);
+  var dishSearchView = new DishSearchView($("#dishSearchView"), model);
   var dishDetailView = new DishDetailView($("#dishDetailView"), model);
   var dinnerOverviewView = new DinnerOverviewView($("#dinnerOverviewView"), model);
   var printView = new PrintView($("#printView"), model);
@@ -18,7 +17,6 @@ $(function () {
    ---------------------------------------------------------
    */
   dishSearchView.searchDishButton.click(() => {
-    dishSearchView.updateFilters();
-    dishItemsView.displaySearchedDishes();
+    dishSearchView.operateSearch();
   });
 });
