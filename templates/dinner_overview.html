@@ -15,28 +15,27 @@
   </head>
 
   <body>
-    <div>
-      <h1>Dinner planner</h1>
-      <div id="dinnerOverviewView">
-        <div class="title-bar">
-          <h2>My Dinner: <span id="numberOfGuests"></span> people</h2>
-          <button id="backButton" class="btn">
-            <span>Go back and edit dinner</span>
-          </button>
-        </div>
-
-        <div id="containerForDishAndPrice">
-          <div id="selectedDishesOverview"></div>
-          <div id="cuttingLineAndPrice">
-            <span>Total:</span>
-            <span id="totalCost"></span>
-          </div>
-        </div>
-
-        <button id="printRecipeButton" class="btn">
-          <span>Print Full Recipe</span>
+    <h1>Dinner planner</h1>
+    <div id="dinnerOverviewView" class="container">
+      <div class="title-bar">
+        <h2>My Dinner: <span id="numberOfGuests"></span> people</h2>
+        <button id="backButton" class="btn btn-orange btn-pointy">
+          <span>Go back and edit dinner</span>
         </button>
       </div>
+
+      <div id="containerForDishAndPrice">
+        <div id="selectedDishesOverview"></div>
+        <div id="cuttingLineAndPrice">
+          <span>Total:</span>
+          <span id="totalCost"></span>
+        </div>
+      </div>
+
+      <hr/>
+      <button id="printRecipeButton" class="btn btn-orange">
+        <span>Print Full Recipe</span>
+      </button>
     </div>
 
     <!-- jQuery -->

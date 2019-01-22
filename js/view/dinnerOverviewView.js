@@ -33,7 +33,7 @@ var DinnerOverviewView = function (container, model) {
   displaySelectedDishes();
 
   var totalCost = container.find("#totalCost");
-  totalCost.html(model.getTotalMenuPrice());
+  totalCost.html(model.getTotalMenuPrice() + " SEK");
 
   this.backButton = container.find("#backButton");
   this.printRecipeButton = container.find("#printRecipeButton");
