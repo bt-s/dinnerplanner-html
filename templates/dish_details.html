@@ -17,8 +17,12 @@
   <body>
     <h1>Dinner planner</h1>
     <div class="dish-details container">
-      <div id="sideBarView" class="col-3">
-        <h2>My Dinner</h2>
+      <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3">
+        <div class="side-bar-header">
+          <h2>My Dinner</h2>
+          <i class="fa fa-bars"></i>
+          <i class="fa fa-times"></i>
+        </div>
         <div class="people-container">
           <span>People</span>
           <div class="people-selector-button">
@@ -43,20 +47,20 @@
 
         <div id="totalPrice"></div>
 
-        <button id="confirmationButton" class="btn">
+        <button id="confirmationButton" class="btn btn-orange">
           <span>Confirm Dinner</span>
         </button>
       </div>
 
-      <div id="dishDetailView" class="col-9">
+      <div id="dishDetailView" class="col-xs-12 col-sm-12 col-md-9">
         <div class="dish-details-overview">
-          <div class="dish-description col-6">
+          <div class="dish-description col-xs-12 col-sm-12 col-md-6">
             <h2 id="dishTitle"></h2>
             <img id="detailImg" src="" alt="">
             <p id="detailDescription"></p>
-            <button id="backToSearchButton" class="btn">back to search</button>
+            <button id="backToSearchButton" class="btn btn-orange btn-pointy">back to search</button>
           </div>
-          <div class="dish-ingredients col-6">
+          <div class="dish-ingredients col-xs-12 col-sm-12 col-md-6">
              <div class="dish-ingredients-heading">
               <span>Ingredients For </span>
               <span class="numberOfGuests"></span>
@@ -66,7 +70,7 @@
             <table id="listOfIngredients"></table>
             <hr/>
             <div id="ingredientTotal">
-              <button id="addToMenuButton" class="btn">Add to menu</button>
+              <button id="addToMenuButton" class="btn btn-orange">Add to menu</button>
               <span id="dishPrice"></span>
             </div>
           </div>
