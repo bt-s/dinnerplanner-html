@@ -40,13 +40,36 @@ $(function () {
   var printViewController =
     new PrintViewController(printView, model, generalController);
 
+  // In the essence, every variable in JS is an Object
+  // So we can put a switchTo() function in this "Dic"
+  var SCREENS = {
+    // Names for pages
+    "WELCOME": "WELCOME",
+    "SELECT_DISH": "SELECT_DISH",
+    "DISH_DETAILS": "DISH_DETAILS",
+    "DINNER_OVERVIEW": "DINNER_OVERVIEW",
+    "DINNER_PRINTOUT": "DINNER_PRINTOUT",
+    // Variable to store current screen
+    "currentScreen": "WELCOME", // Welcome by default
+    "switchTo": (name) => {
+      return this.currentScreen = name;
+    }
+  };
   // Instantiate all screens
   generalController
-    .addScreen("WELCOME", [welcomeView])
-    .addScreen("SELECT_DISH", [sideBarView, dishSearchView])
-    .addScreen("DISH_DETAILS", [sideBarView, dishDetailView])
-    .addScreen("DINNER_OVERVIEW", [dinnerOverviewView, titleBarView])
-    .addScreen("DINNER_PRINTOUT", [printView, titleBarView]);
+    .addScreen(SCREENS.WELCOME, [welcomeView])
+    .addScreen(SCREENS.SELECT_DISH, [sideBarView, dishSearchView])
+    .addScreen(SCREENS.DISH_DETAILS, [sideBarView, dishDetailView])
+    .addScreen(SCREENS.DINNER_OVERVIEW, [dinnerOverviewView, titleBarView])
+    .addScreen(SCREENS.DINNER_PRINTOUT, [printView, titleBarView]);
 
-  generalController.showScreen("WELCOME");
+  generalController.showScreen(SCREENS.switchTo(SCREENS.WELCOME));
+
+
+  window.onunload = () => {
+    console.log("unload 1");
+  };
+  // window.onclick += () => {
+  //   console.log("unload 2");
+  // };
 });
