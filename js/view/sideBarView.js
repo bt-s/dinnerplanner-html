@@ -38,8 +38,9 @@ var SideBarView = function (container, model) {
 
   this.update = function(model, changeDetails) {
     if (changeDetails== "numberOfGuests") {
-      var num = model.getNumberOfGuests();
-      numberOfGuests.html(num);
+      numberOfGuests.html(model.getNumberOfGuests());
+      loadSelectedDishes();
+      totalPrice.html("SEK " + model.getTotalMenuPrice());
     }
   }
 
