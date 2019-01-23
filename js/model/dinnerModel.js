@@ -14,7 +14,7 @@ var DinnerModel = function () {
   }
 
   this.removeObserver = function(observer) {
-    observers.filter(e => e !== observer);
+    observers = observers.filter(e => e !== observer);
   }
 
   this.numberOfGuests = 0;
