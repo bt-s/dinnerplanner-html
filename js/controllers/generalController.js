@@ -1,4 +1,5 @@
 var GeneralController = function () {
+  var _oddElements = {}; // elements not in any view
   var _views = [];
   var _screens = [];
   var _currentScreen = "";
@@ -7,6 +8,16 @@ var GeneralController = function () {
     for (var key in _views) {
       _views[key].hide();
     }
+  }
+
+  this.addOddElement = (name, element) => {
+    _oddElements[name] = element;
+  }
+
+  this.initOddElements = () => {
+    _oddElements.headLine.click(() => {
+      this.showScreen("WELCOME");
+    });
   }
 
   this.setCurrentScreen = (name) => {

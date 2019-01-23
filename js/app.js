@@ -64,6 +64,9 @@ $(function () {
     SCREENS_Set[item] = item;
   });
 
+  // Register && Initialize Odd Elements
+  generalController.addOddElement("headLine", $("#headLine"));
+  generalController.initOddElements();
   // Instantiate all screens
   generalController
     .addScreen(SCREENS_Set.WELCOME, [welcomeView])
@@ -79,7 +82,7 @@ $(function () {
   // if the name is illegal, set to Welcome page
   generalController.setCurrentScreen(
     SCREENS.indexOf(readedScrnName) === -1 ?
-    "WELCOME" : readedScrnName
+    "WELCOME" : "WELCOME"
   );
   generalController.showScreen(generalController.getCurrentScreen());
 
