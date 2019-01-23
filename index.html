@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,10 +8,12 @@
     <title>Dinner planner</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href ="styling/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous">
+    <link rel="stylesheet" href="styling/css/style.css">
 
   </head>
+
   <body>
     <h1>Dinner planner</h1>
 
@@ -31,15 +34,16 @@
         </div>
       </div>
 
-      <hr/>
+      <hr />
       <button id="printRecipeButton" class="btn btn-orange">
         <span>Print Full Recipe</span>
       </button>
     </div>
 
-    <div class="dish-details container">
-      <!-- SIDE BAR VIEW -->
-      <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3">
+    <!-- ---------------This can be deleted ------------------>
+    <!-- <div class="dish-details container"> -->
+    <!-- SIDE BAR VIEW -->
+    <!-- <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3">
         <div class="side-bar-header">
           <h2>My Dinner</h2>
           <i class="fa fa-bars"></i>
@@ -72,39 +76,10 @@
         <button id="confirmationButton" class="btn btn-orange">
           <span>Confirm Dinner</span>
         </button>
-      </div>
+      </div> -->
+    <!-- </div> -->
+    <!-- ----------------------------------- -->
 
-      <!-- DISH DETAIL VIEW-->
-      <div id="dishDetailView" class="col-xs-12 col-sm-12 col-md-9">
-        <div class="dish-details-overview">
-          <div class="dish-description col-xs-12 col-sm-12 col-md-6">
-            <h2 id="dishTitle"></h2>
-            <img id="detailImg" src="" alt="">
-            <p id="detailDescription"></p>
-            <button id="backToSearchButton" class="btn btn-orange btn-pointy">back to search</button>
-          </div>
-          <div class="dish-ingredients col-xs-12 col-sm-12 col-md-6">
-             <div class="dish-ingredients-heading">
-              <span>Ingredients For </span>
-              <span class="numberOfGuests"></span>
-              <span> People</span>
-            </div>
-            <hr/>
-            <table id="listOfIngredients"></table>
-            <hr/>
-            <div id="ingredientTotal">
-              <button id="addToMenuButton" class="btn btn-orange">Add to menu</button>
-              <span id="dishPrice"></span>
-            </div>
-          </div>
-        </div>
-        <section id="prepSection">
-          <h2>Preparation</h2>
-          <p id="prepText"></p>
-        </section>
-
-      </div>
-    </div>
 
     <!-- PRINT VIEW-->
     <div id="printView" class="container">
@@ -117,8 +92,8 @@
       <ul id="orderedItemsList" class="printout-dishes"></ul>
     </div>
 
-    <!--SELECT DISH VIEW-->
-    <div class="select-dish container">
+    <!--SELECT DISH VIEW   &&   DISH DETAIL VIEW-->
+    <div class="select-dish container" class="dish-details container">
       <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3">
         <div class="side-bar-header">
           <h2>My Dinner</h2>
@@ -167,6 +142,36 @@
           <div class="dish-items-wrapper" id="searchedDishes"></div>
         </div>
       </div>
+
+      <div id="dishDetailView" class="col-xs-12 col-sm-12 col-md-9">
+        <div class="dish-details-overview">
+          <div class="dish-description col-xs-12 col-sm-12 col-md-6">
+            <h2 id="dishTitle"></h2>
+            <img id="detailImg" src="" alt="">
+            <p id="detailDescription"></p>
+            <button id="backToSearchButton" class="btn btn-orange btn-pointy">back to search</button>
+          </div>
+          <div class="dish-ingredients col-xs-12 col-sm-12 col-md-6">
+            <div class="dish-ingredients-heading">
+              <span>Ingredients For </span>
+              <span class="numberOfGuests"></span>
+              <span> People</span>
+            </div>
+            <hr />
+            <table id="listOfIngredients"></table>
+            <hr />
+            <div id="ingredientTotal">
+              <button id="addToMenuButton" class="btn btn-orange">Add to menu</button>
+              <span id="dishPrice"></span>
+            </div>
+          </div>
+        </div>
+        <section id="prepSection">
+          <h2>Preparation</h2>
+          <p id="prepText"></p>
+        </section>
+
+      </div>
     </div>
 
     <!--WELCOME VIEW-->
@@ -182,9 +187,12 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Bootstrap JavaScript, needed if you want for instance tabs, models, popovers etc. -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"></script>
 
     <!-- The application JavaScript code -->
     <script src="js/app.js"></script>
@@ -204,4 +212,5 @@
     <script src="js/controllers/sideBarViewController.js"></script>
     <script src="js/controllers/welcomeViewController.js"></script>
   </body>
+
 </html>
