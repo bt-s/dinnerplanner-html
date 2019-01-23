@@ -1,27 +1,36 @@
 var GeneralController = function () {
-  var views = [];
-  var screens = [];
+  var _views = [];
+  var _screens = [];
+  var _currentScreen = "";
 
-  var hideAll = () => {
-    for (var key in views) {
-      views[key].hide();
+  var _hideAll = () => {
+    for (var key in _views) {
+      _views[key].hide();
     }
   }
 
+  this.setCurrentScreen = (name) => {
+    _currentScreen = name;
+  }
+  this.getCurrentScreen = () => {
+    return _currentScreen;
+  };
+
   this.addView = (view) => {
-    views.push(view);
+    _views.push(view);
     return this;
   }
 
-  this.addScreen = (name, views) => {
-    screens[name] = views;
+  this.addScreen = (name, viewsToAdd) => {
+    _screens[name] = viewsToAdd;
     return this;
   }
 
   this.showScreen = (name) => {
-    hideAll();
-    for (var key in screens[name]) {
-      screens[name][key].show();
+    _currentScreen = name;
+    _hideAll();
+    for (var key in _screens[name]) {
+      _screens[name][key].show();
     }
   }
 }
