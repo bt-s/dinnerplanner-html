@@ -17,14 +17,14 @@ var DishSearchView = function (container, model) {
       .join(' ');
   };
 
-  var listDishesTypes = function () {
+  var listDishesTypes = () => {
     dishTypeSelect.html("");
     var option = $("<option/>");
     option.text("All");
     option.prop("value", ""); // set it to none so by default can get all dishes
     dishTypeSelect.append(option);
 
-    dishesTypes.forEach(function (type) {
+    dishesTypes.forEach((type) => {
       var option = $("<option/>");
       option.text(titalizeWords(type));
       option.prop("value", type);
@@ -47,7 +47,7 @@ var DishSearchView = function (container, model) {
     searchedDishesContainer.html("");
     searchedDishes = model.getAllDishes(model.getTypeFilter(), model.getKeywordFilter());
     //create views for each items
-    searchedDishes.forEach(function (dish) {
+    searchedDishes.forEach((dish) => {
       var tmpDishItem = $("<a/>");
       tmpDishItem.prop("id", dish.id);
       var dishItemView = new DishItemView(dish.id, tmpDishItem, model);
@@ -62,7 +62,7 @@ var DishSearchView = function (container, model) {
     container.show();
   };
 
-  
+
   this.operateSearch();
 
 }

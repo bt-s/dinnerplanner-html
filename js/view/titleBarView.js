@@ -8,6 +8,15 @@ var TitleBarView = function (container, model) {
   numberOfGuests.html(model.getNumberOfGuests());
 
   this.backButton = container.find("#backButton");
+  this.printRecipeButton = container.find("#printRecipeButton");
+
+  this.update = (model, changeDetails) => {
+    if (changeDetails== "numberOfGuests") {
+      numberOfGuests.html(model.getNumberOfGuests());
+    }
+  }
+
+  model.addObserver(this.update);
 
   this.hide = () => {
     container.hide();

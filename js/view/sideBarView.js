@@ -12,7 +12,7 @@ var SideBarView = function (container, model) {
 
   var selectedDishes = container.find("#selectedDishes");
 
-  var loadSelectedDishes = function () {
+  var loadSelectedDishes = () => {
     selectedDishes.html("");
     for (var i = 0; i < model.selectedDishes.length; i++) {
       var dishSpan = $("<span/>");
@@ -36,10 +36,11 @@ var SideBarView = function (container, model) {
 
   this.confirmationButton = container.find("#confirmationButton");
 
-  this.update = function(model, changeDetails) {
+  this.update = (model, changeDetails) => {
     if (changeDetails== "numberOfGuests") {
-      var num = model.getNumberOfGuests();
-      numberOfGuests.html(num);
+      numberOfGuests.html(model.getNumberOfGuests());
+      loadSelectedDishes();
+      totalPrice.html("SEK " + model.getTotalMenuPrice());
     }
   }
 

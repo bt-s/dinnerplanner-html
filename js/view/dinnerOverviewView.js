@@ -9,7 +9,7 @@ var DinnerOverviewView = function (container, model) {
 
   var selectedDishes = container.find("#selectedDishesOverview");
 
-  var displaySelectedDishes = function () {
+  var displaySelectedDishes = () => {
     selectedDishes.html("");
     for (var i = 0; i < model.selectedDishes.length; i++) {
       var dishSpan = $("<span/>");
@@ -43,10 +43,19 @@ var DinnerOverviewView = function (container, model) {
   this.backButton = container.find("#backButton");
   this.printRecipeButton = container.find("#printRecipeButton");
 
+  this.update = (model, changeDetails) => {
+    if (changeDetails== "numberOfGuests") {
+      displaySelectedDishes();
+      totalCost.html(model.getTotalMenuPrice() + " SEK");
+    }
+  }
+
+  model.addObserver(this.update);
 
   this.hide = () => {
     container.hide();
   };
+
   this.show = () => {
     container.show();
   };

@@ -14,12 +14,4 @@ var DishItemView = function (id, dishItem, model) {
   this.getDomObj = () => {
     return dishItem;
   };
-
-
-  /** dish item is wrapped in dishSearchView
-  so this function is not needed here*/
-
-  // this.hide = () => {
-  //   container.hide();
-  // };
 }

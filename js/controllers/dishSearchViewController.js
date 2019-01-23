@@ -1,4 +1,4 @@
-var DishSearchViewController = function(view, model, generalController) {
+var DishSearchViewController = function (view, model, generalController) {
   view.searchDishButton.click(() => {
     view.operateSearch();
   });
