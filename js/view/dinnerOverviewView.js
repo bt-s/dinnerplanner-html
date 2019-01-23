@@ -43,10 +43,19 @@ var DinnerOverviewView = function (container, model) {
   this.backButton = container.find("#backButton");
   this.printRecipeButton = container.find("#printRecipeButton");
 
+  this.update = function(model, changeDetails) {
+    if (changeDetails== "numberOfGuests") {
+      displaySelectedDishes();
+      totalCost.html(model.getTotalMenuPrice() + " SEK");
+    }
+  }
+
+  model.addObserver(this.update);
 
   this.hide = () => {
     container.hide();
   };
+
   this.show = () => {
     container.show();
   };
