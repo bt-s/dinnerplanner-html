@@ -1,4 +1,8 @@
 var SideBarViewController = function(view, model, generalController) {
+  view.confirmationButton.click(function() {
+    generalController.showScreen("DINNER_OVERVIEW");
+  });
+
   view.plusButton.click(function() {
     model.setNumberOfGuests(model.getNumberOfGuests() + 1);
   });
