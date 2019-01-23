@@ -3,29 +3,29 @@ var DinnerModel = function () {
   var _this = this;
   var observers = [];
 
-  this.addObserver = function(observer) {
+  this.addObserver = (observer) => {
     observers.push(observer);
   }
 
-  var notifyObservers = function(details) {
+  var notifyObservers = (details) => {
     for (var i = 0; i < observers.length; i++) {
       observers[i](_this, details);
     }
   }
 
-  this.removeObserver = function(observer) {
+  this.removeObserver = (observer) => {
     observers = observers.filter(e => e !== observer);
   }
 
-  this.numberOfGuests = 0;
+  this.numberOfGuests = 1;
 
-  this.setNumberOfGuests = function (num) {
+  this.setNumberOfGuests = (num) => {
     this.numberOfGuests = num;
 
     notifyObservers("numberOfGuests");
   }
 
-  this.getNumberOfGuests = function () {
+  this.getNumberOfGuests = () => {
     return this.numberOfGuests;
   }
 
@@ -88,9 +88,9 @@ var DinnerModel = function () {
     }]
   }]
   // Returns the dish that is(/are) on the (selected) menu for type
-  this.getSelectedDish = function (type) {
+  this.getSelectedDish = (type) => {
     var dishType;
-    this.selectedDishes.forEach(function (dish) {
+    this.selectedDishes.forEach((dish) => {
       if (dish["type"] === type) {
         dishType = dish;
       }
@@ -101,15 +101,15 @@ var DinnerModel = function () {
   this.currentViewingDish;
 
   // Returns all the dishes on the (selected) menu.
-  this.getFullMenu = function () {
+  this.getFullMenu = () => {
     return this.selectedDishes;
   }
 
   // Returns all types of dishes
-  this.getDishesTypes = function () {
+  this.getDishesTypes = () => {
     dishesTypes = [];
 
-    dishes.forEach(function (dish) {
+    dishes.forEach((dish) => {
       dishesTypes.push(dish["type"]);
     });
 
@@ -117,11 +117,11 @@ var DinnerModel = function () {
   }
 
   // Returns all ingredients for all the dishes on the (selected) menu.
-  this.getAllIngredients = function () {
+  this.getAllIngredients = () => {
     var ingredients = [];
 
-    this.selectedDishes.forEach(function (dish) {
-      dish["ingredients"].forEach(function (ingredient) {
+    this.selectedDishes.forEach((dish) => {
+      dish["ingredients"].forEach((ingredient) => {
         ingredients.push(ingredient);
       });
     });
@@ -131,10 +131,10 @@ var DinnerModel = function () {
 
   // Returns the price of the selected dish
   // multiplied by the number of guests
-  this.getDishPrice = function (dish) {
+  this.getDishPrice = (dish) => {
     var dishPrice = 0;
 
-    dish["ingredients"].forEach(function (ingredient) {
+    dish["ingredients"].forEach((ingredient) => {
       dishPrice += ingredient["price"];
     });
 
@@ -143,11 +143,11 @@ var DinnerModel = function () {
 
   // Returns the total price of the (selected) menu (all the ingredients
   // multiplied by number of guests).
-  this.getTotalMenuPrice = function () {
+  this.getTotalMenuPrice = () => {
     var totalPrice = 0;
 
-    this.selectedDishes.forEach(function (dish) {
-      dish["ingredients"].forEach(function (ingredient) {
+    this.selectedDishes.forEach((dish) => {
+      dish["ingredients"].forEach((ingredient) => {
         totalPrice += ingredient["price"];
       });
     });
@@ -158,9 +158,9 @@ var DinnerModel = function () {
   // Adds the passed dish to the (selected) menu. If the dish of that type
   // already exists on the (selected) menu it is removed from the (selected)
   // menu and the new one is added.
-  this.addDishToMenu = function (id) {
+  this.addDishToMenu = (id) => {
     var dishToAdd;
-    dishes.forEach(function (dish) {
+    dishes.forEach((dish) => {
       if (dish["id"] === id) {
         dishToAdd = dish;
       }
@@ -182,7 +182,7 @@ var DinnerModel = function () {
   }
 
   // Removes dish from (selected) menu
-  this.removeDishFromMenu = function (id) {
+  this.removeDishFromMenu = (id) => {
     for (var i = 0; i < this.selectedDishes.length; i++) {
       if (this.selectedDishes[i]["id"] === id) {
         this.selectedDishes.splice(i, 1);
@@ -211,12 +211,12 @@ var DinnerModel = function () {
   // the dish by name or ingredient (use for search). If you don't pass any
   // filter all the dishes of the specified type will be returned. If you
   // don't pass any type, all the dishes will be returned.
-  this.getAllDishes = function (type, filter) {
-    return dishes.filter(function (dish) {
+  this.getAllDishes = (type, filter) => {
+    return dishes.filter((dish) => {
       var found = true;
       if (filter) {
         found = false;
-        dish.ingredients.forEach(function (ingredient) {
+        dish.ingredients.forEach((ingredient) => {
           if (ingredient.name.indexOf(filter) != -1) {
             found = true;
           }
@@ -234,7 +234,7 @@ var DinnerModel = function () {
   }
 
   // Function that returns a dish of specific ID
-  this.getDish = function (id) {
+  this.getDish = (id) => {
     for (key in dishes) {
       if (dishes[key].id == id) {
         return dishes[key];
