@@ -1,3 +1,5 @@
 var DinnerOverviewViewController = function(view, model, generalController) {
-  return 1;
+  view.printRecipeButton.click(() => {
+    generalController.showScreen("DINNER_PRINTOUT");
+  });
 }
