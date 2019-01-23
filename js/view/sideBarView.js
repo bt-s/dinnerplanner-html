@@ -14,7 +14,7 @@ var SideBarView = function (container, model) {
 
   var loadSelectedDishes = function () {
     selectedDishes.html("");
-    for (var i=0; i < model.selectedDishes.length; i++) {
+    for (var i = 0; i < model.selectedDishes.length; i++) {
       var dishSpan = $("<span/>");
       var priceSpan = $("<span/>");
       var dish = model.selectedDishes[i];
@@ -35,5 +35,11 @@ var SideBarView = function (container, model) {
   totalPrice.html("SEK " + model.getTotalMenuPrice());
 
   this.confirmationButton = container.find("#confirmationButton");
-}
 
+  this.hide = () => {
+    container.hide();
+  };
+  this.show=()=>{
+    container.show();
+  };
+}

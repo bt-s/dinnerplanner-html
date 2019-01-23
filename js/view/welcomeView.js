@@ -8,5 +8,12 @@ var WelcomeView = function (container, model) {
   welcomeText.html(model.welcomeText);
 
   this.createNewDinnerButton = container.find("#createNewDinnerButton");
-}
 
+
+  this.hide = () => {
+    container.hide();
+  };
+  this.show=()=>{
+    container.show();
+  };
+}

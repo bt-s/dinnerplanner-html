@@ -38,4 +38,12 @@ var PrintView = function (container, model) {
     });
   }
   loadOrderedItems();
+
+  
+  this.hide = () => {
+    container.hide();
+  };
+  this.show=()=>{
+    container.show();
+  };
 }
