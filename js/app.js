@@ -11,6 +11,7 @@ $(function () {
   var dishSearchView = new DishSearchView($("#dishSearchView"), model);
   var dishDetailView = new DishDetailView($("#dishDetailView"), model);
   var dinnerOverviewView = new DinnerOverviewView($("#dinnerOverviewView"), model);
+  var titleBarView = new TitleBarView($("#titleBarView"), model);
   var printView = new PrintView($("#printView"), model);
 
   // Add all views to the general controller
@@ -20,8 +21,8 @@ $(function () {
     .addView(dishSearchView)
     .addView(dishDetailView)
     .addView(dinnerOverviewView)
+    .addView(titleBarView)
     .addView(printView);
-
 
   // Instantiate the controllers
   var welcomeViewController =
@@ -34,6 +35,8 @@ $(function () {
     new DishDetailsViewController(dishDetailView, model, generalController);
   var dinnerOverviewViewController =
     new DinnerOverviewViewController(dinnerOverviewView, model, generalController);
+  var titleBarViewController =
+    new TitleBarViewController(titleBarView, model, generalController);
   var printViewController =
     new PrintViewController(printView, model, generalController);
 

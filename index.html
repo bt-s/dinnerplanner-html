@@ -16,172 +16,124 @@
 
   <body>
     <h1>Dinner planner</h1>
-
-    <!--DINNER OVERVIEW VIEW-->
-    <div id="dinnerOverviewView" class="container">
-      <div class="title-bar">
-        <h2>My Dinner: <span id="numberOfGuests"></span> people</h2>
-        <button id="backButton" class="btn btn-orange btn-pointy">
-          <span>Go back and edit dinner</span>
-        </button>
+    <div class="container">
+      <!--WELCOME VIEW-->
+      <div id="welcomeView">
+        <p id="welcomeText"></p>
+        <a>
+          <button id="createNewDinnerButton" class="btn btn-orange">
+            Create new dinner
+          </button>
+        </a>
       </div>
 
-      <div id="containerForDishAndPrice">
-        <div id="selectedDishesOverview"></div>
-        <div id="cuttingLineAndPrice">
-          <span>Total:</span>
-          <span id="totalCost"></span>
+      <!--DINNER OVERVIEW and PRINT VIEW-->
+      <div>
+        <div id="titleBarView" class="title-bar">
+          <h2>My Dinner: <span id="numberOfGuests"></span> people</h2>
+          <button id="backButton" class="btn btn-orange btn-pointy">
+            <span>Go back and edit dinner</span>
+          </button>
         </div>
-      </div>
 
-      <hr />
-      <button id="printRecipeButton" class="btn btn-orange">
-        <span>Print Full Recipe</span>
-      </button>
-    </div>
-
-    <!-- ---------------This can be deleted ------------------>
-    <!-- <div class="dish-details container"> -->
-    <!-- SIDE BAR VIEW -->
-    <!-- <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3">
-        <div class="side-bar-header">
-          <h2>My Dinner</h2>
-          <i class="fa fa-bars"></i>
-          <i class="fa fa-times"></i>
-        </div>
-        <div class="people-container">
-          <span>People</span>
-          <div class="people-selector-button">
-            <span id="numberOfGuests"></span>
-            <div class="up-down-buttons">
-              <button id="plusGuest" class="btn">
-                <i class="fas fa-angle-up"></i>
-              </button>
-              <button id="minusGuest" class="btn">
-                <i class="fas fa-angle-down"></i>
-              </button>
+        <div id="dinnerOverviewView">
+          <div id="containerForDishAndPrice">
+            <div id="selectedDishesOverview"></div>
+            <div id="cuttingLineAndPrice">
+              <span>Total:</span>
+              <span id="totalCost"></span>
             </div>
           </div>
+
+          <hr />
+          <button id="printRecipeButton" class="btn btn-orange">
+            <span>Print Full Recipe</span>
+          </button>
         </div>
 
-        <div class="side-bar-sub-header">
-          <span>Dish Name</span>
-          <span>Cost</span>
+        <div id="printView" class="container">
+          <ul id="orderedItemsList" class="printout-dishes"></ul>
         </div>
-
-        <ul id="selectedDishes"></ul>
-
-        <div id="totalPrice"></div>
-
-        <button id="confirmationButton" class="btn btn-orange">
-          <span>Confirm Dinner</span>
-        </button>
-      </div> -->
-    <!-- </div> -->
-    <!-- ----------------------------------- -->
-
-
-    <!-- PRINT VIEW-->
-    <div id="printView" class="container">
-      <div class="title-bar">
-        <h2>My Dinner: <span id="numberOfGuests"></span> people</h2>
-        <button id="backButton" class="btn btn-orange btn-pointy">
-          <span>Go back and edit dinner</span>
-        </button>
       </div>
-      <ul id="orderedItemsList" class="printout-dishes"></ul>
-    </div>
 
-    <!--SELECT DISH VIEW   &&   DISH DETAIL VIEW-->
-    <div class="select-dish container" class="dish-details container">
-      <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3">
-        <div class="side-bar-header">
-          <h2>My Dinner</h2>
-          <i class="fa fa-bars"></i>
-          <i class="fa fa-times"></i>
-        </div>
-        <div class="people-container">
-          <span>People</span>
-          <div class="people-selector-button">
-            <span id="numberOfGuests"></span>
-            <div class="up-down-buttons">
-              <button id="plusGuest" class="btn">
-                <i class="fas fa-angle-up"></i>
-              </button>
-              <button id="minusGuest" class="btn">
-                <i class="fas fa-angle-down"></i>
-              </button>
+      <div class="select-dish dish-details">
+        <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3">
+          <div class="side-bar-header">
+            <h2>My Dinner</h2>
+            <i class="fa fa-bars"></i>
+            <i class="fa fa-times"></i>
+          </div>
+          <div class="people-container">
+            <span>People</span>
+            <div class="people-selector-button">
+              <span id="numberOfGuests"></span>
+              <div class="up-down-buttons">
+                <button id="plusGuest" class="btn">
+                  <i class="fa fa-angle-up"></i>
+                </button>
+                <button id="minusGuest" class="btn">
+                  <i class="fa fa-angle-down"></i>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="side-bar-sub-header">
-          <span>Dish Name</span>
-          <span>Cost</span>
-        </div>
-
-        <ul id="selectedDishes"></ul>
-
-        <div id="totalPrice"></div>
-
-        <button id="confirmationButton" class="btn btn-orange">
-          <span>Confirm Dinner</span>
-        </button>
-      </div>
-
-      <div id="dishSearchView" class="col-xs-12 col-sm-12 col-md-9">
-        <div class="search-bar">
-          <h2>Find a dish</h2>
-          <div class="search-bar-container">
-            <input id="keywordInput" placeholder="Enter key word"></input>
-            <select id="dishTypeSelect"></select>
-            <button type="submit" id="searchDishButton" class="btn btn-orange">Search</button>
+          <div class="side-bar-sub-header">
+            <span>Dish Name</span>
+            <span>Cost</span>
           </div>
-        </div>
-        <div class="dish-items-container">
-          <div class="dish-items-wrapper" id="searchedDishes"></div>
-        </div>
-      </div>
 
-      <div id="dishDetailView" class="col-xs-12 col-sm-12 col-md-9">
-        <div class="dish-details-overview">
-          <div class="dish-description col-xs-12 col-sm-12 col-md-6">
-            <h2 id="dishTitle"></h2>
-            <img id="detailImg" src="" alt="">
-            <p id="detailDescription"></p>
-            <button id="backToSearchButton" class="btn btn-orange btn-pointy">back to search</button>
-          </div>
-          <div class="dish-ingredients col-xs-12 col-sm-12 col-md-6">
-            <div class="dish-ingredients-heading">
-              <span>Ingredients For </span>
-              <span class="numberOfGuests"></span>
-              <span> People</span>
-            </div>
-            <hr />
-            <table id="listOfIngredients"></table>
-            <hr />
-            <div id="ingredientTotal">
-              <button id="addToMenuButton" class="btn btn-orange">Add to menu</button>
-              <span id="dishPrice"></span>
+          <ul id="selectedDishes"></ul>
+
+          <div id="totalPrice"></div>
+
+          <button id="confirmationButton" class="btn btn-orange">
+            <span>Confirm Dinner</span>
+          </button>
+        </div>
+
+        <div id="dishSearchView" class="col-xs-12 col-sm-12 col-md-9">
+          <div class="search-bar">
+            <h2>Find a dish</h2>
+            <div class="search-bar-container">
+              <input id="keywordInput" placeholder="Enter key word"></input>
+              <select id="dishTypeSelect"></select>
+              <button type="submit" id="searchDishButton" class="btn btn-orange">Search</button>
             </div>
           </div>
+          <div class="dish-items-container">
+            <div class="dish-items-wrapper" id="searchedDishes"></div>
+          </div>
         </div>
-        <section id="prepSection">
-          <h2>Preparation</h2>
-          <p id="prepText"></p>
-        </section>
 
-      </div>
-    </div>
-
-    <!--WELCOME VIEW-->
-    <div class="container" id="welcomeView">
-      <p id="welcomeText"></p>
-      <a href="select_dish.html">
-        <button id="createNewDinnerButton" class="btn btn-orange">
-          Create new dinner
-        </button>
-      </a>
+        <div id="dishDetailView" class="col-xs-12 col-sm-12 col-md-9">
+          <div class="dish-details-overview">
+            <div class="dish-description col-xs-12 col-sm-12 col-md-6">
+              <h2 id="dishTitle"></h2>
+              <img id="detailImg" src="" alt="">
+              <p id="detailDescription"></p>
+              <button id="backToSearchButton" class="btn btn-orange btn-pointy">back to search</button>
+            </div>
+            <div class="dish-ingredients col-xs-12 col-sm-12 col-md-6">
+              <div class="dish-ingredients-heading">
+                <span>Ingredients For </span>
+                <span class="numberOfGuests"></span>
+                <span> People</span>
+              </div>
+              <hr />
+              <table id="listOfIngredients"></table>
+              <hr />
+              <div id="ingredientTotal">
+                <button id="addToMenuButton" class="btn btn-orange">Add to menu</button>
+                <span id="dishPrice"></span>
+              </div>
+            </div>
+          </div>
+          <section id="prepSection">
+            <h2>Preparation</h2>
+            <p id="prepText"></p>
+          </section>
+        </div>
     </div>
 
     <!-- jQuery -->
@@ -202,9 +154,11 @@
     <script src="js/view/dishSearchView.js"></script>
     <script src="js/view/dishDetailView.js"></script>
     <script src="js/view/dinnerOverviewView.js"></script>
+    <script src="js/view/titleBarView.js"></script>
     <script src="js/view/printView.js"></script>
     <script src="js/view/dishItemView.js"></script>
     <script src="js/controllers/dinnerOverviewViewController.js"></script>
+    <script src="js/controllers/titleBarViewController.js"></script>
     <script src="js/controllers/dishDetailsViewController.js"></script>
     <script src="js/controllers/dishSearchViewController.js"></script>
     <script src="js/controllers/generalController.js"></script>
