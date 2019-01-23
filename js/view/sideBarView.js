@@ -36,9 +36,19 @@ var SideBarView = function (container, model) {
 
   this.confirmationButton = container.find("#confirmationButton");
 
+  this.update = function(model, changeDetails) {
+    if (changeDetails== "numberOfGuests") {
+      var num = model.getNumberOfGuests();
+      numberOfGuests.html(num);
+    }
+  }
+
+  model.addObserver(this.update);
+
   this.hide = () => {
     container.hide();
   };
+
   this.show=()=>{
     container.show();
   };
