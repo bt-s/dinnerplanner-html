@@ -11,7 +11,7 @@ var DinnerOverviewView = function (container, model) {
 
   var displaySelectedDishes = function () {
     selectedDishes.html("");
-    for (var i=0; i < model.selectedDishes.length; i++) {
+    for (var i = 0; i < model.selectedDishes.length; i++) {
       var dishSpan = $("<span/>");
       var dish = model.selectedDishes[i];
       var dishItem = $("<a/>");
@@ -42,4 +42,12 @@ var DinnerOverviewView = function (container, model) {
 
   this.backButton = container.find("#backButton");
   this.printRecipeButton = container.find("#printRecipeButton");
+
+
+  this.hide = () => {
+    container.hide();
+  };
+  this.show = () => {
+    container.show();
+  };
 }

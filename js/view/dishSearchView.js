@@ -55,6 +55,14 @@ var DishSearchView = function (container, model) {
     });
   }
 
+  this.hide = () => {
+    container.hide();
+  };
+  this.show=()=>{
+    container.show();
+  };
+
+  
   this.operateSearch();
 
 }

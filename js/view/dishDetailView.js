@@ -49,4 +49,12 @@ var DishDetailView = function (container, model) {
 
   this.backToSearchButton = container.find("#backToSearchButton");
   this.addToMenuButton = container.find("#addToMenuButton");
+
+
+  this.hide = () => {
+    container.hide();
+  };
+  this.show = () => {
+    container.show();
+  };
 }

@@ -3,17 +3,17 @@
  * contains the view.
  * @param {Object} model - the reference to the Dinner Model
  */
-var WelcomeView = function (container, model) {
-  var welcomeText = container.find("#welcomeText");
-  welcomeText.html(model.welcomeText);
+var TitleBarView = function (container, model) {
+  var numberOfGuests = container.find("#numberOfGuests");
+  numberOfGuests.html(model.getNumberOfGuests());
 
-  this.createNewDinnerButton = container.find("#createNewDinnerButton");
-
+  this.backButton = container.find("#backButton");
 
   this.hide = () => {
     container.hide();
   };
-  this.show=()=>{
+
+  this.show = () => {
     container.show();
   };
 }
