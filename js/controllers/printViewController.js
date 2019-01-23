@@ -1,3 +1,3 @@
-var PrintViewController = function(view, model, generalController) {
+var PrintViewController = function (view, model, generalController) {
   return 1;
 }

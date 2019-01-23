@@ -10,7 +10,7 @@ var TitleBarView = function (container, model) {
   this.backButton = container.find("#backButton");
   this.printRecipeButton = container.find("#printRecipeButton");
 
-  this.update = function(model, changeDetails) {
+  this.update = (model, changeDetails) => {
     if (changeDetails== "numberOfGuests") {
       numberOfGuests.html(model.getNumberOfGuests());
     }
