@@ -1,3 +1,5 @@
 var WelcomeViewController = function(view, model, generalController) {
-  return 1;
+  view.createNewDinnerButton.click(() => {
+    generalController.showScreen("SELECT_DISH");
+  });
 }

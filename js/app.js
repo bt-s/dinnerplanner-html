@@ -45,24 +45,8 @@ $(function () {
     .addScreen("WELCOME", [welcomeView])
     .addScreen("SELECT_DISH", [sideBarView, dishSearchView])
     .addScreen("DISH_DETAILS", [sideBarView, dishDetailView])
-    .addScreen("DINNER_OVERVIEW", [dinnerOverviewView])
-    .addScreen("DINNER_PRINTOUT", [printView]);
+    .addScreen("DINNER_OVERVIEW", [dinnerOverviewView, titleBarView])
+    .addScreen("DINNER_PRINTOUT", [printView, titleBarView]);
 
   generalController.showScreen("WELCOME");
-
-  // ---- for test purpose --------
-  var counter = 0;
-  var screenNames = [
-    "WELCOME",
-    "SELECT_DISH",
-    "DISH_DETAILS",
-    "DINNER_OVERVIEW",
-    "DINNER_PRINTOUT"
-  ];
-  document.onclick = () => {
-    console.log("document click");
-    counter = ++counter % screenNames.length;
-    generalController.showScreen(screenNames[counter]);
-  };
-  // -------  for test purpose ------
 });
