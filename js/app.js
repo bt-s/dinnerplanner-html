@@ -94,11 +94,6 @@ $(function () {
   };
 
 
-  // for test only -------
-  var counter = 0;
-  window.onclick = () => {
-    counter = ++counter % SCREENS.names.length;
-    generalController.showScreen(
-      SCREENS.switchTo(SCREENS.names[counter]));
-  };
+
+
 });
