@@ -49,48 +49,47 @@ $(function () {
     }
     return "";
   }
-  // In the essence, every variable in JS is an Object
-  // So we can put a switchTo() function in this "Dic"
-  var SCREENS = {
-    "names": [
-      "WELCOME",
-      "SELECT_DISH",
-      "DISH_DETAILS",
-      "DINNER_OVERVIEW",
-      "DINNER_PRINTOUT",
-    ],
-    // Variable to store current screen
-    "currentScreen": "WELCOME", // Welcome by default
-    "switchTo": (name) => {
-      return SCREENS.currentScreen = name;
-    }
-  };
+
+  var SCREENS = [
+    "WELCOME",
+    "SELECT_DISH",
+    "DISH_DETAILS",
+    "DINNER_OVERVIEW",
+    "DINNER_PRINTOUT"
+  ];
+  // this set is created from the SCREENS list
+  // key and value are the same
+  var SCREENS_Set = new Set(SCREENS);
+  SCREENS.forEach((item) => {
+    SCREENS_Set[item] = item;
+  });
+
   // Instantiate all screens
   generalController
-    .addScreen(SCREENS.names[0], [welcomeView])
-    .addScreen(SCREENS.names[1], [sideBarView, dishSearchView])
-    .addScreen(SCREENS.names[2], [sideBarView, dishDetailView])
-    .addScreen(SCREENS.names[3], [dinnerOverviewView, titleBarView])
-    .addScreen(SCREENS.names[4], [printView, titleBarView]);
+    .addScreen(SCREENS_Set.WELCOME, [welcomeView])
+    .addScreen(SCREENS_Set.SELECT_DISH, [sideBarView, dishSearchView])
+    .addScreen(SCREENS_Set.DISH_DETAILS, [sideBarView, dishDetailView])
+    .addScreen(SCREENS_Set.DINNER_OVERVIEW, [dinnerOverviewView, titleBarView])
+    .addScreen(SCREENS_Set.DINNER_PRINTOUT, [printView, titleBarView]);
 
   // read current screen name from local
   var readedScrnName = (document.cookie.length === 0) ?
     localStorage.getItem("currentScreen") :
     getCookie('currentScreen');
   // if the name is illegal, set to Welcome page
-  SCREENS.currentScreen =
-    SCREENS.names.indexOf(readedScrnName) === -1 ?
-    "WELCOME" : readedScrnName;
-  generalController.showScreen(
-    SCREENS.switchTo(SCREENS.currentScreen));
+  generalController.setCurrentScreen(
+    SCREENS.indexOf(readedScrnName) === -1 ?
+    "WELCOME" : readedScrnName
+  );
+  generalController.showScreen(generalController.getCurrentScreen());
 
 
   // save current screen name on machine 
   window.onunload = () => {
     //Chrome doesn't support cookies for local .html files
-    document.cookie = 'currentScreen=' + SCREENS.currentScreen;
+    document.cookie = 'currentScreen=' + generalController.getCurrentScreen();
     //This is used for Chrome
-    localStorage.setItem('currentScreen', SCREENS.currentScreen);
+    localStorage.setItem('currentScreen', generalController.getCurrentScreen());
   };
 
 
