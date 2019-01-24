@@ -82,7 +82,7 @@ $(function () {
   // if the name is illegal, set to Welcome page
   generalController.setCurrentScreen(
     SCREENS.indexOf(readedScrnName) === -1 ?
-    "WELCOME" : "WELCOME"
+    "WELCOME" : readedScrnName
   );
   generalController.showScreen(generalController.getCurrentScreen());
 
