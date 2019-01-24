@@ -87,6 +87,11 @@
   align-items: center;
   justify-content: space-between;
 
+  @include media-breakpoint-between(sm, md) {
+    flex-direction: column-reverse;
+  }
+
+
   span {
     white-space: pre;
     padding-right: 12px;
