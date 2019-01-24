@@ -9,10 +9,6 @@
     margin-top: $padding-xxs;
   }
 
-  > button {
-    margin: $padding-sm 0 $padding-xs;
-  }
-
   ul {
     list-style: none;
     padding: 0;
@@ -20,6 +16,20 @@
     li {
       display: flex;
       justify-content: space-between;
+    }
+  }
+
+  &.menu-open {
+    .side-bar-menu {
+      display: flex;
+    }
+
+    .fa-bars {
+      display: none;
+    }
+
+    .fa-times {
+      display: block;
     }
   }
 }
@@ -68,11 +78,14 @@
   justify-content: space-between;
   align-items: center;
 
-  .fa {
+  .fa-times,
+  .fa-bars {
     font-size: 25px;
+    width: 25px;
+    height: 25px;
   }
 
-  .fa-bars {
+  .fa-times {
     display: none;
   }
 
@@ -81,6 +94,19 @@
     .fa-bars {
       display: none;
     }
+  }
+}
+
+.side-bar-menu {
+  display: none;
+  flex-direction: column;
+
+  @include media-breakpoint-up(sm) {
+    display: flex;
+  }
+
+  > button {
+    margin: $padding-sm 0 $padding-xs;
   }
 }
 

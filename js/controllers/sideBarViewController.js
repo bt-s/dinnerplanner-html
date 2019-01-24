@@ -12,4 +12,11 @@ var SideBarViewController = function (view, model, generalController) {
       model.setNumberOfGuests(model.getNumberOfGuests() - 1);
     }
   });
+
+  view.menuButton.click(() => {
+  });
+
+  view.menuButton.click(function(){
+      $(this).parent().parent().toggleClass("menu-open");
+  });
 }

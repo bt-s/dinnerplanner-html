@@ -51,46 +51,45 @@
         </button>
       </div>
 
-      <div id="printView" class="container">
-        <ul id="orderedItemsList" class="printout-dishes"></ul>
-      </div>
-    </div>
-
-    <div class="select-dish dish-details">
-      <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3">
-        <div class="side-bar-header">
-          <h2>My Dinner</h2>
-          <i class="fa fa-bars"></i>
-          <i class="fa fa-times"></i>
-        </div>
-        <div class="people-container">
-          <span>People</span>
-          <div class="people-selector-button">
-            <span id="numberOfGuests"></span>
-            <div class="up-down-buttons">
-              <button id="plusGuest" class="btn">
-                <i class="fa fa-angle-up"></i>
-              </button>
-              <button id="minusGuest" class="btn">
-                <i class="fa fa-angle-down"></i>
-              </button>
+      <div class="select-dish dish-details">
+        <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3">
+          <div class="side-bar-header">
+            <h2>My Dinner</h2>
+            <a id="menuButton">
+              <i class="fa fa-bars"></i>
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+          <div class="side-bar-menu">
+            <div class="people-container">
+              <span>People</span>
+              <div class="people-selector-button">
+                <span id="numberOfGuests"></span>
+                <div class="up-down-buttons">
+                  <button id="plusGuest" class="btn">
+                    <i class="fa fa-angle-up"></i>
+                  </button>
+                  <button id="minusGuest" class="btn">
+                    <i class="fa fa-angle-down"></i>
+                  </button>
+                </div>
+              </div>
             </div>
+
+            <div class="side-bar-sub-header">
+              <span>Dish Name</span>
+              <span>Cost</span>
+            </div>
+
+            <ul id="selectedDishes"></ul>
+
+            <div id="totalPrice"></div>
+
+            <button id="confirmationButton" class="btn btn-orange">
+              <span>Confirm Dinner</span>
+            </button>
           </div>
         </div>
-
-        <div class="side-bar-sub-header">
-          <span>Dish Name</span>
-          <span>Cost</span>
-        </div>
-
-        <ul id="selectedDishes"></ul>
-
-        <div id="totalPrice"></div>
-
-        <button id="confirmationButton" class="btn btn-orange">
-          <span>Confirm Dinner</span>
-        </button>
-      </div>
 
       <div id="dishSearchView" class="col-xs-12 col-sm-12 col-md-9">
         <div class="search-bar">

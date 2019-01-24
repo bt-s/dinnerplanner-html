@@ -1,11 +1,24 @@
 .title-bar {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   border-bottom: 4px solid $black;
   padding: $padding-xs;
   margin-bottom: $padding-md;
   padding-left: 32px;
+
+  @include media-breakpoint-up(sm) {
+    flex-direction: row;
+  }
+
+  button {
+    margin-top: $padding-sm;
+
+    @include media-breakpoint-up(sm) {
+      margin-top: 0;
+    }
+  }
 
   h2 {
     margin: 0;
