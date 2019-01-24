@@ -260,14 +260,18 @@ h1 {
   height: 100%; }
   #sideBarView h2 {
     margin-top: 8px; }
-  #sideBarView > button {
-    margin: 24px 0 16px; }
   #sideBarView ul {
     list-style: none;
     padding: 0; }
     #sideBarView ul li {
       display: flex;
       justify-content: space-between; }
+  #sideBarView.menu-open .side-bar-menu {
+    display: flex; }
+  #sideBarView.menu-open .fa-bars {
+    display: none; }
+  #sideBarView.menu-open .fa-times {
+    display: block; }
 
 .people-container {
   display: flex;
@@ -303,14 +307,26 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center; }
-  .side-bar-header .fa {
-    font-size: 25px; }
+  .side-bar-header .fa-times,
   .side-bar-header .fa-bars {
+    font-size: 25px;
+    width: 25px;
+    height: 25px; }
+  .side-bar-header .fa-times {
     display: none; }
   @media (min-width: 576px) {
     .side-bar-header .fa-times,
     .side-bar-header .fa-bars {
       display: none; } }
+
+.side-bar-menu {
+  display: none;
+  flex-direction: column; }
+  @media (min-width: 576px) {
+    .side-bar-menu {
+      display: flex; } }
+  .side-bar-menu > button {
+    margin: 24px 0 16px; }
 
 .side-bar-sub-header {
   width: calc(100% + 30px);
