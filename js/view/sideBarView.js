@@ -10,6 +10,8 @@ var SideBarView = function (container, model) {
   this.plusButton = container.find("#plusGuest");
   this.minusButton = container.find("#minusGuest");
 
+  this.menuButton = container.find("#menuButton");
+
   var selectedDishes = container.find("#selectedDishes");
 
   var loadSelectedDishes = () => {
