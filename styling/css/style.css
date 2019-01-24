@@ -112,6 +112,9 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between; }
+  @media (min-width: 576px) and (max-width: 991.98px) {
+    #ingredientTotal {
+      flex-direction: column-reverse; } }
   #ingredientTotal span {
     white-space: pre;
     padding-right: 12px; }
