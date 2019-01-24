@@ -224,12 +224,21 @@ h1 {
 
 .title-bar {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   border-bottom: 4px solid #000000;
   padding: 16px;
   margin-bottom: 32px;
   padding-left: 32px; }
+  @media (min-width: 576px) {
+    .title-bar {
+      flex-direction: row; } }
+  .title-bar button {
+    margin-top: 24px; }
+    @media (min-width: 576px) {
+      .title-bar button {
+        margin-top: 0; } }
   .title-bar h2 {
     margin: 0; }
 
