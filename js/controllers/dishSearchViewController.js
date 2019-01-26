@@ -1,7 +1,6 @@
 var DishSearchViewController = function (view, model, generalController) {
   view.searchDishButton.click(() => {
-    view.operateSearch();
-
-
+    // view.operateSearch();
+    model.operateSearch(...view.getSearchCondition());
   });
 }

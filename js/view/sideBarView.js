@@ -16,10 +16,10 @@ var SideBarView = function (container, model) {
 
   var loadSelectedDishes = () => {
     selectedDishes.html("");
-    for (var i = 0; i < model.selectedDishes.length; i++) {
+    for (var i = 0; i < model.getSelectedDishes().length; i++) {
       var dishSpan = $("<span/>");
       var priceSpan = $("<span/>");
-      var dish = model.selectedDishes[i];
+      var dish = model.getSelectedDishes()[i];
       var dishPrice = model.getDishPrice(dish);
       var listItem = $("<li/>");
 
@@ -39,7 +39,7 @@ var SideBarView = function (container, model) {
   this.confirmationButton = container.find("#confirmationButton");
 
   this.update = (model, changeDetails) => {
-    if (changeDetails== "numberOfGuests") {
+    if (changeDetails == "numberOfGuests") {
       numberOfGuests.html(model.getNumberOfGuests());
       loadSelectedDishes();
       totalPrice.html("SEK " + model.getTotalMenuPrice());
@@ -52,7 +52,7 @@ var SideBarView = function (container, model) {
     container.hide();
   };
 
-  this.show=()=>{
+  this.show = () => {
     container.show();
   };
 }

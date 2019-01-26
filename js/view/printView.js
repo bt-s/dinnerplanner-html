@@ -9,7 +9,7 @@ var PrintView = function (container, model) {
 
   var loadOrderedItems = () => {
     numberOfGuests.text(model.getNumberOfGuests());
-    model.selectedDishes.forEach(dish => {
+    model.getSelectedDishes().forEach(dish => {
       var imgAtLeft = $("<img>");
       var name = $("<h2/>");
       var description = $("<p/>");

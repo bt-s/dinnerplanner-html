@@ -29,68 +29,15 @@ var DinnerModel = function () {
     return this.numberOfGuests;
   }
 
-  // For test purposes
-  this.selectedDishes = [{ // should be changed to []
-    'id': 3,
-    'name': 'Baked Brie with Peaches',
-    'type': 'starter',
-    'image': 'bakedbrie.jpg',
-    'description': "Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    'ingredients': [{
-      'name': 'round Brie cheese',
-      'quantity': 10,
-      'unit': 'g',
-      'price': 8
-    }, {
-      'name': 'raspberry preserves',
-      'quantity': 15,
-      'unit': 'g',
-      'price': 10
-    }, {
-      'name': 'peaches',
-      'quantity': 1,
-      'unit': '',
-      'price': 4
-    }]
-  }, {
-    'id': 101,
-    'name': 'MD 2',
-    'type': 'main dish',
-    'image': 'bakedbrie.jpg',
-    'description': "Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    'ingredients': [{
-      'name': 'ingredient 1',
-      'quantity': 1,
-      'unit': 'pieces',
-      'price': 8
-    }, {
-      'name': 'ingredient 2',
-      'quantity': 15,
-      'unit': 'g',
-      'price': 7
-    }, {
-      'name': 'ingredient 3',
-      'quantity': 10,
-      'unit': 'ml',
-      'price': 4
-    }]
-  }, {
-    'id': 200,
-    'name': 'Chocolat Ice cream',
-    'type': 'dessert',
-    'image': 'icecream.jpg',
-    'description': "Here is how you make it... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    'ingredients': [{
-      'name': 'ice cream',
-      'quantity': 100,
-      'unit': 'ml',
-      'price': 6
-    }]
-  }]
+  var selectedDishes = [];
+  this.getSelectedDishes = () => {
+    return selectedDishes;
+  };
+
   // Returns the dish that is(/are) on the (selected) menu for type
   this.getSelectedDish = (type) => {
     var dishType;
-    this.selectedDishes.forEach((dish) => {
+    selectedDishes.forEach((dish) => {
       if (dish["type"] === type) {
         dishType = dish;
       }
@@ -102,7 +49,7 @@ var DinnerModel = function () {
 
   // Returns all the dishes on the (selected) menu.
   this.getFullMenu = () => {
-    return this.selectedDishes;
+    return selectedDishes;
   }
 
   // Returns all types of dishes
@@ -120,7 +67,7 @@ var DinnerModel = function () {
   this.getAllIngredients = () => {
     var ingredients = [];
 
-    this.selectedDishes.forEach((dish) => {
+    selectedDishes.forEach((dish) => {
       dish["ingredients"].forEach((ingredient) => {
         ingredients.push(ingredient);
       });
@@ -146,7 +93,7 @@ var DinnerModel = function () {
   this.getTotalMenuPrice = () => {
     var totalPrice = 0;
 
-    this.selectedDishes.forEach((dish) => {
+    selectedDishes.forEach((dish) => {
       dish["ingredients"].forEach((ingredient) => {
         totalPrice += ingredient["price"];
       });
@@ -167,43 +114,27 @@ var DinnerModel = function () {
     });
 
     var dishAlreadyInMenu = false;
-    for (var i = 0; i < this.selectedDishes.length; i++) {
-      if (this.selectedDishes[i].type === this.getDish(id).type) {
+    for (var i = 0; i < selectedDishes.length; i++) {
+      if (selectedDishes[i].type === this.getDish(id).type) {
         dishAlreadyInMenu = true;
-        this.selectedDishes.splice(i, 1);
-        this.selectedDishes.push(dishToAdd);
+        selectedDishes.splice(i, 1);
+        selectedDishes.push(dishToAdd);
       }
 
     };
 
     if (dishAlreadyInMenu === false) {
-      this.selectedDishes.push(dishToAdd);
+      selectedDishes.push(dishToAdd);
     }
   }
 
   // Removes dish from (selected) menu
   this.removeDishFromMenu = (id) => {
-    for (var i = 0; i < this.selectedDishes.length; i++) {
-      if (this.selectedDishes[i]["id"] === id) {
-        this.selectedDishes.splice(i, 1);
+    for (var i = 0; i < selectedDishes.length; i++) {
+      if (selectedDishes[i]["id"] === id) {
+        selectedDishes.splice(i, 1);
       }
     }
-  }
-
-  this.typeFilter;
-  this.setTypeFilter = (type) => {
-    this.typeFilter = type;
-  }
-  this.getTypeFilter = () => {
-    return this.typeFilter;
-  }
-
-  this.keywordFilter;
-  this.setKeywordFilter = (keyword) => {
-    this.keywordFilter = keyword;
-  }
-  this.getKeywordFilter = () => {
-    return this.keywordFilter;
   }
 
   // Function that returns all dishes of specific type (i.e. "starter",
@@ -226,19 +157,28 @@ var DinnerModel = function () {
           found = true;
         }
       }
-      // didn't specified, which means all types
       if (type)
         return dish.type == type && found;
       return found;
     });
   }
 
+  // show all dishes by default;
+  var searchedDishes;
+  this.getSearchedDishes = () => {
+    return searchedDishes;
+  };
+
+  this.operateSearch = (type, keyword) => {
+    searchedDishes = this.getAllDishes(type, keyword);
+    notifyObservers("searchedDishes");
+  };
+
   // Function that returns a dish of specific ID
   this.getDish = (id) => {
     for (key in dishes) {
       if (dishes[key].id == id) {
         return dishes[key];
-
       }
     }
   }
@@ -500,4 +440,8 @@ var DinnerModel = function () {
       'price': 6
     }]
   }];
+
+  // all code below should be deleted
+  selectedDishes = [dishes[5], dishes[1], dishes[4]];
+  searchedDishes = this.getAllDishes();
 }

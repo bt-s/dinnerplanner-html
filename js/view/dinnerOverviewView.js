@@ -11,9 +11,9 @@ var DinnerOverviewView = function (container, model) {
 
   var displaySelectedDishes = () => {
     selectedDishes.html("");
-    for (var i = 0; i < model.selectedDishes.length; i++) {
+    for (var i = 0; i < model.getSelectedDishes().length; i++) {
       var dishSpan = $("<span/>");
-      var dish = model.selectedDishes[i];
+      var dish = model.getSelectedDishes()[i];
       var dishItem = $("<a/>");
       var image = $("<img/>");
       var heading = $("<h3/>");

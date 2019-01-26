@@ -9,7 +9,7 @@ var DishDetailView = function (container, model) {
   var prepText = container.find("#prepText");
 
   numberOfGuests.html(model.getNumberOfGuests());
-  model.currentViewingDish = model.selectedDishes[0]; // for test, should be deleted
+  model.currentViewingDish = model.getSelectedDishes()[0]; // for test, should be deleted
 
   var dishTitle = container.find("#dishTitle");
   var detailImg = container.find("#detailImg");

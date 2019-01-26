@@ -1,5 +1,5 @@
 $(function () {
-  // We instantiate our model
+  // We instantiate our model at the beginning
   var model = new DinnerModel();
 
   // We instantiate our general controller
