@@ -1,4 +1,6 @@
-var DishItemView = function (id, dishItem, model) {
+var DishItemView = function (id,  model) {
+  var dishItem=$("<a/>");
+  dishItem.prop("id",id);
   var dish = model.getDish(id);
   var heading = $("<h3/>");
   var image = $("<img/>");

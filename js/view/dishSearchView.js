@@ -36,9 +36,7 @@ var DishSearchView = function (container, model) {
     searchedDishesContainer.html("");
     //create views for each items
     model.getSearchedDishes().forEach((dish) => {
-      var tmpDishItem = $("<a/>");
-      tmpDishItem.prop("id", dish.id);
-      var dishItemView = new DishItemView(dish.id, tmpDishItem, model);
+      var dishItemView = new DishItemView(dish.id, model);
       searchedDishesContainer.append(dishItemView.getDomObj());
     });
   };
