@@ -39,6 +39,8 @@ $(function () {
     new TitleBarViewController(titleBarView, model, generalController);
   var printViewController =
     new PrintViewController(printView, model, generalController);
+  var dishItemViewController =
+    new DishItemViewController($("#searchedDishes"), model, generalController);
 
   function getCookie(cname) {
     var name = cname + "=";

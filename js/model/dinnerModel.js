@@ -105,7 +105,9 @@ var DinnerModel = function () {
   // Adds the passed dish to the (selected) menu. If the dish of that type
   // already exists on the (selected) menu it is removed from the (selected)
   // menu and the new one is added.
+
   this.addDishToMenu = (id) => {
+    console.log(selectedDishes);// the 3rd dish became undefined object, how could that be possible?
     var dishToAdd;
     dishes.forEach((dish) => {
       if (dish["id"] === id) {
@@ -442,6 +444,6 @@ var DinnerModel = function () {
   }];
 
   // all code below should be deleted
-  selectedDishes = [dishes[5], dishes[1], dishes[4]];
+  selectedDishes = [dishes[5], dishes[1], dishes[0]];
   searchedDishes = this.getAllDishes();
 }
