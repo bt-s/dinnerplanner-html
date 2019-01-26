@@ -35,8 +35,6 @@ var DinnerOverviewView = function (container, model) {
     }
   }
 
-  displaySelectedDishes();
-
   var totalCost = container.find("#totalCost");
   totalCost.html(model.getTotalMenuPrice() + " SEK");
 
@@ -44,13 +42,11 @@ var DinnerOverviewView = function (container, model) {
   this.printRecipeButton = container.find("#printRecipeButton");
 
   this.update = (model, changeDetails) => {
-    if (changeDetails== "numberOfGuests") {
+    if (changeDetails == "numberOfGuests") {
       displaySelectedDishes();
       totalCost.html(model.getTotalMenuPrice() + " SEK");
     }
   }
-
-  model.addObserver(this.update);
 
   this.hide = () => {
     container.hide();
@@ -59,4 +55,8 @@ var DinnerOverviewView = function (container, model) {
   this.show = () => {
     container.show();
   };
+
+  model.addObserver(this.update);
+  displaySelectedDishes();
+
 }
