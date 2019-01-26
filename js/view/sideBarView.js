@@ -9,9 +9,7 @@ var SideBarView = function (container, model) {
 
   this.plusButton = container.find("#plusGuest");
   this.minusButton = container.find("#minusGuest");
-
   this.menuButton = container.find("#menuButton");
-
   var selectedDishes = container.find("#selectedDishes");
 
   var loadSelectedDishes = () => {
@@ -31,7 +29,6 @@ var SideBarView = function (container, model) {
     }
   }
 
-  loadSelectedDishes();
 
   var totalPrice = container.find("#totalPrice");
   totalPrice.html("SEK " + model.getTotalMenuPrice());
@@ -46,13 +43,13 @@ var SideBarView = function (container, model) {
     }
   }
 
-  model.addObserver(this.update);
-
   this.hide = () => {
     container.hide();
   };
-
   this.show = () => {
     container.show();
   };
+  
+  loadSelectedDishes();
+  model.addObserver(this.update);
 }

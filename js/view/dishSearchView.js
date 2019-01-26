@@ -51,6 +51,7 @@ var DishSearchView = function (container, model) {
     ];
   };
 
+  // question, why pass model to this function as model is already available in this function because it's in the constructor function of this class
   this.update = (model, changeDetails) => {
     if (changeDetails === "searchedDishes") {
       showSearchedDishes();
