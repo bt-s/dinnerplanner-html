@@ -91,47 +91,52 @@
           </div>
         </div>
 
-      <div id="dishSearchView" class="col-xs-12 col-sm-12 col-md-9">
-        <div class="search-bar">
-          <h2>Find a dish</h2>
-          <div class="search-bar-container">
-            <input id="keywordInput" placeholder="Enter key word" />
-            <select id="dishTypeSelect"></select>
-            <button type="submit" id="searchDishButton" class="btn btn-orange">Search</button>
+        <div id="dishSearchView" class="col-xs-12 col-sm-12 col-md-9">
+          <div class="search-bar">
+            <h2>Find a dish</h2>
+            <div class="search-bar-container">
+              <input id="keywordInput" placeholder="Enter key word" />
+              <select id="dishTypeSelect"></select>
+              <button type="submit" id="searchDishButton" class="btn btn-orange">Search</button>
+            </div>
+          </div>
+          <div class="dish-items-container">
+            <div class="dish-items-wrapper" id="searchedDishes"></div>
           </div>
         </div>
-        <div class="dish-items-container">
-          <div class="dish-items-wrapper" id="searchedDishes"></div>
-        </div>
-      </div>
 
-      <div id="dishDetailView" class="col-xs-12 col-sm-12 col-md-9">
-        <div class="dish-details-overview">
-          <div class="dish-description col-xs-12 col-sm-12 col-md-6">
-            <h2 id="dishTitle"></h2>
-            <img id="detailImg" src="" alt="">
-            <p id="detailDescription"></p>
-            <button id="backToSearchButton" class="btn btn-orange btn-pointy">back to search</button>
-          </div>
-          <div class="dish-ingredients col-xs-12 col-sm-12 col-md-6">
-            <div class="dish-ingredients-heading">
-              <span>Ingredients For </span>
-              <span class="numberOfGuests"></span>
-              <span> People</span>
+        <div id="dishDetailView" class="col-xs-12 col-sm-12 col-md-9">
+          <div class="dish-details-overview">
+            <div class="dish-description col-xs-12 col-sm-12 col-md-6">
+              <h2 id="dishTitle"></h2>
+              <img id="detailImg" src="" alt="">
+              <p id="detailDescription"></p>
+              <button id="backToSearchButton" class="btn btn-orange btn-pointy">back to search</button>
             </div>
-            <hr />
-            <table id="listOfIngredients"></table>
-            <hr />
-            <div id="ingredientTotal">
-              <button id="addToMenuButton" class="btn btn-orange">Add to menu</button>
-              <span id="dishPrice"></span>
+            <div class="dish-ingredients col-xs-12 col-sm-12 col-md-6">
+              <div class="dish-ingredients-heading">
+                <span>Ingredients For </span>
+                <span class="numberOfGuests"></span>
+                <span> People</span>
+              </div>
+              <hr />
+              <table id="listOfIngredients"></table>
+              <hr />
+              <div id="ingredientTotal">
+                <button id="addToMenuButton" class="btn btn-orange">Add to menu</button>
+                <span id="dishPrice"></span>
+              </div>
             </div>
           </div>
+          <section id="prepSection">
+            <h2>Preparation</h2>
+            <p id="prepText"></p>
+          </section>
         </div>
-        <section id="prepSection">
-          <h2>Preparation</h2>
-          <p id="prepText"></p>
-        </section>
+
+        <div id="printView" class="container">
+          <ul id="orderedItemsList" class="printout-dishes"></ul>
+        </div>
       </div>
     </div>
 
