@@ -106,28 +106,21 @@ var DinnerModel = function () {
   // already exists on the (selected) menu it is removed from the (selected)
   // menu and the new one is added.
   this.addDishToMenu = (id) => {
-    console.log(selectedDishes); // the 3rd dish became undefined object, how could that be possible?
     var dishToAdd;
     dishes.forEach((dish) => {
-      if (dish["id"] === id) {
+      if (dish["id"] == id) { // as the parameter has string type, and the dish.id has number type, so use == instead of ===
         dishToAdd = dish;
       }
     });
     if (!dishToAdd) // there will be a strange bug if don't quit on this condition
       return false;
-    var dishAlreadyInMenu = false;
     for (var i = 0; i < selectedDishes.length; i++) {
       if (selectedDishes[i].type === this.getDish(id).type) {
-        dishAlreadyInMenu = true;
         selectedDishes.splice(i, 1);
-        selectedDishes.push(dishToAdd);
       }
     }
-
-    if (dishAlreadyInMenu === false) {
-      selectedDishes.push(dishToAdd);
-      console.log(runned);
-    }
+    selectedDishes.push(dishToAdd);
+    notifyObservers("selectedDishes");
   }
 
   // Removes dish from (selected) menu
@@ -444,6 +437,6 @@ var DinnerModel = function () {
   }];
 
   // all code below should be deleted
-  selectedDishes = [dishes[5], dishes[1], dishes[0]];
+  selectedDishes = [dishes[0], dishes[3], dishes[8]];
   searchedDishes = this.getAllDishes();
 }

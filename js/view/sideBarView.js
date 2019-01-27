@@ -41,6 +41,10 @@ var SideBarView = function (container, model) {
       loadSelectedDishes();
       totalPrice.html("SEK " + model.getTotalMenuPrice());
     }
+    if (changeDetails == "selectedDishes") {
+      loadSelectedDishes();
+      totalPrice.html("SEK " + model.getTotalMenuPrice());
+    }
   }
 
   this.hide = () => {
@@ -49,7 +53,7 @@ var SideBarView = function (container, model) {
   this.show = () => {
     container.show();
   };
-  
+
   loadSelectedDishes();
   model.addObserver(this.update);
 }
