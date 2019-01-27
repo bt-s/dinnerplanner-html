@@ -38,11 +38,14 @@ var DinnerOverviewView = function (container, model) {
   var totalCost = container.find("#totalCost");
   totalCost.html(model.getTotalMenuPrice() + " SEK");
 
-  this.backButton = container.find("#backButton");
+  //this.backButton = container.find("#backButton");
   this.printRecipeButton = container.find("#printRecipeButton");
 
   this.update = (model, changeDetails) => {
     if (changeDetails == "numberOfGuests") {
+      totalCost.html(model.getTotalMenuPrice() + " SEK");
+    }
+    if (changeDetails == "selectedDishes") {
       displaySelectedDishes();
       totalCost.html(model.getTotalMenuPrice() + " SEK");
     }

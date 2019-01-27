@@ -8,6 +8,7 @@ var PrintView = function (container, model) {
   var orderedItems = container.find("#orderedItemsList");
 
   var loadOrderedItems = () => {
+    orderedItems.html("");
     numberOfGuests.text(model.getNumberOfGuests());
     model.getSelectedDishes().forEach(dish => {
       var imgAtLeft = $("<img>");
@@ -39,11 +40,19 @@ var PrintView = function (container, model) {
   }
   loadOrderedItems();
 
+  this.update = (model, changeDetails) => {
+    if (changeDetails == "selectedDishes") {
+      loadOrderedItems();
+    }
+  };
 
   this.hide = () => {
     container.hide();
   };
-  this.show=()=>{
+  this.show = () => {
     container.show();
   };
+
+  model.addObserver(this.update);
+
 }
