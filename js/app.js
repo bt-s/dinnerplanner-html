@@ -88,13 +88,10 @@ $(function () {
   if (document.cookie.length === 0) {
     for (key in dataToStore) {
       dataToStore[key] = localStorage.getItem(key);
-      console.log(key, localStorage.getItem(key));
     }
-    console.log(dataToStore);
   } else {
     for (key in dataToStore) {
       dataToStore[key] = getCookie(key);
-      console.log(key, dataToStore[key]);
     }
   }
   // ---- Load data from local ----
@@ -118,13 +115,11 @@ $(function () {
     document.cookie = "numberOfGuests=" + model.getNumberOfGuests();
     var sl = [];
     var slStr = '';
-    console.log(model.getSelectedDishes(), 'selected dishes');
     for (var i = 0; i < model.getSelectedDishes().length; i++) {
       sl.push(model.getSelectedDishes()[i].id);
       slStr += ',' + model.getSelectedDishes()[i].id;
     }
-    slStr = slStr.substr(1);
-    console.log(slStr, 'sss');
+    slStr = slStr.substr(1); // delete the first , 
     document.cookie = "selectedDishes=" + sl;
     document.cookie = "searchCondition=" + dishSearchView.getSearchCondition();
     //This is used for Chrome
