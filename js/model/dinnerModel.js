@@ -45,7 +45,14 @@ var DinnerModel = function () {
     return dishType;
   }
 
-  this.currentViewingDish;
+  var currentViewingDish;
+  this.getCurrentViewingDish = () => {
+    return currentViewingDish;
+  };
+  this.setCurrentViewingDish = (id) => {
+    currentViewingDish = this.getDish(id);
+    notifyObservers("viewingDish");
+  };
 
   // Returns all the dishes on the (selected) menu.
   this.getFullMenu = () => {
@@ -112,7 +119,7 @@ var DinnerModel = function () {
         dishToAdd = dish;
       }
     });
-    if (!dishToAdd) // there will be a strange bug if don't quit on this condition
+    if (!dishToAdd)
       return false;
     for (var i = 0; i < selectedDishes.length; i++) {
       if (selectedDishes[i].type === this.getDish(id).type) {
@@ -435,6 +442,8 @@ var DinnerModel = function () {
       'price': 6
     }]
   }];
+
+  currentViewingDish = dishes[0]; // this must be set by default
 
   // all code below should be deleted
   selectedDishes = [dishes[0], dishes[3], dishes[8]];

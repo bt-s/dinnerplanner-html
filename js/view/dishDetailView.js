@@ -7,26 +7,27 @@ var DishDetailView = function (container, model) {
   var numberOfGuests = container.find(".numberOfGuests");
   var ingredientList = container.find("#listOfIngredients");
   var prepText = container.find("#prepText");
+  var viewingDish = model.getCurrentViewingDish();
 
   numberOfGuests.html(model.getNumberOfGuests());
-  model.currentViewingDish = model.getSelectedDishes()[0]; // for test, should be deleted
 
   var dishTitle = container.find("#dishTitle");
   var detailImg = container.find("#detailImg");
   var detailDescription = container.find("#detailDescription");
 
   var loadDishInfo = () => {
-    dishTitle.text(model.currentViewingDish.name);
-    detailImg.prop("src", "images/" + model.currentViewingDish.image);
-    detailImg.prop("alt", model.currentViewingDish.name);
-    detailDescription.text(model.currentViewingDish.description);
+    viewingDish = model.getCurrentViewingDish();
+    dishTitle.text(viewingDish.name);
+    detailImg.prop("src", "images/" + viewingDish.image);
+    detailImg.prop("alt", viewingDish.name);
+    detailDescription.text(viewingDish.description);
     //no data for preparation, so reuse description
-    prepText.text(model.currentViewingDish.description);
+    prepText.text(viewingDish.description);
   }
 
   var loadIngredients = () => {
     var dishPrice = 0;
-    model.currentViewingDish.ingredients.forEach(e => {
+    viewingDish.ingredients.forEach(e => {
       var volumeSpan = $("<td/>");
       var nameSpan = $("<td/>");
       var monetarySpan = $("<td/>");
@@ -50,6 +51,12 @@ var DishDetailView = function (container, model) {
   this.backToSearchButton = container.find("#backToSearchButton");
   this.addToMenuButton = container.find("#addToMenuButton");
 
+  this.update = (model, changeDetails) => {
+    if (changeDetails == "viewingDish") {
+      loadDishInfo();
+      loadIngredients();
+    }
+  };
 
   this.hide = () => {
     container.hide();
@@ -57,4 +64,6 @@ var DishDetailView = function (container, model) {
   this.show = () => {
     container.show();
   };
+
+  model.addObserver(this.update);
 }

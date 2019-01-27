@@ -61,7 +61,7 @@ $(function () {
   ];
   // this set is created from the SCREENS list
   // key and value are the same
-  var SCREENS_Set = new Set(SCREENS);
+  SCREENS_Set = new Set(SCREENS); // this should be global
   SCREENS.forEach((item) => {
     SCREENS_Set[item] = item;
   });
