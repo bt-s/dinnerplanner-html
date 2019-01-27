@@ -77,14 +77,36 @@ $(function () {
     .addScreen(SCREENS_Set.DINNER_OVERVIEW, [dinnerOverviewView, titleBarView])
     .addScreen(SCREENS_Set.DINNER_PRINTOUT, [printView, titleBarView]);
 
-  // read current screen name from local
-  var readedScrnName = (document.cookie.length === 0) ?
-    localStorage.getItem("currentScreen") :
-    getCookie('currentScreen');
+  // read stored data from local
+  var dataToStore = {
+    "currentScreen": "",
+    "numberOfGuests": 0,
+    "selectedDishes": [],
+    "searchCondition": []
+  };
+
+  if (document.cookie.length === 0) {
+    for (key in dataToStore) {
+      dataToStore[key] = localStorage.getItem(key);
+      console.log(key, localStorage.getItem(key));
+    }
+    console.log(dataToStore);
+  } else {
+    for (key in dataToStore) {
+      dataToStore[key] = getCookie(key);
+      console.log(key, dataToStore[key]);
+    }
+  }
+  // ---- Load data from local ----
+  dataToStore['selectedDishes'].split(',').forEach((id) => {
+    model.addDishToMenu(id);
+  });
+  model.setNumberOfGuests(Number(dataToStore['numberOfGuests']));
+  dishSearchView.setSearchCondition(...dataToStore["searchCondition"].split(','));
   // if the name is illegal, set to Welcome page
   generalController.setCurrentScreen(
-    SCREENS.indexOf(readedScrnName) === -1 ?
-    "WELCOME" : readedScrnName
+    SCREENS.indexOf(dataToStore['currentScreen']) === -1 ?
+    "WELCOME" : dataToStore['currentScreen']
   );
   generalController.showScreen(generalController.getCurrentScreen());
 
@@ -93,8 +115,30 @@ $(function () {
   window.onunload = () => {
     //Chrome doesn't support cookies for local .html files
     document.cookie = 'currentScreen=' + generalController.getCurrentScreen();
+    document.cookie = "numberOfGuests=" + model.getNumberOfGuests();
+    var sl = [];
+    var slStr = '';
+    console.log(model.getSelectedDishes(), 'selected dishes');
+    for (var i = 0; i < model.getSelectedDishes().length; i++) {
+      sl.push(model.getSelectedDishes()[i].id);
+      slStr += ',' + model.getSelectedDishes()[i].id;
+    }
+    slStr = slStr.substr(1);
+    console.log(slStr, 'sss');
+    document.cookie = "selectedDishes=" + sl;
+    document.cookie = "searchCondition=" + dishSearchView.getSearchCondition();
     //This is used for Chrome
     localStorage.setItem('currentScreen', generalController.getCurrentScreen());
+    localStorage.setItem('numberOfGuests', model.getNumberOfGuests() + '');
+    localStorage.setItem('selectedDishes', slStr);
+    var searchConStr = dishSearchView.getSearchCondition();
+    searchConStr = searchConStr[0] + ',' + searchConStr[1];
+    localStorage.setItem('searchCondition', searchConStr);
+    for (key in dataToStore) {
+      dataToStore[key] = localStorage.getItem(key);
+      console.log(localStorage.getItem(key));
+    }
+
   };
 
 

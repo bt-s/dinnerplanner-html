@@ -21,7 +21,6 @@ var DinnerModel = function () {
 
   this.setNumberOfGuests = (num) => {
     this.numberOfGuests = num;
-
     notifyObservers("numberOfGuests");
   }
 

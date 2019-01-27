@@ -48,6 +48,13 @@ var DishSearchView = function (container, model) {
       keywordInput.prop("value")
     ];
   };
+  this.setSearchCondition = (type, kwd) => {
+    for (var i = 0; i < dishTypeSelect.children().length; i++) {
+      if (dishTypeSelect.children()[i].value == type)
+        dishTypeSelect[0].selectedIndex = i;
+    }
+    keywordInput.prop("value", kwd);
+  };
 
   // question, why pass model to this function as model is already available in this function because it's in the constructor function of this class
   this.update = (model, changeDetails) => {
