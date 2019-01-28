@@ -1,6 +1,4 @@
 let SideBarView = function (container, model) {
-  let totalMenuPrice = model.getTotalMenuPrice();
-
   let numberOfGuests = container.find("#numberOfGuests")
     .html(model.getNumberOfGuests());
 
@@ -22,7 +20,7 @@ let SideBarView = function (container, model) {
   }
 
   let totalPrice = container.find("#totalPrice")
-    .html("SEK " + totalMenuPrice);
+    .html("SEK " + model.getTotalMenuPrice());
 
   this.confirmationButton = container.find("#confirmationButton");
 
@@ -30,11 +28,11 @@ let SideBarView = function (container, model) {
     if (changeDetails == "numberOfGuests") {
       numberOfGuests.html(model.getNumberOfGuests());
       loadSelectedDishes();
-      totalPrice.html("SEK " + totalMenuPrice);
+      totalPrice.html("SEK " + model.getTotalMenuPrice());
     }
     if (changeDetails == "selectedDishes") {
       loadSelectedDishes();
-      totalPrice.html("SEK " + totalMenuPrice);
+      totalPrice.html("SEK " + model.getTotalMenuPrice());
     }
   }
 
