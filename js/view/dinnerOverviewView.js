@@ -9,7 +9,7 @@ let DinnerOverviewView = function (container, model) {
     model.getSelectedDishes().forEach((dish) => {
       let image = $("<img/>")
         .prop("alt", dish["name"])
-        .prop("src", "../images/" + dish["image"]);
+        .prop("src", "images/" + dish["image"]);
       let heading = $("<h3/>").text(dish["name"]);
       let dishPrice = model.getDishPrice(dish);
       let priceSpan = $("<span/>").text(dishPrice + " SEK");;

@@ -9,7 +9,7 @@ let DishDetailView = function (container, model) {
       text(viewingDish.name);
 
     let detailImg = container.find("#detailImg").
-      prop("src", "../images/" + viewingDish.image,
+      prop("src", "images/" + viewingDish.image,
            "alt", viewingDish.name);
 
     let detailDescription = container.find("#detailDescription").

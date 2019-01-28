@@ -4,7 +4,7 @@ let DishItemView = function (id, model) {
 
   let image = $("<img/>")
     .prop("alt", dish["name"])
-    .prop("src", "../images/" + dish["image"]);
+    .prop("src", "images/" + dish["image"]);
 
   let dishItem = $("<a/>")
     .prop("id", "dishItem" + id)

@@ -4,7 +4,7 @@ let PrintView = function (container, model) {
       .text(model.getNumberOfGuests());
 
     model.getSelectedDishes().forEach(dish => {
-      let imgAtLeft = $("<img>").prop("src", "../images/" + dish.image);
+      let imgAtLeft = $("<img>").prop("src", "images/" + dish.image);
       let name = $("<h2/>").text(dish.name);
       let description = $("<p/>").text(dish.description);
       let preparation = $("<h3/>").text("Preparation");
