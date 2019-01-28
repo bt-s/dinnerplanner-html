@@ -1,11 +1,11 @@
-var GeneralController = function () {
-  var _oddElements = {}; // elements not in any view
-  var _views = [];
-  var _screens = [];
-  var _currentScreen = "";
+let GeneralController = function () {
+  let _oddElements = {}; // elements not in any view
+  let _views = [];
+  let _screens = [];
+  let _currentScreen = "";
 
-  var _hideAll = () => {
-    for (var key in _views) {
+  let _hideAll = () => {
+    for (let key in _views) {
       _views[key].hide();
     }
   }
@@ -23,6 +23,7 @@ var GeneralController = function () {
   this.setCurrentScreen = (name) => {
     _currentScreen = name;
   }
+
   this.getCurrentScreen = () => {
     return _currentScreen;
   };
@@ -40,7 +41,7 @@ var GeneralController = function () {
   this.showScreen = (name) => {
     _currentScreen = name;
     _hideAll();
-    for (var key in _screens[name]) {
+    for (let key in _screens[name]) {
       _screens[name][key].show();
     }
   }
