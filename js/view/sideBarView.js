@@ -1,37 +1,28 @@
-/**
- * @param {jQuery object} container - references the HTML parent element that
- * contains the view.
- * @param {Object} model - the reference to the Dinner Model
- */
-var SideBarView = function (container, model) {
-  var numberOfGuests = container.find("#numberOfGuests");
-  numberOfGuests.html(model.getNumberOfGuests());
+let SideBarView = function (container, model) {
+  let totalMenuPrice = model.getTotalMenuPrice();
+
+  let numberOfGuests = container.find("#numberOfGuests")
+    .html(model.getNumberOfGuests());
 
   this.plusButton = container.find("#plusGuest");
   this.minusButton = container.find("#minusGuest");
   this.menuButton = container.find("#menuButton");
-  var selectedDishes = container.find("#selectedDishes");
 
-  var loadSelectedDishes = () => {
-    selectedDishes.html("");
-    for (var i = 0; i < model.getSelectedDishes().length; i++) {
-      var dishSpan = $("<span/>");
-      var priceSpan = $("<span/>");
-      var dish = model.getSelectedDishes()[i];
-      var dishPrice = model.getDishPrice(dish);
-      var listItem = $("<li/>");
+  let loadSelectedDishes = () => {
+    let selectedDishes = container.find("#selectedDishes").html("");
 
-      dishSpan.text(dish["name"]);
-      priceSpan.text(dishPrice);
-      listItem.append(dishSpan);
-      listItem.append(priceSpan);
+    model.getSelectedDishes().forEach((dish) => {
+      let dishSpan = $("<span/>").text(dish["name"]);
+      let priceSpan = $("<span/>").text(model.getDishPrice(dish));
+      let listItem = $("<li/>")
+        .append(dishSpan)
+        .append(priceSpan);
       selectedDishes.append(listItem);
-    }
+    });
   }
 
-
-  var totalPrice = container.find("#totalPrice");
-  totalPrice.html("SEK " + model.getTotalMenuPrice());
+  let totalPrice = container.find("#totalPrice")
+    .html("SEK " + totalMenuPrice);
 
   this.confirmationButton = container.find("#confirmationButton");
 
@@ -39,21 +30,23 @@ var SideBarView = function (container, model) {
     if (changeDetails == "numberOfGuests") {
       numberOfGuests.html(model.getNumberOfGuests());
       loadSelectedDishes();
-      totalPrice.html("SEK " + model.getTotalMenuPrice());
+      totalPrice.html("SEK " + totalMenuPrice);
     }
     if (changeDetails == "selectedDishes") {
       loadSelectedDishes();
-      totalPrice.html("SEK " + model.getTotalMenuPrice());
+      totalPrice.html("SEK " + totalMenuPrice);
     }
   }
 
   this.hide = () => {
     container.hide();
   };
+
   this.show = () => {
     container.show();
   };
 
   loadSelectedDishes();
+
   model.addObserver(this.update);
 }
