@@ -1,4 +1,4 @@
-var SideBarViewController = function (view, model, generalController) {
+let SideBarViewController = function (view, model, generalController) {
   view.confirmationButton.click(() => {
     generalController.showScreen("DINNER_OVERVIEW");
   });
@@ -11,9 +11,6 @@ var SideBarViewController = function (view, model, generalController) {
     if (model.getNumberOfGuests() !== 0) {
       model.setNumberOfGuests(model.getNumberOfGuests() - 1);
     }
-  });
-
-  view.menuButton.click(() => {
   });
 
   view.menuButton.click(function(){

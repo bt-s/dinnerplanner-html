@@ -37,8 +37,6 @@ $(function () {
     new DinnerOverviewViewController(dinnerOverviewView, model, generalController);
   const titleBarViewController =
     new TitleBarViewController(titleBarView, model, generalController);
-  const printViewController =
-    new PrintViewController(printView, model, generalController);
   const dishItemViewController =
     new DishItemViewController($("#searchedDishes"), model, generalController);
 
