@@ -95,11 +95,13 @@ $(function () {
     }
   }
   // ---- Load data from local ----
-  dataToStore['selectedDishes'].split(',').forEach((id) => {
-    model.addDishToMenu(id);
-  });
-  model.setNumberOfGuests(Number(dataToStore['numberOfGuests']));
-  dishSearchView.setSearchCondition(...dataToStore["searchCondition"].split(','));
+  if (dataToStore['selectedDishes'] !== null) {
+    dataToStore['selectedDishes'].split(',').forEach((id) => {
+      model.addDishToMenu(id);
+    });
+    model.setNumberOfGuests(Number(dataToStore['numberOfGuests']));
+    dishSearchView.setSearchCondition(...dataToStore["searchCondition"].split(','));
+  }
   // if the name is illegal, set to Welcome page
   generalController.setCurrentScreen(
     SCREENS.indexOf(dataToStore['currentScreen']) === -1 ?
@@ -108,7 +110,7 @@ $(function () {
   generalController.showScreen(generalController.getCurrentScreen());
 
 
-  // save current screen name on machine 
+  // save current screen name on machine
   window.onunload = () => {
     //Chrome doesn't support cookies for local .html files
     document.cookie = 'currentScreen=' + generalController.getCurrentScreen();
@@ -119,7 +121,7 @@ $(function () {
       sl.push(model.getSelectedDishes()[i].id);
       slStr += ',' + model.getSelectedDishes()[i].id;
     }
-    slStr = slStr.substr(1); // delete the first , 
+    slStr = slStr.substr(1); // delete the first ,
     document.cookie = "selectedDishes=" + sl;
     document.cookie = "searchCondition=" + dishSearchView.getSearchCondition();
     //This is used for Chrome
