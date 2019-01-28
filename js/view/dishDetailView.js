@@ -36,7 +36,7 @@ let DishDetailView = function (container, model) {
       dishPrice += e.price;
     });
 
-    container.find("#dishPrice").text("SEK    " + dishPrice);
+    container.find("#dishPrice").text("TOTAL: SEK " + dishPrice);
   }
 
   loadDishInfo();

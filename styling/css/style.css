@@ -125,8 +125,10 @@ a {
 .dish-items-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, 140px);
-  grid-gap: 1rem;
   justify-content: space-between; }
+  @media (max-width: 767.98px) {
+    .dish-items-wrapper {
+      grid-gap: 1rem; } }
   .dish-items-wrapper a {
     margin-bottom: 32px;
     max-width: 140px; }
