@@ -1,0 +1,1 @@
+let TitleBarView=function(t,e){let i=t.find("#numberOfGuests").html(e.getNumberOfGuests());this.backButton=t.find("#backButton"),this.printRecipeButton=t.find("#printRecipeButton"),this.update=((t,e)=>{"numberOfGuests"==e&&i.html(t.getNumberOfGuests())}),e.addObserver(this.update),this.hide=(()=>{t.hide()}),this.show=(()=>{t.show()})};

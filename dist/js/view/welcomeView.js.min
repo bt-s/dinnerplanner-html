@@ -1,0 +1,1 @@
+let WelcomeView=function(e,t){e.find("#welcomeText").html(t.welcomeText);this.createNewDinnerButton=e.find("#createNewDinnerButton"),this.hide=(()=>{e.hide()}),this.show=(()=>{e.show()})};

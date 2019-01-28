@@ -1,0 +1,1 @@
+let DishItemViewController=function(e,t,i){e.click(e=>{let n=e.target.parentNode.id.substring(8);t.setCurrentViewingDish(n),i.showScreen("DISH_DETAILS")})};

@@ -1,0 +1,1 @@
+let DishItemView=function(e,t){let i=t.getDish(e),m=$("<h3/>").text(i.name),p=$("<img/>").prop("alt",i.name).prop("src","../images/"+i.image),a=$("<a/>").prop("id","dishItem"+e).append(p,m);this.getDomObj=(()=>a)};
