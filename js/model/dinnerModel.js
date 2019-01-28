@@ -1,50 +1,43 @@
 // DinnerModel Object constructor
-var DinnerModel = function () {
-  var _this = this;
-  var observers = [];
+let DinnerModel = function () {
+  const _this = this;
+  let observers = [];
 
   this.addObserver = (observer) => {
     observers.push(observer);
   }
 
-  var notifyObservers = (details) => {
-    for (var i = 0; i < observers.length; i++) {
+  let notifyObservers = (details) => {
+    for (let i = 0; i < observers.length; i++) {
       observers[i](_this, details);
     }
   }
 
-  this.removeObserver = (observer) => {
-    observers = observers.filter(e => e !== observer);
-  }
-
   this.numberOfGuests = 1;
-
   this.setNumberOfGuests = (num) => {
     this.numberOfGuests = num;
     notifyObservers("numberOfGuests");
   }
-
   this.getNumberOfGuests = () => {
     return this.numberOfGuests;
   }
 
-  var selectedDishes = [];
+  let selectedDishes = [];
   this.getSelectedDishes = () => {
     return selectedDishes;
   };
 
   // Returns the dish that is(/are) on the (selected) menu for type
   this.getSelectedDish = (type) => {
-    var dishType;
     selectedDishes.forEach((dish) => {
       if (dish["type"] === type) {
-        dishType = dish;
+        let dishType = dish;
       }
     });
     return dishType;
   }
 
-  var currentViewingDish;
+  let currentViewingDish;
   this.getCurrentViewingDish = () => {
     return currentViewingDish;
   };
@@ -71,7 +64,7 @@ var DinnerModel = function () {
 
   // Returns all ingredients for all the dishes on the (selected) menu.
   this.getAllIngredients = () => {
-    var ingredients = [];
+    let ingredients = [];
 
     selectedDishes.forEach((dish) => {
       dish["ingredients"].forEach((ingredient) => {
@@ -85,7 +78,7 @@ var DinnerModel = function () {
   // Returns the price of the selected dish
   // multiplied by the number of guests
   this.getDishPrice = (dish) => {
-    var dishPrice = 0;
+    let dishPrice = 0;
 
     dish["ingredients"].forEach((ingredient) => {
       dishPrice += ingredient["price"];
@@ -97,7 +90,7 @@ var DinnerModel = function () {
   // Returns the total price of the (selected) menu (all the ingredients
   // multiplied by number of guests).
   this.getTotalMenuPrice = () => {
-    var totalPrice = 0;
+    let totalPrice = 0;
 
     selectedDishes.forEach((dish) => {
       dish["ingredients"].forEach((ingredient) => {
@@ -112,26 +105,30 @@ var DinnerModel = function () {
   // already exists on the (selected) menu it is removed from the (selected)
   // menu and the new one is added.
   this.addDishToMenu = (id) => {
-    var dishToAdd;
+    let dishToAdd;
+
     dishes.forEach((dish) => {
-      if (dish["id"] == id) { // as the parameter has string type, and the dish.id has number type, so use == instead of ===
+      if (dish["id"] == id) {
         dishToAdd = dish;
       }
     });
+
     if (!dishToAdd)
       return false;
-    for (var i = 0; i < selectedDishes.length; i++) {
+
+    for (let i = 0; i < selectedDishes.length; i++) {
       if (selectedDishes[i].type === this.getDish(id).type) {
         selectedDishes.splice(i, 1);
       }
     }
+
     selectedDishes.push(dishToAdd);
     notifyObservers("selectedDishes");
   }
 
   // Removes dish from (selected) menu
   this.removeDishFromMenu = (id) => {
-    for (var i = 0; i < selectedDishes.length; i++) {
+    for (let i = 0; i < selectedDishes.length; i++) {
       if (selectedDishes[i]["id"] === id) {
         selectedDishes.splice(i, 1);
       }
@@ -145,7 +142,8 @@ var DinnerModel = function () {
   // don't pass any type, all the dishes will be returned.
   this.getAllDishes = (type, filter) => {
     return dishes.filter((dish) => {
-      var found = true;
+      let found = true;
+
       if (filter) {
         found = false;
         dish.ingredients.forEach((ingredient) => {
@@ -158,14 +156,15 @@ var DinnerModel = function () {
           found = true;
         }
       }
+
       if (type)
         return dish.type == type && found;
+
       return found;
     });
   }
 
-  // show all dishes by default;
-  var searchedDishes;
+  let searchedDishes = [];
   this.getSearchedDishes = () => {
     return searchedDishes;
   };
@@ -200,7 +199,7 @@ var DinnerModel = function () {
   // can sometimes be empty like in the example of eggs where
   // you just say "5 eggs" and not "5 pieces of eggs" or anything else.
 
-  var dishes = [{
+  const dishes = [{
     'id': 1,
     'name': 'French toast',
     'type': 'starter',
@@ -442,9 +441,8 @@ var DinnerModel = function () {
     }]
   }];
 
-  currentViewingDish = dishes[0]; // this must be set by default
+  Object.freeze(dishes);
 
-  // all code below should be deleted
-  selectedDishes = [dishes[0], dishes[3], dishes[8]];
-  searchedDishes = this.getAllDishes();
+  currentViewingDish = dishes[0];
+
 }
