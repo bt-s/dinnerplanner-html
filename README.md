@@ -1,4 +1,3 @@
-===========
 NOTES Lab 2
 ===========
 Note 1 (by Bas Straathof and Yao, Ming):
@@ -9,7 +8,9 @@ Since node.js dependencies have been added after lab 1, and gulpfile.js contains
 $ npm install
 $ gulp
 
-===========
+Note 3 (by Bas Straathof and Yao, Ming):
+The relevant code can be found here: https://github.com/bt-s/dinnerplanner-html/releases/tag/lab2
+
 NOTES Lab 1
 ===========
 
