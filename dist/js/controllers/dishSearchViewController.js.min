@@ -1,1 +1,0 @@
-let DishSearchViewController=function(e,t,c){e.searchDishButton.click(()=>{t.operateSearch(...e.getSearchCondition())})};

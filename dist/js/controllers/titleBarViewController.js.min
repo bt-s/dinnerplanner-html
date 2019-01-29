@@ -1,1 +1,0 @@
-let TitleBarViewController=function(e,t,c){e.backButton.click(()=>{c.showScreen("SELECT_DISH")})};

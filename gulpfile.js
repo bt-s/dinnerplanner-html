@@ -4,6 +4,7 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const csso = require('gulp-csso');
+const concat = require('gulp-concat');
 const uglify = require('gulp-uglify-es').default;
 const rename = require('gulp-rename');
 
@@ -32,10 +33,11 @@ gulp.task('sass', function () {
 gulp.task('js', function() {
   return gulp.src('./js/**/*.js')
     .pipe(uglify())
+    .pipe(concat('script.js'))
     .pipe(rename(function (path) {
       path.extname = ".js.min";
     }))
-    .pipe(gulp.dest('./dist/js'));
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('default', ['sass', 'js']);

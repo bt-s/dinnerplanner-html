@@ -1,1 +1,0 @@
-let SideBarViewController=function(e,t,u){e.confirmationButton.click(()=>{u.showScreen("DINNER_OVERVIEW")}),e.plusButton.click(()=>{t.setNumberOfGuests(t.getNumberOfGuests()+1)}),e.minusButton.click(()=>{0!==t.getNumberOfGuests()&&t.setNumberOfGuests(t.getNumberOfGuests()-1)}),e.menuButton.click(function(){$(this).parent().parent().toggleClass("menu-open")})};
