@@ -2,9 +2,8 @@ let DishDetailView = function (container, model) {
   let numberOfGuests = container.find(".numberOfGuests").
     html(model.getNumberOfGuests());;
 
-  let viewingDish = model.getCurrentViewingDish();
-
   let loadDishInfo = () => {
+    let viewingDish = model.getCurrentViewingDish();
     let dishTitle = container.find("#dishTitle").
       text(viewingDish.name);
 
@@ -21,6 +20,8 @@ let DishDetailView = function (container, model) {
 
   let loadIngredients = () => {
     let dishPrice = 0;
+    let ingredientList = container.find("#listOfIngredients").html("");
+    let viewingDish = model.getCurrentViewingDish();
 
     viewingDish.ingredients.forEach(e => {
       let tableItem = $("<tr/>");
@@ -30,8 +31,7 @@ let DishDetailView = function (container, model) {
                        $("<td/>").text("SEK"),
                        $("<td/>").text(e.price));
 
-      let ingredientList = container.find("#listOfIngredients").
-        append(tableItem);
+      ingredientList.append(tableItem);
 
       dishPrice += e.price;
     });
