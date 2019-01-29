@@ -1,4 +1,4 @@
-let DishesData = function () {
+const DishesData = function () {
   this.dishes = [{
     'id': 1,
     'name': 'French toast',
