@@ -1,1 +1,0 @@
-let DinnerOverviewViewController=function(e,n,i){e.printRecipeButton.click(()=>{i.showScreen("DINNER_PRINTOUT")})};

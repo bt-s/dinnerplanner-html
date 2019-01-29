@@ -1,1 +1,0 @@
-let DishDetailsViewController=function(e,i,n){e.backToSearchButton.click(()=>{n.showScreen("SELECT_DISH")}),e.addToMenuButton.click(e=>{i.addDishToMenu(i.getCurrentViewingDish().id)})};
