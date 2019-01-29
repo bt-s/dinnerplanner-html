@@ -1,4 +1,3 @@
-===========
 NOTES Lab 2
 ===========
 Note 1 (by Bas Straathof and Yao, Ming):
@@ -9,7 +8,6 @@ Since node.js dependencies have been added after lab 1, and gulpfile.js contains
 $ npm install
 $ gulp
 
-===========
 NOTES Lab 1
 ===========
 
