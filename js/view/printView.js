@@ -3,6 +3,9 @@ let PrintView = function (container, model) {
     let numberOfGuests = container.find(".numberOfGuests")
       .text(model.getNumberOfGuests());
 
+    let orderedItems = container.find("#orderedItemsList")
+      .html("");
+
     model.getSelectedDishes().forEach(dish => {
       let imgAtLeft = $("<img>").prop("src", "images/" + dish.image);
       let name = $("<h2/>").text(dish.name);
@@ -23,9 +26,7 @@ let PrintView = function (container, model) {
         .append(midPart)
         .append(rightPart);
 
-      let orderedItems = container.find("#orderedItemsList")
-        .html("")
-        .append(listItem);
+      orderedItems.append(listItem);
     });
   }
 
