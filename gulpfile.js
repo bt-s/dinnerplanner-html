@@ -26,9 +26,6 @@ gulp.task('sass', function () {
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
     .pipe(csso())
-    .pipe(rename(function (path) {
-      path.extname = ".css.min";
-    }))
     .pipe(gulp.dest('./dist'));
 });
 
