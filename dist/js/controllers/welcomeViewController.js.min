@@ -1,0 +1,1 @@
+let WelcomeViewController=function(e,n,c){e.createNewDinnerButton.click(()=>{c.showScreen("SELECT_DISH")})};

@@ -20,7 +20,13 @@
     "autoprefixer": "^9.4.5",
     "bootstrap": "^4.2.1",
     "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-csso": "^3.0.1",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.1",
+    "gulp-uglify-es": "^1.0.4",
     "node-sass": "^4.11.0"
   },
   "devDependencies": {}

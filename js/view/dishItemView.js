@@ -1,15 +1,14 @@
-var DishItemView = function (id, dishItem, model) {
-  var dish = model.getDish(id);
-  var heading = $("<h3/>");
-  var image = $("<img/>");
+let DishItemView = function (id, model) {
+  let dish = model.getDish(id);
+  let heading = $("<h3/>").text(dish["name"]);
 
-  heading.text(dish["name"]);
+  let image = $("<img/>")
+    .prop("alt", dish["name"])
+    .prop("src", "images/" + dish["image"]);
 
-  image.prop("alt", dish["name"]);
-  image.prop("src", "images/" + dish["image"]);
-
-  dishItem.append(image);
-  dishItem.append(heading);
+  let dishItem = $("<a/>")
+    .prop("id", "dishItem" + id)
+    .append(image, heading);
 
   this.getDomObj = () => {
     return dishItem;

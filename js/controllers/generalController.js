@@ -1,27 +1,48 @@
-var GeneralController = function () {
-  var views = [];
-  var screens = [];
+let GeneralController = function () {
+  let _oddElements = {}; // elements not in any view
+  let _views = [];
+  let _screens = [];
+  let _currentScreen = "";
 
-  var hideAll = () => {
-    for (var key in views) {
-      views[key].hide();
+  let _hideAll = () => {
+    for (let key in _views) {
+      _views[key].hide();
     }
   }
 
+  this.addOddElement = (name, element) => {
+    _oddElements[name] = element;
+  }
+
+  this.initOddElements = () => {
+    _oddElements.headLine.click(() => {
+      this.showScreen("WELCOME");
+    });
+  }
+
+  this.setCurrentScreen = (name) => {
+    _currentScreen = name;
+  }
+
+  this.getCurrentScreen = () => {
+    return _currentScreen;
+  };
+
   this.addView = (view) => {
-    views.push(view);
+    _views.push(view);
     return this;
   }
 
-  this.addScreen = (name, views) => {
-    screens[name] = views;
+  this.addScreen = (name, viewsToAdd) => {
+    _screens[name] = viewsToAdd;
     return this;
   }
 
   this.showScreen = (name) => {
-    hideAll();
-    for (var key in screens[name]) {
-      screens[name][key].show();
+    _currentScreen = name;
+    _hideAll();
+    for (let key in _screens[name]) {
+      _screens[name][key].show();
     }
   }
 }

@@ -1,47 +1,42 @@
-/**
- * @param {jQuery object} container - references the HTML parent element that
- * contains the view.
- * @param {Object} model - the reference to the Dinner Model
- */
-var DishDetailView = function (container, model) {
-  var numberOfGuests = container.find(".numberOfGuests");
-  var ingredientList = container.find("#listOfIngredients");
-  var prepText = container.find("#prepText");
+let DishDetailView = function (container, model) {
+  let numberOfGuests = container.find(".numberOfGuests").
+    html(model.getNumberOfGuests());;
 
-  numberOfGuests.html(model.getNumberOfGuests());
-  model.currentViewingDish = model.selectedDishes[0]; // for test, should be deleted
+  let viewingDish = model.getCurrentViewingDish();
 
-  var dishTitle = container.find("#dishTitle");
-  var detailImg = container.find("#detailImg");
-  var detailDescription = container.find("#detailDescription");
+  let loadDishInfo = () => {
+    let dishTitle = container.find("#dishTitle").
+      text(viewingDish.name);
 
-  var loadDishInfo = () => {
-    dishTitle.text(model.currentViewingDish.name);
-    detailImg.prop("src", "images/" + model.currentViewingDish.image);
-    detailImg.prop("alt", model.currentViewingDish.name);
-    detailDescription.text(model.currentViewingDish.description);
-    //no data for preparation, so reuse description
-    prepText.text(model.currentViewingDish.description);
+    let detailImg = container.find("#detailImg").
+      prop("src", "images/" + viewingDish.image,
+           "alt", viewingDish.name);
+
+    let detailDescription = container.find("#detailDescription").
+      text(viewingDish.description);
+
+    let prepText = container.find("#prepText").
+      text(viewingDish.description);
   }
 
-  var loadIngredients = () => {
-    var dishPrice = 0;
-    model.currentViewingDish.ingredients.forEach(e => {
-      var volumeSpan = $("<td/>");
-      var nameSpan = $("<td/>");
-      var monetarySpan = $("<td/>");
-      var priceSpan = $("<td/>");
-      var tableItem = $("<tr/>");
+  let loadIngredients = () => {
+    let dishPrice = 0;
+
+    viewingDish.ingredients.forEach(e => {
+      let tableItem = $("<tr/>");
+
+      tableItem.append($("<td/>").text(e.quantity + e.unit),
+                       $("<td/>").text(e.name),
+                       $("<td/>").text("SEK"),
+                       $("<td/>").text(e.price));
+
+      let ingredientList = container.find("#listOfIngredients").
+        append(tableItem);
 
       dishPrice += e.price;
-      tableItem.append(volumeSpan.text(e.quantity + e.unit));
-      tableItem.append(nameSpan.text(e.name));
-      tableItem.append(monetarySpan.text("SEK"));
-      tableItem.append(priceSpan.text(e.price));
-      ingredientList.append(tableItem);
     });
 
-    container.find("#dishPrice").text("SEK    " + dishPrice);
+    container.find("#dishPrice").text("TOTAL: SEK " + dishPrice);
   }
 
   loadDishInfo();
@@ -50,11 +45,20 @@ var DishDetailView = function (container, model) {
   this.backToSearchButton = container.find("#backToSearchButton");
   this.addToMenuButton = container.find("#addToMenuButton");
 
+  this.update = (model, changeDetails) => {
+    if (changeDetails == "viewingDish") {
+      loadDishInfo();
+      loadIngredients();
+    }
+  };
 
   this.hide = () => {
     container.hide();
   };
+
   this.show = () => {
     container.show();
   };
+
+  model.addObserver(this.update);
 }

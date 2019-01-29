@@ -1,68 +1,65 @@
-/**
- * @param {jQuery object} container - references the HTML parent element that
- * contains the view.
- * @param {Object} model - the reference to the Dinner Model
- */
-var DishSearchView = function (container, model) {
-  var dishesTypes = model.getDishesTypes();
-  var searchedDishes;
-  var searchedDishesContainer = container.find("#searchedDishes");
-  var dishTypeSelect = container.find("#dishTypeSelect");
-  var keywordInput = container.find("#keywordInput");
+let DishSearchView = function (container, model) {
+  let dishTypeSelect = container.find("#dishTypeSelect").html("");
+  let keywordInput = container.find("#keywordInput");
 
-  var titalizeWords = (words) => {
+  let titalizeWords = (words) => {
     return words
       .split(' ')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   };
 
-  var listDishesTypes = () => {
-    dishTypeSelect.html("");
-    var option = $("<option/>");
-    option.text("All");
-    option.prop("value", ""); // set it to none so by default can get all dishes
+  let listDishesTypes = () => {
+    let option = $("<option/>").text("All").prop("value", "");
     dishTypeSelect.append(option);
 
-    dishesTypes.forEach((type) => {
-      var option = $("<option/>");
-      option.text(titalizeWords(type));
-      option.prop("value", type);
+    model.getDishesTypes().forEach((type) => {
+      let option = $("<option/>").text(titalizeWords(type)).prop("value", type);
       dishTypeSelect.append(option);
     });
-  }
+  };
 
-  listDishesTypes();
+  let showSearchedDishes = () => {
+    let searchedDishesContainer = container.find("#searchedDishes").html("");
+
+    model.getSearchedDishes().forEach((dish) => {
+      let dishItemView = new DishItemView(dish.id, model);
+      searchedDishesContainer.append(dishItemView.getDomObj());
+    });
+  };
 
   this.searchDishButton = container.find("#searchDishButton");
 
-  this.updateFilters = () => {
-    model.setTypeFilter(dishTypeSelect.prop("value"));
-    model.setKeywordFilter(keywordInput.prop("value"));
+  this.getSearchCondition = () => {
+    return [dishTypeSelect.prop("value"),
+      keywordInput.prop("value")
+    ];
   };
 
-  this.operateSearch = () => {
-    this.updateFilters();
-    //clear all dish in DOM before search
-    searchedDishesContainer.html("");
-    searchedDishes = model.getAllDishes(model.getTypeFilter(), model.getKeywordFilter());
-    //create views for each items
-    searchedDishes.forEach((dish) => {
-      var tmpDishItem = $("<a/>");
-      tmpDishItem.prop("id", dish.id);
-      var dishItemView = new DishItemView(dish.id, tmpDishItem, model);
-      searchedDishesContainer.append(dishItemView.getDomObj());
-    });
-  }
+  this.setSearchCondition = (type, kwd) => {
+    for (let i = 0; i < dishTypeSelect.children().length; i++) {
+      if (dishTypeSelect.children()[i].value == type)
+        dishTypeSelect[0].selectedIndex = i;
+    }
+
+    keywordInput.prop("value", kwd);
+  };
+
+  this.update = (model, changeDetails) => {
+    if (changeDetails === "searchedDishes") {
+      showSearchedDishes();
+    }
+  };
 
   this.hide = () => {
     container.hide();
   };
-  this.show=()=>{
+
+  this.show = () => {
     container.show();
   };
 
-
-  this.operateSearch();
-
+  listDishesTypes();
+  showSearchedDishes();
+  model.addObserver(this.update);
 }
