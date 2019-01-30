@@ -1,3 +1,4 @@
+launch.json
 #### NPM ignore
 node_modules/
 package-lock.json
