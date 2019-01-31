@@ -1,6 +1,7 @@
 let DishSearchView = function (container, model) {
-  let dishTypeSelect = container.find("#dishTypeSelect").html("");
-  let keywordInput = container.find("#keywordInput");
+  this.dishTypeSelect = container.find("#dishTypeSelect").html("");
+  this.keywordInput = container.find("#keywordInput");
+  this.searchDishButton = container.find("#searchDishButton");
 
   let titalizeWords = (words) => {
     return words
@@ -11,11 +12,11 @@ let DishSearchView = function (container, model) {
 
   let listDishesTypes = () => {
     let option = $("<option/>").text("All").prop("value", "");
-    dishTypeSelect.append(option);
+    this.dishTypeSelect.append(option);
 
     model.getDishesTypes().forEach((type) => {
       let option = $("<option/>").text(titalizeWords(type)).prop("value", type);
-      dishTypeSelect.append(option);
+      this.dishTypeSelect.append(option);
     });
   };
 
@@ -28,21 +29,20 @@ let DishSearchView = function (container, model) {
     });
   };
 
-  this.searchDishButton = container.find("#searchDishButton");
 
   this.getSearchCondition = () => {
-    return [dishTypeSelect.prop("value"),
-      keywordInput.prop("value")
+    return [this.dishTypeSelect.prop("value"),
+      this.keywordInput.prop("value")
     ];
   };
 
   this.setSearchCondition = (type, kwd) => {
-    for (let i = 0; i < dishTypeSelect.children().length; i++) {
-      if (dishTypeSelect.children()[i].value == type)
-        dishTypeSelect[0].selectedIndex = i;
+    for (let i = 0; i < this.dishTypeSelect.children().length; i++) {
+      if (this.dishTypeSelect.children()[i].value == type)
+        this.dishTypeSelect[0].selectedIndex = i;
     }
 
-    keywordInput.prop("value", kwd);
+    this.keywordInput.prop("value", kwd);
   };
 
   this.update = (model, changeDetails) => {
