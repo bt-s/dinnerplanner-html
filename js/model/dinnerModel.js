@@ -29,19 +29,23 @@ let DinnerModel = function () {
     return this.numberOfGuests;
   }
 
-  let selectedDishes = [];
-
+  let selectedDishIDs = [];
   this.getSelectedDishes = () => {
+    let selectedDishes = [];
+    selectedDishIDs.forEach((id) => {
+      selectedDishes.push(this.getDish(id));
+    });
     return selectedDishes;
   };
   this.clearSelectedDishes = () => {
-    selectedDishes = [];
+    selectedDishIDs = [];
   }
 
   // Returns the dish that is(/are) on the (selected) menu for type
   this.getSelectedDish = (type) => {
     let dishType;
-    selectedDishes.forEach((dish) => {
+    selectedDishIDs.forEach((id) => {
+      let dish = this.getDish(id);
       if (dish["type"] === type) {
         dishType = dish;
       }
@@ -62,7 +66,7 @@ let DinnerModel = function () {
 
   // Returns all the dishes on the (selected) menu.
   this.getFullMenu = () => {
-    return selectedDishes;
+    return this.getSelectedDishes();
   }
 
   // Returns all types of dishes
@@ -79,8 +83,8 @@ let DinnerModel = function () {
   // Returns all ingredients for all the dishes on the (selected) menu.
   this.getAllIngredients = () => {
     let ingredients = [];
-
-    selectedDishes.forEach((dish) => {
+    selectedDishIDs.forEach((id) => {
+      let dish = this.getDish(id);
       dish["ingredients"].forEach((ingredient) => {
         ingredients.push(ingredient);
       });
@@ -106,7 +110,8 @@ let DinnerModel = function () {
   this.getTotalMenuPrice = () => {
     let totalPrice = 0;
 
-    selectedDishes.forEach((dish) => {
+    selectedDishIDs.forEach((id) => {
+      let dish = this.getDish(id);
       dish["ingredients"].forEach((ingredient) => {
         totalPrice += ingredient["price"];
       });
@@ -119,32 +124,29 @@ let DinnerModel = function () {
   // already exists on the (selected) menu it is removed from the (selected)
   // menu and the new one is added.
   this.addDishToMenu = (id) => {
-    let dishToAdd;
-
     dishes.forEach((dish) => {
-      if (dish["id"] == id) {
-        dishToAdd = dish;
+      if (dish["id"] != id)
+        return;
+      let replaced = false;
+      for (let i = 0; i < selectedDishIDs.length; i++) {
+        if (this.getDish(selectedDishIDs[i]).type === this.getDish(id).type) {
+          selectedDishIDs[i] = id;
+          replaced = true;
+        }
       }
+      if (!replaced) {
+        selectedDishIDs.push(id);
+      }
+      notifyObservers("selectedDishes");
+
     });
-
-    if (!dishToAdd)
-      return false;
-
-    for (let i = 0; i < selectedDishes.length; i++) {
-      if (selectedDishes[i].type === this.getDish(id).type) {
-        selectedDishes.splice(i, 1);
-      }
-    }
-
-    selectedDishes.push(dishToAdd);
-    notifyObservers("selectedDishes");
   }
 
   // Removes dish from (selected) menu
   this.removeDishFromMenu = (id) => {
-    for (let i = 0; i < selectedDishes.length; i++) {
-      if (selectedDishes[i]["id"] === id) {
-        selectedDishes.splice(i, 1);
+    for (let i = 0; i < selectedDishIDs.length; i++) {
+      if (selectedDishIDs[i] == id) {
+        selectedDishIDs.splice(i, 1);
       }
     }
   }
