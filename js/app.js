@@ -1,4 +1,7 @@
 $(function () {
+  // Show the whole page when loading the main script
+  document.querySelector("body").hidden = false;
+
   // We instantiate our model at the beginning
   const model = new DinnerModel();
 
