@@ -15,23 +15,16 @@ $(function () {
   loadDataFromLocal();
   injectDataIntoModel();
   // We instantiate our general controller
-  // @ts-ignore
   const generalController = new GeneralController();
 
   // Create the instances of our view
-  // @ts-ignore
+
   const welcomeView = new WelcomeView($("#welcomeView"), model);
-  // @ts-ignore
   const sideBarView = new SideBarView($("#sideBarView"), model);
-  // @ts-ignore
   const dishSearchView = new DishSearchView($("#dishSearchView"), model);
-  // @ts-ignore
   const dishDetailView = new DishDetailView($("#dishDetailView"), model);
-  // @ts-ignore
   const dinnerOverviewView = new DinnerOverviewView($("#dinnerOverviewView"), model);
-  // @ts-ignore
   const titleBarView = new TitleBarView($("#titleBarView"), model);
-  // @ts-ignore
   const printView = new PrintView($("#printView"), model);
 
   // Add all views to the general controller
@@ -45,33 +38,19 @@ $(function () {
     .addView(printView);
 
   // Instantiate the controllers
-  // @ts-ignore
   const welcomeViewController =
-    // @ts-ignore
     new WelcomeViewController(welcomeView, model, generalController);
-  // @ts-ignore
   const sideBarViewController =
-    // @ts-ignore
     new SideBarViewController(sideBarView, model, generalController);
-  // @ts-ignore
   const dishSearchViewController =
-    // @ts-ignore
     new DishSearchViewController(dishSearchView, model, generalController);
-  // @ts-ignore
   const dishDetailsViewController =
-    // @ts-ignore
     new DishDetailsViewController(dishDetailView, model, generalController);
-  // @ts-ignore
   const dinnerOverviewViewController =
-    // @ts-ignore
     new DinnerOverviewViewController(dinnerOverviewView, model, generalController);
-  // @ts-ignore
   const titleBarViewController =
-    // @ts-ignore
     new TitleBarViewController(titleBarView, model, generalController);
-  // @ts-ignore
   const dishItemViewController =
-    // @ts-ignore
     new DishItemViewController($("#searchedDishes"), model, generalController);
 
   const SCREENS = [
@@ -109,15 +88,11 @@ $(function () {
     }
 
     if (document.cookie.length === 0) {
-      // @ts-ignore
       for (key in dataToStore) {
-        // @ts-ignore
         dataToStore[key] = localStorage.getItem(key);
       }
     } else {
-      // @ts-ignore
       for (key in dataToStore) {
-        // @ts-ignore
         dataToStore[key] = getCookie(key);
       }
     }
@@ -125,13 +100,10 @@ $(function () {
 
   function injectDataIntoModel() {
     if (dataToStore['selectedDishes'] !== null) {
-      // @ts-ignore
       dataToStore['selectedDishes'].split(',').forEach((id) => {
         model.addDishToMenu(id);
       });
       model.setNumberOfGuests(Number(dataToStore['numberOfGuests']));
-      // @ts-ignore
-
       model.setSearchCondition(...dataToStore["searchCondition"].split(','));
 
     }
@@ -151,7 +123,6 @@ $(function () {
 
   updateViews();
 
-  // @ts-ignore
   window.addEventListener("unload", function (event) {
     let currentScreen = generalController.getCurrentScreen();
     let numberOfGuests = model.getNumberOfGuests();
@@ -178,9 +149,7 @@ $(function () {
     localStorage.setItem('selectedDishes', slStr);
     let searchCondStr = searchCond[0] + ',' + searchCond[1];
     localStorage.setItem('searchCondition', searchCondStr);
-    // @ts-ignore
     for (key in dataToStore) {
-      // @ts-ignore
       dataToStore[key] = localStorage.getItem(key);
     }
   });

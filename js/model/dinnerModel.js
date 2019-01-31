@@ -2,7 +2,6 @@
 let DinnerModel = function () {
   const _this = this;
 
-  // @ts-ignore
   const dishesData = new DishesData();
   const dishes = dishesData.dishes;
   Object.freeze(dishes);
