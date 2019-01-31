@@ -1,5 +1,5 @@
 launch.json
-.vscode
+.vscode/
 #### NPM ignore
 node_modules/
 package-lock.json
