@@ -1,11 +1,24 @@
 $(function () {
+  // read stored data from local, use var to elevate
+  let dataToStore = {
+    "currentScreen": "",
+    "numberOfGuests": 0,
+    "selectedDishes": [],
+    "searchCondition": []
+  };
+
+  // Show the whole page when loading the main script
+  document.querySelector("body").hidden = false;
+
   // We instantiate our model at the beginning
   const model = new DinnerModel();
-
+  loadDataFromLocal();
+  injectDataIntoModel();
   // We instantiate our general controller
   const generalController = new GeneralController();
 
   // Create the instances of our view
+
   const welcomeView = new WelcomeView($("#welcomeView"), model);
   const sideBarView = new SideBarView($("#sideBarView"), model);
   const dishSearchView = new DishSearchView($("#dishSearchView"), model);
@@ -60,15 +73,10 @@ $(function () {
     .addScreen("DINNER_OVERVIEW", [dinnerOverviewView, titleBarView])
     .addScreen("DINNER_PRINTOUT", [printView, titleBarView]);
 
-  // read stored data from local
-  let dataToStore = {
-    "currentScreen": "",
-    "numberOfGuests": 0,
-    "selectedDishes": [],
-    "searchCondition": []
-  };
 
-  let storeCookies = () => {
+
+  // had to use function in order to elevate its scope
+  function loadDataFromLocal() {
     let getCookie = (cname) => {
       let name = cname + "=";
       let ca = document.cookie.split(';');
@@ -90,27 +98,32 @@ $(function () {
     }
   }
 
-  function loadDataFromLocal() {
+  function injectDataIntoModel() {
     if (dataToStore['selectedDishes'] !== null) {
       dataToStore['selectedDishes'].split(',').forEach((id) => {
         model.addDishToMenu(id);
       });
       model.setNumberOfGuests(Number(dataToStore['numberOfGuests']));
-      dishSearchView.setSearchCondition(...dataToStore["searchCondition"].split(','));
+      model.setSearchCondition(...dataToStore["searchCondition"].split(','));
+
     }
-    // if the name is illegal, set to Welcome page
-    generalController.setCurrentScreen(
-      SCREENS.indexOf(dataToStore['currentScreen']) === -1 ?
-      "WELCOME" : dataToStore['currentScreen']
-    );
-    generalController.showScreen(generalController.getCurrentScreen());
   }
 
-  storeCookies();
-  loadDataFromLocal();
+  function updateViews() {
+    dishSearchView.setSearchCondition(...dataToStore["searchCondition"].split(','));
+    if (dataToStore['currentScreen'] !== null) {
+      // if the name is illegal, set to Welcome page
+      generalController.setCurrentScreen(
+        SCREENS.indexOf(dataToStore['currentScreen']) === -1 ?
+        "WELCOME" : dataToStore['currentScreen']
+      );
+      generalController.showScreen(generalController.getCurrentScreen());
+    }
+  }
 
-  // Save current screen name on machine
-  window.addEventListener("unload", function(event) {
+  updateViews();
+
+  window.addEventListener("unload", function (event) {
     let currentScreen = generalController.getCurrentScreen();
     let numberOfGuests = model.getNumberOfGuests();
     let searchCond = dishSearchView.getSearchCondition();

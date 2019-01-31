@@ -34,12 +34,16 @@ let DinnerModel = function () {
   this.getSelectedDishes = () => {
     return selectedDishes;
   };
+  this.clearSelectedDishes = () => {
+    selectedDishes = [];
+  }
 
   // Returns the dish that is(/are) on the (selected) menu for type
   this.getSelectedDish = (type) => {
+    let dishType;
     selectedDishes.forEach((dish) => {
       if (dish["type"] === type) {
-        let dishType = dish;
+        dishType = dish;
       }
     });
     return dishType;
@@ -63,7 +67,7 @@ let DinnerModel = function () {
 
   // Returns all types of dishes
   this.getDishesTypes = () => {
-    dishesTypes = [];
+    let dishesTypes = [];
 
     dishes.forEach((dish) => {
       dishesTypes.push(dish["type"]);
@@ -174,6 +178,16 @@ let DinnerModel = function () {
     });
   }
 
+  let searchCondition = ["", ""]; // keyword, type
+  this.getSearchCondition = () => {
+    return searchCondition;
+  }
+  this.setSearchCondition = (type, kwd) => {
+    searchCondition[0] = type;
+    searchCondition[1] = kwd;
+    notifyObservers("searchCondition");
+  }
+
   let searchedDishes = dishes;
   this.getSearchedDishes = () => {
     return searchedDishes;
@@ -186,7 +200,7 @@ let DinnerModel = function () {
 
   // Function that returns a dish of specific ID
   this.getDish = (id) => {
-    for (key in dishes) {
+    for (const key in dishes) {
       if (dishes[key].id == id) {
         return dishes[key];
       }
