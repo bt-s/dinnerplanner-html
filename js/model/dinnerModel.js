@@ -35,6 +35,9 @@ let DinnerModel = function () {
   this.getSelectedDishes = () => {
     return selectedDishes;
   };
+  this.clearSelectedDishes = () => {
+    selectedDishes = [];
+  }
 
   // Returns the dish that is(/are) on the (selected) menu for type
   this.getSelectedDish = (type) => {
@@ -174,6 +177,16 @@ let DinnerModel = function () {
 
       return found;
     });
+  }
+
+  let searchCondition = ["", ""]; // keyword, type
+  this.getSearchCondition = () => {
+    return searchCondition;
+  }
+  this.setSearchCondition = (type, kwd) => {
+    searchCondition[0] = type;
+    searchCondition[1] = kwd;
+    notifyObservers("searchCondition");
   }
 
   let searchedDishes = dishes;

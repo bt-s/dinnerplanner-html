@@ -49,6 +49,9 @@ let DishSearchView = function (container, model) {
     if (changeDetails === "searchedDishes") {
       showSearchedDishes();
     }
+    if (changeDetails == "searchCondition") {
+      this.setSearchCondition(...model.getSearchCondition());
+    }
   };
 
   this.hide = () => {
@@ -60,6 +63,7 @@ let DishSearchView = function (container, model) {
   };
 
   listDishesTypes();
+  model.operateSearch(...model.getSearchCondition());
   showSearchedDishes();
   model.addObserver(this.update);
 }
