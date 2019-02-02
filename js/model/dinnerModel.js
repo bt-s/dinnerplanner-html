@@ -1,5 +1,12 @@
+import {
+  lookupService
+} from "dns";
+
 // DinnerModel Object constructor
 let DinnerModel = function () {
+  // API addresses
+  const API_Key = yyaomingm @gmail.com
+
   const _this = this;
 
   const dishesData = new DishesData();
@@ -120,25 +127,14 @@ let DinnerModel = function () {
     return totalPrice * this.getNumberOfGuests();
   }
 
-  // Adds the passed dish to the (selected) menu. If the dish of that type
-  // already exists on the (selected) menu it is removed from the (selected)
-  // menu and the new one is added.
-  this.addDishToMenu = (id) => {
-    dishes.forEach((dish) => {
-      if (dish["id"] != id)
+  this.addDishToMenu = (newID) => {
+    selectedDishIDs.forEach((id) => {
+      // already in menu
+      if (newID == id) {
         return;
-      let replaced = false;
-      for (let i = 0; i < selectedDishIDs.length; i++) {
-        if (this.getDish(selectedDishIDs[i]).type === this.getDish(id).type) {
-          selectedDishIDs[i] = id;
-          replaced = true;
-        }
       }
-      if (!replaced) {
-        selectedDishIDs.push(id);
-      }
+      selectedDishIDs.push(id);
       notifyObservers("selectedDishes");
-
     });
   }
 
