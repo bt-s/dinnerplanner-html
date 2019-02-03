@@ -1,31 +1,31 @@
 $(function () {
   // read stored data from local, use var to elevate
   let dataToStore = {
-    "currentScreen": "",
-    "numberOfGuests": 0,
-    "selectedDishes": [],
-    "searchCondition": []
-  };
-
+    'currentScreen': '',
+    'numberOfGuests': 0,
+    'selectedDishes': [],
+    'searchCondition': []
+  }
   // Show the whole page when loading the main script
-  document.querySelector("body").hidden = false;
+  document.querySelector('body').hidden = false;
 
   // We instantiate our model at the beginning
   const model = new DinnerModel();
   loadDataFromLocal();
   injectDataIntoModel();
+
   // We instantiate our general controller
   const generalController = new GeneralController();
 
   // Create the instances of our view
 
-  const welcomeView = new WelcomeView($("#welcomeView"), model);
-  const sideBarView = new SideBarView($("#sideBarView"), model);
-  const dishSearchView = new DishSearchView($("#dishSearchView"), model);
-  const dishDetailView = new DishDetailView($("#dishDetailView"), model);
-  const dinnerOverviewView = new DinnerOverviewView($("#dinnerOverviewView"), model);
-  const titleBarView = new TitleBarView($("#titleBarView"), model);
-  const printView = new PrintView($("#printView"), model);
+  const welcomeView = new WelcomeView($('#welcomeView'), model);
+  const sideBarView = new SideBarView($('#sideBarView'), model);
+  const dishSearchView = new DishSearchView($('#dishSearchView'), model);
+  const dishDetailView = new DishDetailView($('#dishDetailView'), model);
+  const dinnerOverviewView = new DinnerOverviewView($('#dinnerOverviewView'), model);
+  const titleBarView = new TitleBarView($('#titleBarView'), model);
+  const printView = new PrintView($('#printView'), model);
 
   // Add all views to the general controller
   generalController
@@ -51,48 +51,46 @@ $(function () {
   const titleBarViewController =
     new TitleBarViewController(titleBarView, model, generalController);
   const dishItemViewController =
-    new DishItemViewController($("#searchedDishes"), model, generalController);
+    new DishItemViewController($('#searchedDishes'), model, generalController);
 
   const SCREENS = [
-    "WELCOME",
-    "SELECT_DISH",
-    "DISH_DETAILS",
-    "DINNER_OVERVIEW",
-    "DINNER_PRINTOUT"
+    'WELCOME',
+    'SELECT_DISH',
+    'DISH_DETAILS',
+    'DINNER_OVERVIEW',
+    'DINNER_PRINTOUT'
   ];
 
   // Register && Initialize Odd Elements
-  generalController.addOddElement("headLine", $("#headLine"));
+  generalController.addOddElement('headLine', $('#headLine'));
   generalController.initOddElements();
 
   // Instantiate all screens
   generalController
-    .addScreen("WELCOME", [welcomeView])
-    .addScreen("SELECT_DISH", [sideBarView, dishSearchView])
-    .addScreen("DISH_DETAILS", [sideBarView, dishDetailView])
-    .addScreen("DINNER_OVERVIEW", [dinnerOverviewView, titleBarView])
-    .addScreen("DINNER_PRINTOUT", [printView, titleBarView]);
-
-
+    .addScreen('WELCOME', [welcomeView])
+    .addScreen('SELECT_DISH', [sideBarView, dishSearchView])
+    .addScreen('DISH_DETAILS', [sideBarView, dishDetailView])
+    .addScreen('DINNER_OVERVIEW', [dinnerOverviewView, titleBarView])
+    .addScreen('DINNER_PRINTOUT', [printView, titleBarView]);
 
   // had to use function in order to elevate its scope
   function loadDataFromLocal() {
     let getCookie = (cname) => {
-      let name = cname + "=";
+      let name = cname + '=';
       let ca = document.cookie.split(';');
       for (let i = 0; i < ca.length; i++) {
         let c = ca[i].trim();
-        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
       }
-      return "";
+      return '';
     }
 
     if (document.cookie.length === 0) {
-      for (key in dataToStore) {
+      for (let key in dataToStore) {
         dataToStore[key] = localStorage.getItem(key);
       }
     } else {
-      for (key in dataToStore) {
+      for (let key in dataToStore) {
         dataToStore[key] = getCookie(key);
       }
     }
@@ -101,21 +99,22 @@ $(function () {
   function injectDataIntoModel() {
     if (dataToStore['selectedDishes'] !== null) {
       dataToStore['selectedDishes'].split(',').forEach((id) => {
-        model.addDishToMenu(id);
+        if (id !== '') {
+          model.addDishToMenu(id);
+        }
       });
       model.setNumberOfGuests(Number(dataToStore['numberOfGuests']));
-      model.setSearchCondition(...dataToStore["searchCondition"].split(','));
-
+      model.setSearchCondition(...dataToStore['searchCondition'].split(','));
     }
   }
 
   function updateViews() {
-    dishSearchView.setSearchCondition(...dataToStore["searchCondition"].split(','));
+    dishSearchView.setSearchCondition(...dataToStore['searchCondition'].split(','));
     if (dataToStore['currentScreen'] !== null) {
       // if the name is illegal, set to Welcome page
       generalController.setCurrentScreen(
         SCREENS.indexOf(dataToStore['currentScreen']) === -1 ?
-        "WELCOME" : dataToStore['currentScreen']
+        'WELCOME' : dataToStore['currentScreen']
       );
       generalController.showScreen(generalController.getCurrentScreen());
     }
@@ -123,13 +122,13 @@ $(function () {
 
   updateViews();
 
-  window.addEventListener("unload", function (event) {
+  window.addEventListener('unload', function (event) {
     let currentScreen = generalController.getCurrentScreen();
     let numberOfGuests = model.getNumberOfGuests();
     let searchCond = dishSearchView.getSearchCondition();
 
     document.cookie = 'currentScreen=' + currentScreen;
-    document.cookie = "numberOfGuests=" + numberOfGuests;
+    document.cookie = 'numberOfGuests=' + numberOfGuests;
 
     let sl = [];
     let slStr = '';
@@ -139,8 +138,8 @@ $(function () {
     });
     slStr = slStr.substr(1);
 
-    document.cookie = "selectedDishes=" + sl;
-    document.cookie = "searchCondition=" + searchCond;
+    document.cookie = 'selectedDishes=' + sl;
+    document.cookie = 'searchCondition=' + searchCond;
 
     // Chrome doesn't support cookies for local .html files, so the followiung
     // is used for Chrome
@@ -149,8 +148,8 @@ $(function () {
     localStorage.setItem('selectedDishes', slStr);
     let searchCondStr = searchCond[0] + ',' + searchCond[1];
     localStorage.setItem('searchCondition', searchCondStr);
-    for (key in dataToStore) {
+    for (let key in dataToStore) {
       dataToStore[key] = localStorage.getItem(key);
     }
   });
-});
+})

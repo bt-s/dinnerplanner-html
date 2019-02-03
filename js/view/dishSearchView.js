@@ -21,8 +21,10 @@ let DishSearchView = function (container, model) {
   };
 
   let showSearchedDishes = () => {
-    let searchedDishesContainer = container.find("#searchedDishes").html("");
+    console.log('show searched dishes');
 
+    let searchedDishesContainer = container.find("#searchedDishes").html("");
+    console.log(model.getSearchedDishes())
     model.getSearchedDishes().forEach((dish) => {
       let dishItemView = new DishItemView(dish.id, model);
       searchedDishesContainer.append(dishItemView.getDomObj());
@@ -64,6 +66,5 @@ let DishSearchView = function (container, model) {
 
   listDishesTypes();
   model.operateSearch(...model.getSearchCondition());
-  showSearchedDishes();
   model.addObserver(this.update);
 }

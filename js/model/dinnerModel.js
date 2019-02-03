@@ -1,148 +1,164 @@
-import {
-  lookupService
-} from "dns";
-
 // DinnerModel Object constructor
 let DinnerModel = function () {
   // API addresses
-  const API_Key = yyaomingm @gmail.com
+  const API_Key = '3d2a031b4cmsh5cd4e7b939ada54p19f679jsn9a775627d767'
+  const API_Search_Recipe = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search'
 
-  const _this = this;
+  const _this = this
+  const dishesData = new DishesData()
+  const dishes = dishesData.dishes
+  Object.freeze(dishes)
 
-  const dishesData = new DishesData();
-  const dishes = dishesData.dishes;
-  Object.freeze(dishes);
+  this.numberOfGuests = 1
 
-  let observers = [];
+  let searchedDishes = []
+  let dishTypes = [
+    'main course',
+    'side dish',
+    'dessert',
+    'appetizer',
+    'salad',
+    'bread',
+    'breakfast',
+    'soup',
+    'beverage',
+    'sauce',
+    'drink'
+  ]
+  let imgBaseUrl = '';
+
+  let selectedDishIDs = []
+  let observers = []
+  let searchCondition = ['', ''] // keyword, type
 
   this.addObserver = (observer) => {
-    observers.push(observer);
+    observers.push(observer)
   }
 
   let notifyObservers = (details) => {
     for (let i = 0; i < observers.length; i++) {
-      observers[i](_this, details);
+      observers[i](_this, details)
     }
   }
 
-  this.numberOfGuests = 1;
+  this.getImgBaseUrl = () => {
+    return imgBaseUrl
+  }
 
   this.setNumberOfGuests = (num) => {
-    this.numberOfGuests = num;
-    notifyObservers("numberOfGuests");
+    this.numberOfGuests = num
+    notifyObservers('numberOfGuests')
   }
 
   this.getNumberOfGuests = () => {
-    return this.numberOfGuests;
+    return this.numberOfGuests
   }
 
-  let selectedDishIDs = [];
   this.getSelectedDishes = () => {
-    let selectedDishes = [];
+    let selectedDishes = []
     selectedDishIDs.forEach((id) => {
-      selectedDishes.push(this.getDish(id));
-    });
-    return selectedDishes;
+      selectedDishes.push(this.getDish(id))
+    })
+    return selectedDishes
   };
   this.clearSelectedDishes = () => {
-    selectedDishIDs = [];
+    selectedDishIDs = []
   }
 
   // Returns the dish that is(/are) on the (selected) menu for type
   this.getSelectedDish = (type) => {
-    let dishType;
+    let dishType
     selectedDishIDs.forEach((id) => {
-      let dish = this.getDish(id);
-      if (dish["type"] === type) {
-        dishType = dish;
+      let dish = this.getDish(id)
+      if (dish['type'] === type) {
+        dishType = dish
       }
-    });
-    return dishType;
+    })
+    return dishType
   }
 
-  let currentViewingDish = dishes[0];
+  let currentViewingDish = dishes[0]
 
   this.getCurrentViewingDish = () => {
-    return currentViewingDish;
+    return currentViewingDish
   };
 
   this.setCurrentViewingDish = (id) => {
-    currentViewingDish = this.getDish(id);
-    notifyObservers("viewingDish");
+    currentViewingDish = this.getDish(id)
+    notifyObservers('viewingDish')
   };
 
   // Returns all the dishes on the (selected) menu.
   this.getFullMenu = () => {
-    return this.getSelectedDishes();
+    return this.getSelectedDishes()
   }
 
   // Returns all types of dishes
   this.getDishesTypes = () => {
-    let dishesTypes = [];
+    let dishesTypes = []
 
     dishes.forEach((dish) => {
-      dishesTypes.push(dish["type"]);
-    });
+      dishesTypes.push(dish['type'])
+    })
 
-    return [...new Set(dishesTypes)];
+    return [...new Set(dishesTypes)]
   }
 
   // Returns all ingredients for all the dishes on the (selected) menu.
   this.getAllIngredients = () => {
-    let ingredients = [];
+    let ingredients = []
     selectedDishIDs.forEach((id) => {
-      let dish = this.getDish(id);
-      dish["ingredients"].forEach((ingredient) => {
-        ingredients.push(ingredient);
-      });
-    });
+      let dish = this.getDish(id)
+      dish['ingredients'].forEach((ingredient) => {
+        ingredients.push(ingredient)
+      })
+    })
 
-    return ingredients;
+    return ingredients
   }
 
   // Returns the price of the selected dish
   // multiplied by the number of guests
   this.getDishPrice = (dish) => {
-    let dishPrice = 0;
+    let dishPrice = 0
 
-    dish["ingredients"].forEach((ingredient) => {
-      dishPrice += ingredient["price"];
-    });
+    dish['ingredients'].forEach((ingredient) => {
+      dishPrice += ingredient['price']
+    })
 
-    return dishPrice * this.getNumberOfGuests();
+    return dishPrice * this.getNumberOfGuests()
   }
 
   // Returns the total price of the (selected) menu (all the ingredients
   // multiplied by number of guests).
   this.getTotalMenuPrice = () => {
-    let totalPrice = 0;
+    let totalPrice = 0
 
     selectedDishIDs.forEach((id) => {
-      let dish = this.getDish(id);
-      dish["ingredients"].forEach((ingredient) => {
-        totalPrice += ingredient["price"];
-      });
-    });
+      let dish = this.getDish(id)
+      dish['ingredients'].forEach((ingredient) => {
+        totalPrice += ingredient['price']
+      })
+    })
 
-    return totalPrice * this.getNumberOfGuests();
+    return totalPrice * this.getNumberOfGuests()
   }
 
   this.addDishToMenu = (newID) => {
-    selectedDishIDs.forEach((id) => {
-      // already in menu
-      if (newID == id) {
-        return;
+    for (let i = 0; i < selectedDishIDs.length; i++) {
+      if (newID === selectedDishIDs[i]) {
+        return
       }
-      selectedDishIDs.push(id);
-      notifyObservers("selectedDishes");
-    });
+    }
+    selectedDishIDs.push(newID)
+    notifyObservers('selectedDishes')
   }
 
   // Removes dish from (selected) menu
   this.removeDishFromMenu = (id) => {
     for (let i = 0; i < selectedDishIDs.length; i++) {
-      if (selectedDishIDs[i] == id) {
-        selectedDishIDs.splice(i, 1);
+      if (selectedDishIDs[i] === id) {
+        selectedDishIDs.splice(i, 1)
       }
     }
   }
@@ -152,63 +168,67 @@ let DinnerModel = function () {
   // the dish by name or ingredient (use for search). If you don't pass any
   // filter all the dishes of the specified type will be returned. If you
   // don't pass any type, all the dishes will be returned.
-  this.getAllDishes = (type, filter) => {
-    return dishes.filter((dish) => {
-      let found = true;
-
-      if (filter) {
-        found = false;
-        dish.ingredients.forEach((ingredient) => {
-          if (ingredient.name.indexOf(filter) != -1) {
-            found = true;
-          }
-        });
-
-        if (dish.name.indexOf(filter) != -1) {
-          found = true;
+  this.getAllDishes = (type, kwd) => {
+    let params = new URLSearchParams();
+    params.append('number', 20);
+    type ? params.append('type', type) : null;
+    kwd ? params.append('query', kwd) : null;
+    let url = API_Search_Recipe + '?' + params.toString();
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+          'X-Mashape-Key': API_Key
         }
-      }
-
-      if (type)
-        return dish.type == type && found;
-
-      return found;
-    });
+      }).then(res => res.json())
+      .then((json) => {
+        console.log(json);
+        searchedDishes = json.results;
+        imgBaseUrl = json.baseUri;
+      });
   }
 
-  let searchCondition = ["", ""]; // keyword, type
   this.getSearchCondition = () => {
-    return searchCondition;
+    return searchCondition
   }
   this.setSearchCondition = (type, kwd) => {
-    searchCondition[0] = type;
-    searchCondition[1] = kwd;
-    notifyObservers("searchCondition");
+    searchCondition[0] = type
+    searchCondition[1] = kwd
+    notifyObservers('searchCondition')
   }
 
-  let searchedDishes = dishes;
   this.getSearchedDishes = () => {
     return searchedDishes;
   };
 
   this.operateSearch = (type, keyword) => {
-    searchedDishes = this.getAllDishes(type, keyword);
-    notifyObservers("searchedDishes");
+    this.getAllDishes(type, keyword)
+      .then(() => {
+        console.log('search operated');
+
+        notifyObservers('searchedDishes')
+      })
   };
 
+  this.getLocalDish = (id) => {
+    for (let key in searchedDishes) {
+      if (searchedDishes[key].id === id) {
+        return searchedDishes[key]
+      }
+    }
+  }
   // Function that returns a dish of specific ID
   this.getDish = (id) => {
-    for (const key in dishes) {
+    for (let key in dishes) {
       if (dishes[key].id == id) {
-        return dishes[key];
+        return dishes[key]
       }
     }
   }
 
   // Welcome text
-  this.welcomeText = "\
+  this.welcomeText = '\
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do \
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim \
           ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut  \
-          aliquip ex ea commodo consequat."
+          aliquip ex ea commodo consequat.'
 }
