@@ -4,8 +4,6 @@ let DishDetailsViewController = function (view, model, generalController) {
   });
 
   view.addToMenuButton.click((event) => {
-    console.log('add btn click');
-
     model.addDishToMenu(model.getCurrentViewingDish().id);
   });
 }
