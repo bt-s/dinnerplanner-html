@@ -11,8 +11,6 @@ let SideBarView = function (container, model) {
 
     model.getSelectedDishes().forEach((dish) => {
       let dishSpan = $("<span/>").text(model.getDishName(dish));
-      console.log('/////', dish.id);
-
       let priceSpan = $("<span/>").text(model.getDishPrice(dish));
       let listItem = $("<li/>")
         .append(dishSpan)
@@ -44,8 +42,6 @@ let SideBarView = function (container, model) {
   this.show = () => {
     container.show();
   };
-
-  // loadSelectedDishes();
 
   model.addObserver(this.update);
 }
