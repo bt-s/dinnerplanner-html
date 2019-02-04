@@ -1,23 +1,18 @@
 $(function () {
-  // read stored data from local, use var to elevate
   let dataToStore = {
     'currentScreen': '',
     'numberOfGuests': 0,
     'selectedDishes': [],
     'searchCondition': []
   }
-  // Show the whole page when loading the main script
+
   document.querySelector('body').hidden = false;
 
-  // We instantiate our model at the beginning
   const model = new DinnerModel();
   loadDataFromLocal();
   injectDataIntoModel();
 
-  // We instantiate our general controller
   const generalController = new GeneralController();
-
-  // Create the instances of our view
 
   const welcomeView = new WelcomeView($('#welcomeView'), model);
   const sideBarView = new SideBarView($('#sideBarView'), model);
@@ -27,7 +22,6 @@ $(function () {
   const titleBarView = new TitleBarView($('#titleBarView'), model);
   const printView = new PrintView($('#printView'), model);
 
-  // Add all views to the general controller
   generalController
     .addView(welcomeView)
     .addView(sideBarView)
@@ -37,7 +31,6 @@ $(function () {
     .addView(titleBarView)
     .addView(printView);
 
-  // Instantiate the controllers
   const welcomeViewController =
     new WelcomeViewController(welcomeView, model, generalController);
   const sideBarViewController =
@@ -61,11 +54,9 @@ $(function () {
     'DINNER_PRINTOUT'
   ];
 
-  // Register && Initialize Odd Elements
   generalController.addOddElement('headLine', $('#headLine'));
   generalController.initOddElements();
 
-  // Instantiate all screens
   generalController
     .addScreen('WELCOME', [welcomeView])
     .addScreen('SELECT_DISH', [sideBarView, dishSearchView])
@@ -73,7 +64,6 @@ $(function () {
     .addScreen('DINNER_OVERVIEW', [dinnerOverviewView, titleBarView])
     .addScreen('DINNER_PRINTOUT', [printView, titleBarView]);
 
-  // had to use function in order to elevate its scope
   function loadDataFromLocal() {
     let getCookie = (cname) => {
       let name = cname + '=';
@@ -96,32 +86,30 @@ $(function () {
     }
   }
 
-  function requestRecipeData(params) {
+  // TODO: request recipe data after page refresh
+  function requestRecipeData(type, kwd) {
     let params = new URLSearchParams();
     params.append('number', 20);
     type ? params.append('type', type) : null;
     kwd ? params.append('query', kwd) : null;
     let url = API_Search_Recipe + '?' + params.toString();
+
     return fetch(url, {
-        method: 'GET',
-        headers: {
-          'X-Mashape-Key': API_Key
-        }
-      }).then(res => res.json())
-      .then((json) => {
-        console.log('all dish', json);
-        this.setSearchedDishes(json.results)
+      method: 'GET',
+      headers: {
+        'X-Mashape-Key': API_Key
+      }
+    }).then(res => res.json())
+    .then((json) => {
+      this.setSearchedDishes(json.results)
         imgBaseUrl = json.baseUri;
-        // notify
-      });
+    });
   }
 
   function injectDataIntoModel() {
     if (dataToStore['selectedDishes'] !== null) {
       dataToStore['selectedDishes'].split(',').forEach((id) => {
         if (id !== '') {
-          console.log('app.js', id);
-
           model.addDishToMenu(id);
         }
       });
@@ -131,14 +119,15 @@ $(function () {
   }
 
   function updateViews() {
-    dishSearchView.setSearchCondition(...dataToStore['searchCondition'].split(','));
-    if (dataToStore['currentScreen'] !== null) {
-      // if the name is illegal, set to Welcome page
-      generalController.setCurrentScreen(
-        SCREENS.indexOf(dataToStore['currentScreen']) === -1 ?
-        'WELCOME' : dataToStore['currentScreen']
-      );
-      generalController.showScreen(generalController.getCurrentScreen());
+    if (dataToStore['selectedDishes'] !== null) {
+      dishSearchView.setSearchCondition(...dataToStore['searchCondition'].split(','));
+      if (dataToStore['currentScreen'] !== null) {
+        generalController.setCurrentScreen(
+          SCREENS.indexOf(dataToStore['currentScreen']) === -1 ?
+          'WELCOME' : dataToStore['currentScreen']
+        );
+        generalController.showScreen(generalController.getCurrentScreen());
+      }
     }
   }
 
@@ -170,6 +159,7 @@ $(function () {
     localStorage.setItem('selectedDishes', slStr);
     let searchCondStr = searchCond[0] + ',' + searchCond[1];
     localStorage.setItem('searchCondition', searchCondStr);
+
     for (let key in dataToStore) {
       dataToStore[key] = localStorage.getItem(key);
     }
