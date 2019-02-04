@@ -1,46 +1,61 @@
-let DinnerOverviewView = function (container, model) {
-  let numberOfGuests = container.find("#numberOfGuests");
-  numberOfGuests.html(model.getNumberOfGuests());
+class DinnerOverviewView {
+  constructor(container, model) {
+    container.html(`
+      <div id='selectedDishesOverview'></div>
+      <span id='totalCost'></span>
+      <hr />
+      <button id='printRecipeButton' class='btn btn-orange'>
+        <span>Print Full Recipe</span>
+      </button>`
+    );
 
-  let selectedDishes = container.find("#selectedDishesOverview");
+    this.printRecipeButton = container.find('#printRecipeButton');
 
-  let displaySelectedDishes = () => {
-    selectedDishes.html("");
-    model.getSelectedDishes().forEach((dish) => {
-      let image = $("<img/>")
-        .prop("alt", model.getDishName(dish))
-        .prop("src", model.getImgBaseUrl() + dish["image"]);
-      let heading = $("<h3/>").text(model.getDishName(dish));
-      let dishPrice = model.getDishPrice(dish);
-      let priceSpan = $("<span/>").text(dishPrice + " SEK");;
-      let dishItem = $("<a/>").append(image, heading, priceSpan);;
+    let displaySelectedDishes = () => {
+      let selectedDishes = container.find('#selectedDishesOverview');
 
-      selectedDishes.append(dishItem);
-    });
-  }
+      selectedDishes.html('');
 
-  let totalCost = container.find("#totalCost").html(" SEK");;
+      model.getSelectedDishes().forEach((dish) => {
+        const alt = model.getDishName(dish);
+        const src = model.getImgBaseUrl() + dish['image'];
+        const heading = model.getDishName(dish);
+        const price = model.getDishPrice(dish) + ' SEK';
 
-  this.printRecipeButton = container.find("#printRecipeButton");
+        const dishItem = `
+          <img alt=${alt} src=${src}>
+            <h3>${heading}</h3>
+            <span>${price}</span>
+          </img>`
 
-  this.update = (model, changeDetails) => {
-    if (changeDetails == "numberOfGuests") {
-      totalCost.html(model.getTotalMenuPrice() + " SEK");
+        selectedDishes.append(dishItem);
+      });
     }
-    if (changeDetails == "selectedDishes") {
-      displaySelectedDishes();
-      totalCost.html(model.getTotalMenuPrice() + " SEK");
+
+    let updateTotalCost = () => {
+      let totalCost = container.find('#totalCost');
+      totalCost.html('Total' + model.getTotalMenuPrice() + ' SEK');
     }
+
+    this.update = (model, changeDetails) => {
+      if (changeDetails == 'numberOfGuests') {
+        updateTotalCost();
+      }
+
+      if (changeDetails == 'selectedDishes') {
+        displaySelectedDishes();
+        updateTotalCost();
+      }
+    }
+
+    this.hide = () => {
+      container.hide();
+    };
+
+    this.show = () => {
+      container.show();
+    };
+
+    model.addObserver(this.update);
   }
-
-  this.hide = () => {
-    container.hide();
-  };
-
-  this.show = () => {
-    container.show();
-  };
-
-  model.addObserver(this.update);
-  // displaySelectedDishes();
 }
