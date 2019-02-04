@@ -8,9 +8,9 @@ let DinnerOverviewView = function (container, model) {
     selectedDishes.html("");
     model.getSelectedDishes().forEach((dish) => {
       let image = $("<img/>")
-        .prop("alt", dish["name"])
-        .prop("src", "images/" + dish["image"]);
-      let heading = $("<h3/>").text(dish["name"]);
+        .prop("alt", model.getDishName(dish))
+        .prop("src", model.getImgBaseUrl() + dish["image"]);
+      let heading = $("<h3/>").text(model.getDishName(dish));
       let dishPrice = model.getDishPrice(dish);
       let priceSpan = $("<span/>").text(dishPrice + " SEK");;
       let dishItem = $("<a/>").append(image, heading, priceSpan);;
@@ -19,8 +19,7 @@ let DinnerOverviewView = function (container, model) {
     });
   }
 
-  let totalCost = container.find("#totalCost").
-    html(model.getTotalMenuPrice() + " SEK");;
+  let totalCost = container.find("#totalCost").html(" SEK");;
 
   this.printRecipeButton = container.find("#printRecipeButton");
 
@@ -43,5 +42,5 @@ let DinnerOverviewView = function (container, model) {
   };
 
   model.addObserver(this.update);
-  displaySelectedDishes();
+  // displaySelectedDishes();
 }

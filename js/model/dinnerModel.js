@@ -3,6 +3,7 @@ let DinnerModel = function () {
   // API addresses
   const API_Key = '3d2a031b4cmsh5cd4e7b939ada54p19f679jsn9a775627d767'
   const API_Search_Recipe = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search'
+  const API_Recipe_Info = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/{id}/information'
 
   const _this = this
   const dishesData = new DishesData()
@@ -12,6 +13,7 @@ let DinnerModel = function () {
   this.numberOfGuests = 1
 
   let searchedDishes = []
+  let searchedDishesMAP = {} // for easier retrieval
   let dishTypes = [
     'main course',
     'side dish',
@@ -28,17 +30,49 @@ let DinnerModel = function () {
   let imgBaseUrl = '';
 
   let selectedDishIDs = []
+  let storedDishes = {} // because page might be refreshed and dish price have to be retained through another API than that used for recipe search. We use this to store dish detailed infos
   let observers = []
   let searchCondition = ['', ''] // keyword, type
 
-  this.addObserver = (observer) => {
-    observers.push(observer)
-  }
 
   let notifyObservers = (details) => {
     for (let i = 0; i < observers.length; i++) {
       observers[i](_this, details)
     }
+  }
+  let URLWithParams = (url, params) => {
+    let urlParams = new URLSearchParams();
+    for (let key in params) {
+      urlParams.append(key, params[key])
+    }
+    return url + '?' + urlParams.toString()
+  }
+
+  this.requestRecipeInfo = (id) => {
+    return fetch(URLWithParams(API_Recipe_Info.replace('{id}', id), {
+        'id': id,
+        'includeNutrition': false
+      }), {
+        method: 'GET',
+        headers: {
+          'X-Mashape-Key': API_Key
+        }
+      }).then(res => res.json())
+      .then((json) => {
+        console.log('recipe info res', json);
+        searchedDishes.forEach((dish) => {
+          if (dish.id == id) {
+            dish.info = json
+            storedDishes[id] = dish
+            notifyObservers('viewingDishDetail')
+            return
+          }
+        })
+      })
+  };
+
+  this.addObserver = (observer) => {
+    observers.push(observer)
   }
 
   this.getImgBaseUrl = () => {
@@ -57,7 +91,7 @@ let DinnerModel = function () {
   this.getSelectedDishes = () => {
     let selectedDishes = []
     selectedDishIDs.forEach((id) => {
-      selectedDishes.push(this.getDish(id))
+      selectedDishes.push(this.getLocalDish(id))
     })
     return selectedDishes
   };
@@ -77,15 +111,14 @@ let DinnerModel = function () {
     return dishType
   }
 
-  let currentViewingDish = dishes[0]
+  let currentViewingDish = null;
 
   this.getCurrentViewingDish = () => {
     return currentViewingDish
   };
 
   this.setCurrentViewingDish = (id) => {
-    currentViewingDish = this.getDish(id)
-    notifyObservers('viewingDish')
+    currentViewingDish = this.getLocalDish(id)
   };
 
   // Returns all the dishes on the (selected) menu.
@@ -95,20 +128,14 @@ let DinnerModel = function () {
 
   // Returns all types of dishes
   this.getDishesTypes = () => {
-    let dishesTypes = []
-
-    dishes.forEach((dish) => {
-      dishesTypes.push(dish['type'])
-    })
-
-    return [...new Set(dishesTypes)]
+    return [...new Set(dishTypes)]
   }
 
   // Returns all ingredients for all the dishes on the (selected) menu.
   this.getAllIngredients = () => {
     let ingredients = []
     selectedDishIDs.forEach((id) => {
-      let dish = this.getDish(id)
+      let dish = this.getLocalDish(id)
       dish['ingredients'].forEach((ingredient) => {
         ingredients.push(ingredient)
       })
@@ -120,33 +147,33 @@ let DinnerModel = function () {
   // Returns the price of the selected dish
   // multiplied by the number of guests
   this.getDishPrice = (dish) => {
-    let dishPrice = 0
-
-    dish['ingredients'].forEach((ingredient) => {
-      dishPrice += ingredient['price']
-    })
-
-    return dishPrice * this.getNumberOfGuests()
+    return dish.info.pricePerServing
+  }
+  this.getDishName = (dish) => {
+    return dish.title
+  }
+  this.getDishDescription = (dish) => {
+    return dish.info.instructions
+  }
+  this.getDishPreparation = (dish) => {
+    return dish.info.instructions
   }
 
   // Returns the total price of the (selected) menu (all the ingredients
   // multiplied by number of guests).
   this.getTotalMenuPrice = () => {
     let totalPrice = 0
+    console.log('get total menu price', storedDishes);
 
     selectedDishIDs.forEach((id) => {
-      let dish = this.getDish(id)
-      dish['ingredients'].forEach((ingredient) => {
-        totalPrice += ingredient['price']
-      })
+      totalPrice += storedDishes[id].info.pricePerServing
     })
-
     return totalPrice * this.getNumberOfGuests()
   }
 
   this.addDishToMenu = (newID) => {
     for (let i = 0; i < selectedDishIDs.length; i++) {
-      if (newID === selectedDishIDs[i]) {
+      if (newID == selectedDishIDs[i]) {
         return
       }
     }
@@ -181,8 +208,8 @@ let DinnerModel = function () {
         }
       }).then(res => res.json())
       .then((json) => {
-        console.log(json);
-        searchedDishes = json.results;
+        console.log('all dish', json);
+        this.setSearchedDishes(json.results)
         imgBaseUrl = json.baseUri;
       });
   }
@@ -198,7 +225,13 @@ let DinnerModel = function () {
 
   this.getSearchedDishes = () => {
     return searchedDishes;
-  };
+  }
+  this.setSearchedDishes = (dishes) => {
+    searchedDishes = dishes
+    searchedDishes.forEach(dish => {
+      searchedDishesMAP[dish.id.toString()] = dish
+    })
+  }
 
   this.operateSearch = (type, keyword) => {
     this.getAllDishes(type, keyword)
@@ -211,7 +244,7 @@ let DinnerModel = function () {
 
   this.getLocalDish = (id) => {
     for (let key in searchedDishes) {
-      if (searchedDishes[key].id === id) {
+      if (searchedDishes[key].id == id) { // should use == because it could be number or string
         return searchedDishes[key]
       }
     }

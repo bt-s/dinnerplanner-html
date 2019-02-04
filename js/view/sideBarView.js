@@ -10,7 +10,9 @@ let SideBarView = function (container, model) {
     let selectedDishes = container.find("#selectedDishes").html("");
 
     model.getSelectedDishes().forEach((dish) => {
-      let dishSpan = $("<span/>").text(dish["name"]);
+      let dishSpan = $("<span/>").text(model.getDishName(dish));
+      console.log('/////', dish.id);
+
       let priceSpan = $("<span/>").text(model.getDishPrice(dish));
       let listItem = $("<li/>")
         .append(dishSpan)
@@ -19,8 +21,7 @@ let SideBarView = function (container, model) {
     });
   }
 
-  let totalPrice = container.find("#totalPrice")
-    .html("SEK " + model.getTotalMenuPrice());
+  let totalPrice = container.find("#totalPrice").html("SEK ");
 
   this.confirmationButton = container.find("#confirmationButton");
 
@@ -44,7 +45,7 @@ let SideBarView = function (container, model) {
     container.show();
   };
 
-  loadSelectedDishes();
+  // loadSelectedDishes();
 
   model.addObserver(this.update);
 }

@@ -7,11 +7,11 @@ let PrintView = function (container, model) {
       .html("");
 
     model.getSelectedDishes().forEach(dish => {
-      let imgAtLeft = $("<img>").prop("src", "images/" + dish.image);
-      let name = $("<h2/>").text(dish.name);
-      let description = $("<p/>").text(dish.description);
+      let imgAtLeft = $("<img>").prop("src", model.getImgBaseUrl() + dish.image);
+      let name = $("<h2/>").text(model.getDishName(dish));
+      let description = $("<p/>").text(model.getDishDescription(dish));
       let preparation = $("<h3/>").text("Preparation");
-      let prepText = $("<p/>").text(dish.description);
+      let prepText = $("<p/>").text(model.getDishPreparation(dish));
 
       let midPart = $("<section/>")
         .append(name)
@@ -30,7 +30,7 @@ let PrintView = function (container, model) {
     });
   }
 
-  loadOrderedItems();
+  // loadOrderedItems();
 
   this.update = (model, changeDetails) => {
     if (changeDetails == "selectedDishes") {

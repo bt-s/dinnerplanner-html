@@ -1,55 +1,55 @@
 let DishDetailView = function (container, model) {
   let numberOfGuests = container.find(".numberOfGuests").
-    html(model.getNumberOfGuests());;
+  html(model.getNumberOfGuests());;
 
   let loadDishInfo = () => {
     let viewingDish = model.getCurrentViewingDish();
     let dishTitle = container.find("#dishTitle").
-      text(viewingDish.name);
+    text(viewingDish.title);
 
     let detailImg = container.find("#detailImg").
-      prop("src", "images/" + viewingDish.image,
-           "alt", viewingDish.name);
+    prop("src", model.getImgBaseUrl() + viewingDish.image,
+      "alt", viewingDish.title);
 
-    let detailDescription = container.find("#detailDescription").
-      text(viewingDish.description);
+    let detailDescription = container.find("#detailDescription")
+      .text(model.getDishPreparation(viewingDish));
 
-    let prepText = container.find("#prepText").
-      text(viewingDish.description);
+    let prepText = container.find("#prepText")
+      .text(model.getDishPreparation(viewingDish));
   }
 
   let loadIngredients = () => {
     let dishPrice = 0;
     let ingredientList = container.find("#listOfIngredients").html("");
     let viewingDish = model.getCurrentViewingDish();
-
-    viewingDish.ingredients.forEach(e => {
+    if (!viewingDish) {
+      return
+    }
+    viewingDish.info.extendedIngredients.forEach(ingredient => {
       let tableItem = $("<tr/>");
-
-      tableItem.append($("<td/>").text(e.quantity + e.unit),
-                       $("<td/>").text(e.name),
-                       $("<td/>").text("SEK"),
-                       $("<td/>").text(e.price));
-
+      tableItem.append($("<td/>").text(ingredient.amount + ingredient.measures.metric.unitShort), // amount and unit in short
+        $("<td/>").text(ingredient.name),
+        $("<td/>").text("SEK")); // no price for ingredients
+      // $("<td/>").text(ingredient.price)); 
       ingredientList.append(tableItem);
-
-      dishPrice += e.price;
+      // dishPrice += ingredient.price;  // no price provided
     });
-
+    dishPrice = viewingDish.info.pricePerServing * model.getNumberOfGuests()
     container.find("#dishPrice").text("TOTAL: SEK " + dishPrice);
   }
-
-  loadDishInfo();
-  loadIngredients();
 
   this.backToSearchButton = container.find("#backToSearchButton");
   this.addToMenuButton = container.find("#addToMenuButton");
 
   this.update = (model, changeDetails) => {
-    if (changeDetails == "viewingDish") {
+    if (changeDetails == "viewingDishDetail") {
       loadDishInfo();
       loadIngredients();
+    } else if (changeDetails == 'numberOfGuests') {
+      loadIngredients()
+      numberOfGuests.text(model.getNumberOfGuests())
     }
+
   };
 
   this.hide = () => {
