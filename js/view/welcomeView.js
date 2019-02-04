@@ -1,13 +1,22 @@
-let WelcomeView = function (container, model) {
-  let welcomeText = container.find("#welcomeText").html(model.welcomeText);
+class WelcomeView {
+  constructor(container, model) {
+    container.html(`
+      <p id="welcomeText">${model.welcomeText}</p>
+      <a>
+        <button id="createNewDinnerButton" class="btn btn-orange">
+          Create new dinner
+        </button>
+      </a>`
+      );
 
-  this.createNewDinnerButton = container.find("#createNewDinnerButton");
+    this.createNewDinnerButton = container.find("#createNewDinnerButton");
 
-  this.hide = () => {
-    container.hide();
-  };
+    this.hide = () => {
+      container.hide();
+    };
 
-  this.show=()=>{
-    container.show();
-  };
+    this.show=()=>{
+      container.show();
+    };
+  }
 }
