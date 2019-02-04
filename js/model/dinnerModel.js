@@ -178,6 +178,8 @@ let DinnerModel = function () {
       }
     }
     selectedDishIDs.push(newID)
+    console.log('added new dish id');
+
     notifyObservers('selectedDishes')
   }
 

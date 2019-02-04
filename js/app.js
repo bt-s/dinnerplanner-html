@@ -96,10 +96,32 @@ $(function () {
     }
   }
 
+  function requestRecipeData(params) {
+    let params = new URLSearchParams();
+    params.append('number', 20);
+    type ? params.append('type', type) : null;
+    kwd ? params.append('query', kwd) : null;
+    let url = API_Search_Recipe + '?' + params.toString();
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+          'X-Mashape-Key': API_Key
+        }
+      }).then(res => res.json())
+      .then((json) => {
+        console.log('all dish', json);
+        this.setSearchedDishes(json.results)
+        imgBaseUrl = json.baseUri;
+        // notify
+      });
+  }
+
   function injectDataIntoModel() {
     if (dataToStore['selectedDishes'] !== null) {
       dataToStore['selectedDishes'].split(',').forEach((id) => {
         if (id !== '') {
+          console.log('app.js', id);
+
           model.addDishToMenu(id);
         }
       });
