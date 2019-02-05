@@ -24,7 +24,7 @@ let DishSearchView = function (container, model) {
     let searchedDishesContainer = container.find("#searchedDishes").html("");
     model.getSearchedDishes().forEach((dish) => {
       let dishItemView = new DishItemView(dish.id, model);
-      searchedDishesContainer.append(dishItemView.getDomObj());
+      searchedDishesContainer.append(dishItemView.dishItem);
     });
   };
 
