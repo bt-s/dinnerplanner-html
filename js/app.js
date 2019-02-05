@@ -121,12 +121,11 @@ $(function () {
 
     model.setNumberOfGuests(Number(dataToStore['numberOfGuests']));
     model.setSearchCondition(...dataToStore['searchCondition'].split(','));
-    model.operateSearch(...dataToStore['searchCondition'].split(','));
+    // model.operateSearch(...dataToStore['searchCondition'].split(','));
   }
 
   function updateViews() {
     dishSearchView.setSearchCondition(...dataToStore['searchCondition'].split(','));
-    // model.operateSearch(...dataToStore['searchCondition'].split(','));
     if (dataToStore['currentScreen'] == null) {
       return;
     }

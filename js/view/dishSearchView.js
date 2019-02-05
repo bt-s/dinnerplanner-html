@@ -17,8 +17,7 @@ class DishSearchView {
       <div class="dish-items-container">
         <div class="dish-items-wrapper" id="searchedDishes"></div>
       </div>
-    </div>`
-    );
+    </div>`);
 
     this.dishTypeSelect = container.find("#dishTypeSelect");
     this.keywordInput = container.find("#keywordInput");
@@ -36,7 +35,6 @@ class DishSearchView {
         if (this.dishTypeSelect.children()[i].value == type)
           this.dishTypeSelect[0].selectedIndex = i;
       }
-
       this.keywordInput.prop("value", kwd);
     };
 
@@ -64,7 +62,9 @@ class DishSearchView {
     };
 
     this.model.getDishesTypes().forEach((type) => {
-      let option = `<option value=${type}>${titalizeWords(type)}</option>`;
+      let option = `<option value='${type}'>${titalizeWords(type)}</option>`;
+      console.log(option);
+
       this.dishTypeSelect.append(option);
     });
   };
