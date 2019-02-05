@@ -3,6 +3,7 @@ class DinnerModel {
     const APIKey = '3d2a031b4cmsh5cd4e7b939ada54p19f679jsn9a775627d767';
     const APISearchRecipe = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search';
     const APIRecipeInfo = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/{id}/information';
+    const APIREcipeData = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk';
 
     const _this = this;
     const dishesData = new DishesData();
@@ -48,26 +49,52 @@ class DinnerModel {
     }
 
     this.requestRecipeInfo = (id) => {
-      url = URLWithParams(APIRecipeInfo.replace('{id}', id),
-          {'id': id, 'includeNutrition': false });
+      let url = URLWithParams(APIRecipeInfo.replace('{id}', id), {
+        'id': id,
+        'includeNutrition': false
+      });
 
       return fetch(url, {
-        method: 'GET',
-        headers: {
-          'X-Mashape-Key': APIKey
-        }
-      })
-      .then(res => res.json())
+          method: 'GET',
+          headers: {
+            'X-Mashape-Key': APIKey
+          }
+        })
+        .then(res => res.json())
         .then((json) => {
           searchedDishes.forEach((dish) => {
-            if (dish.id == id) {
-              dish.info = json;
-              storedDishes[id] = dish;
-              notifyObservers('viewingDishDetail');
-              return;
+            if (dish.id != id) {
+              return
             }
+            dish.info = json;
+            storedDishes[id] = dish.info;
+            console.log('ind requestRecipeInfor', storedDishes[id]);
+            this.setCurrentViewingDish(id);
+            notifyObservers('viewingDishDetail');
+            // return;
           })
         })
+    };
+
+    this.requestRecipeData = (ids) => {
+      let url = URLWithParams(APIREcipeData, {
+        'ids': ids.toString(),
+        'includeNutrition': false
+      });
+      return fetch(url, {
+          method: 'GET',
+          headers: {
+            'X-Mashape-Key': APIKey
+          }
+        })
+        .then(res => res.json())
+        .then((dishes) => {
+          dishes.forEach((dish) => {
+            storedDishes[dish.id] = dish;
+            console.log(storedDishes[dish.id]);
+          });
+          notifyObservers('selectedDishes');
+        });
     };
 
     this.addObserver = (observer) => {
@@ -90,7 +117,7 @@ class DinnerModel {
     this.getSelectedDishes = () => {
       let selectedDishes = [];
       selectedDishIDs.forEach((id) => {
-        selectedDishes.push(this.getLocalDish(id));
+        selectedDishes.push(storedDishes[id]);
       })
 
       return selectedDishes;
@@ -119,7 +146,10 @@ class DinnerModel {
     };
 
     this.setCurrentViewingDish = (id) => {
-      currentViewingDish = this.getLocalDish(id);
+      currentViewingDish = storedDishes[id];
+      notifyObservers('viewingDishDetail')
+      console.log('viewing dish is ', currentViewingDish);
+
     };
 
     this.getFullMenu = () => {
@@ -144,26 +174,27 @@ class DinnerModel {
       return ingredients;
     }
 
-    this.getDishPrice = (dish) => {
-      return dish.info.pricePerServing;
-    }
+    // TODO, use a uniformed way to access property of dish
+    // this.getDishPrice = (dish) => {
+    //   return dish.info.pricePerServing;
+    // }
 
-    this.getDishName = (dish) => {
-      return dish.title;
-    }
+    // this.getDishName = (dish) => {
+    //   return dish.title;
+    // }
 
-    this.getDishDescription = (dish) => {
-      return dish.info.instructions;
-    }
+    // this.getDishDescription = (dish) => {
+    //   return dish.info.instructions;
+    // }
 
-    this.getDishPreparation = (dish) => {
-      return dish.info.instructions;
-    }
+    // this.getDishPreparation = (dish) => {
+    //   return dish.info.instructions;
+    // }
 
     this.getTotalMenuPrice = () => {
       let totalPrice = 0;
       selectedDishIDs.forEach((id) => {
-        totalPrice += storedDishes[id].info.pricePerServing;
+        totalPrice += storedDishes[id].pricePerServing;
       })
 
       return totalPrice * this.getNumberOfGuests();
@@ -196,15 +227,15 @@ class DinnerModel {
       let url = APISearchRecipe + '?' + params.toString();
 
       return fetch(url, {
-        method: 'GET',
-        headers: {
-          'X-Mashape-Key': APIKey
-        }
-      }).then(res => res.json())
-      .then((json) => {
-        this.setSearchedDishes(json.results)
+          method: 'GET',
+          headers: {
+            'X-Mashape-Key': APIKey
+          }
+        }).then(res => res.json())
+        .then((json) => {
+          this.setSearchedDishes(json.results)
           imgBaseUrl = json.baseUri;
-      });
+        });
     }
 
     this.getSearchCondition = () => {

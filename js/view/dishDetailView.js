@@ -1,5 +1,5 @@
 class DishDetailView {
-   constructor(container, model) {
+  constructor(container, model) {
     this.container = container;
     container.html(`
       <div class="dish-details-overview">
@@ -23,8 +23,7 @@ class DishDetailView {
           </div>
         </div>
       </div>
-      <section id="prepSection"></section>`
-    );
+      <section id="prepSection"></section>`);
 
     this.numberOfGuests = container.find("#numberOfGuests");
     this.backToSearchButton = container.find("#backToSearchButton");
@@ -49,15 +48,14 @@ class DishDetailView {
       let dishDescription = this.container.find('#dishDescription').html(`
         <h2 id="dishTitle">${viewingDish.title}</h2>
         <img id="detailImg"
-            src=${model.getImgBaseUrl() + viewingDish.image}
+            src=${viewingDish.image}
             alt=${viewingDish.title}>
         </img>
-        <p id='detailDescription'>${model.getDishPreparation(viewingDish)}</p>`
-      );
+        <p id='detailDescription'>${viewingDish.instructions}</p>`);
 
       let prepSection = this.container.find("#prepSection").html(`
         <h2>Preparation</h2>
-        <p id="prepText">${model.getDishPreparation(viewingDish)}</p>
+        <p id="prepText">${viewingDish.instructions}</p>
       `);
     }
 
@@ -70,7 +68,7 @@ class DishDetailView {
         return
       }
 
-      viewingDish.info.extendedIngredients.forEach(ingredient => {
+      viewingDish.extendedIngredients.forEach(ingredient => {
         let tableItem = `
           <tr>
             <td>${ingredient.amount + ingredient.measures.metric.unitShort}</td>
@@ -81,15 +79,19 @@ class DishDetailView {
         ingredientList.append(tableItem);
       });
 
-      dishPrice = viewingDish.info.pricePerServing * model.getNumberOfGuests()
+      dishPrice = viewingDish.pricePerServing * model.getNumberOfGuests()
       this.container.find("#dishPrice").text("TOTAL: SEK " + dishPrice);
     }
 
     if (changeDetails == "viewingDishDetail") {
+      console.log('viewing dish detail   detailView');
+
       loadDishInfo();
       loadIngredients();
 
     } else if (changeDetails == 'numberOfGuests') {
+      console.log('num of guest  detailView');
+
       loadIngredients();
       this.numberOfGuests.text(model.getNumberOfGuests());
     }

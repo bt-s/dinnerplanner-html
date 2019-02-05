@@ -36,8 +36,7 @@ class SideBarView {
         <button id="confirmationButton" class="btn btn-orange">
           <span>Confirm Dinner</span>
         </button>
-      </div>`
-    );
+      </div>`);
 
     this.plusButton = container.find("#plusGuest");
     this.minusButton = container.find("#minusGuest");
@@ -55,8 +54,8 @@ class SideBarView {
         model.getSelectedDishes().forEach((dish) => {
           let listItem = `
             <li>
-              <span>${model.getDishName(dish)}</span>
-              <span>${model.getDishPrice(dish)}</span>
+              <span>${dish.title}</span>
+              <span>${dish.pricePerServing}</span>
             </li>
           `
 

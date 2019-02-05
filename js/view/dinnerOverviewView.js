@@ -6,8 +6,7 @@ class DinnerOverviewView {
       <hr />
       <button id='printRecipeButton' class='btn btn-orange'>
         <span>Print Full Recipe</span>
-      </button>`
-    );
+      </button>`);
 
     this.printRecipeButton = container.find('#printRecipeButton');
 
@@ -17,10 +16,10 @@ class DinnerOverviewView {
       selectedDishes.html('');
 
       model.getSelectedDishes().forEach((dish) => {
-        const alt = model.getDishName(dish);
-        const src = model.getImgBaseUrl() + dish['image'];
-        const heading = model.getDishName(dish);
-        const price = model.getDishPrice(dish) + ' SEK';
+        const alt = dish.title;
+        const src = dish.image;
+        const heading = dish.title;
+        const price = dish.pricePerServing + ' SEK';
 
         const dishItem = `
           <img alt=${alt} src=${src}>

@@ -3,7 +3,8 @@ $(function () {
     'currentScreen': '',
     'numberOfGuests': 0,
     'selectedDishes': [],
-    'searchCondition': []
+    'searchCondition': [],
+    'viewingDishID': ''
   }
 
   document.querySelector('body').hidden = false;
@@ -64,6 +65,9 @@ $(function () {
     .addScreen('DINNER_OVERVIEW', [dinnerOverviewView, titleBarView])
     .addScreen('DINNER_PRINTOUT', [printView, titleBarView]);
 
+  updateViews();
+
+
   function loadDataFromLocal() {
     let getCookie = (cname) => {
       let name = cname + '=';
@@ -86,61 +90,69 @@ $(function () {
     }
   }
 
-  // TODO: request recipe data after page refresh
-  function requestRecipeData(type, kwd) {
-    let params = new URLSearchParams();
-    params.append('number', 20);
-    type ? params.append('type', type) : null;
-    kwd ? params.append('query', kwd) : null;
-    let url = API_Search_Recipe + '?' + params.toString();
-
-    return fetch(url, {
-      method: 'GET',
-      headers: {
-        'X-Mashape-Key': API_Key
-      }
-    }).then(res => res.json())
-    .then((json) => {
-      this.setSearchedDishes(json.results)
-        imgBaseUrl = json.baseUri;
-    });
-  }
-
   function injectDataIntoModel() {
-    if (dataToStore['selectedDishes'] !== null) {
-      dataToStore['selectedDishes'].split(',').forEach((id) => {
-        if (id !== '') {
-          model.addDishToMenu(id);
-        }
-      });
-      model.setNumberOfGuests(Number(dataToStore['numberOfGuests']));
-      model.setSearchCondition(...dataToStore['searchCondition'].split(','));
+    const ids = dataToStore['selectedDishes'].split(',');
+    // delete empty items
+    for (let i = 0; i < ids.length; i++) {
+      if (!ids[i]) {
+        ids.splice(i, 1);
+      }
     }
+
+    // Add dish to menu
+    ids.forEach((id) => {
+      if (id !== '') {
+        model.addDishToMenu(id);
+      }
+    });
+    // Load data into storedDishes
+    if (dataToStore['viewingDishID']) {
+      const viewingId = dataToStore['viewingDishID'];
+      console.log(viewingId, 'viewingId');
+      ids.push(viewingId);
+    }
+    if (ids.length > 0) {
+      model.requestRecipeData(ids)
+        .then(param => {
+          if (dataToStore['viewingDishID']) {
+            model.setCurrentViewingDish(dataToStore['viewingDishID']);
+          }
+        });
+    }
+
+    model.setNumberOfGuests(Number(dataToStore['numberOfGuests']));
+    model.setSearchCondition(...dataToStore['searchCondition'].split(','));
+    model.operateSearch(...dataToStore['searchCondition'].split(','));
   }
 
   function updateViews() {
-    if (dataToStore['selectedDishes'] !== null) {
-      dishSearchView.setSearchCondition(...dataToStore['searchCondition'].split(','));
-      if (dataToStore['currentScreen'] !== null) {
-        generalController.setCurrentScreen(
-          SCREENS.indexOf(dataToStore['currentScreen']) === -1 ?
-          'WELCOME' : dataToStore['currentScreen']
-        );
-        generalController.showScreen(generalController.getCurrentScreen());
-      }
+    dishSearchView.setSearchCondition(...dataToStore['searchCondition'].split(','));
+    // model.operateSearch(...dataToStore['searchCondition'].split(','));
+    if (dataToStore['currentScreen'] == null) {
+      return;
     }
-  }
+    generalController.setCurrentScreen(
+      SCREENS.indexOf(dataToStore['currentScreen']) === -1 ?
+      'WELCOME' : dataToStore['currentScreen']
+    );
+    if (generalController.getCurrentScreen() == 'DISH_DETAILS') {
 
-  generalController.showScreen("WELCOME");
-  updateViews();
+    }
+    generalController.showScreen(generalController.getCurrentScreen());
+  }
 
   window.addEventListener('unload', function (event) {
     let currentScreen = generalController.getCurrentScreen();
-    let numberOfGuests = model.getNumberOfGuests();
+    let numberOfGuests = model.getNumberOfGuests() + '';
     let searchCond = dishSearchView.getSearchCondition();
+    let viewingDishID = model.getCurrentViewingDish();
+    viewingDishID = viewingDishID ? viewingDishID.id : false;
 
     document.cookie = 'currentScreen=' + currentScreen;
     document.cookie = 'numberOfGuests=' + numberOfGuests;
+    if (viewingDishID) {
+      document.cookie = 'viewingDishID=' + viewingDishID;
+    }
 
     let sl = [];
     let slStr = '';
@@ -156,11 +168,13 @@ $(function () {
     // Chrome doesn't support cookies for local .html files, so the followiung
     // is used for Chrome
     localStorage.setItem('currentScreen', currentScreen);
-    localStorage.setItem('numberOfGuests', numberOfGuests + '');
+    localStorage.setItem('numberOfGuests', numberOfGuests);
     localStorage.setItem('selectedDishes', slStr);
     let searchCondStr = searchCond[0] + ',' + searchCond[1];
     localStorage.setItem('searchCondition', searchCondStr);
-
+    if (viewingDishID) {
+      localStorage.setItem('viewingDishID', viewingDishID)
+    }
     for (let key in dataToStore) {
       dataToStore[key] = localStorage.getItem(key);
     }
