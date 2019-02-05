@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -21,103 +20,15 @@
 
     <div id="welcomeView"></div>
 
-    <!--DINNER OVERVIEW and PRINT VIEW-->
     <div class="container">
-      <div id="titleBarView" class="title-bar">
-        <h2>My Dinner: <span id="numberOfGuests"></span> people</h2>
-        <button id="backButton" class="btn btn-orange btn-pointy">
-          <span>Go back and edit dinner</span>
-        </button>
-      </div>
-
+      <div id="titleBarView" class="title-bar"></div>
       <div id="dinnerOverviewView"></div>
 
       <div class="select-dish dish-details">
-        <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3">
-          <div class="side-bar-header">
-            <h2>My Dinner</h2>
-            <a id="menuButton">
-              <i class="fa fa-bars"></i>
-              <i class="fa fa-times"></i>
-            </a>
-          </div>
-          <div class="side-bar-menu">
-            <div class="people-container">
-              <span>People</span>
-              <div class="people-selector-button">
-                <span id="numberOfGuests"></span>
-                <div class="up-down-buttons">
-                  <button id="plusGuest" class="btn">
-                    <i class="fa fa-angle-up"></i>
-                  </button>
-                  <button id="minusGuest" class="btn">
-                    <i class="fa fa-angle-down"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="side-bar-sub-header">
-              <span>Dish Name</span>
-              <span>Cost</span>
-            </div>
-
-            <ul id="selectedDishes"></ul>
-
-            <div id="totalPrice"></div>
-
-            <button id="confirmationButton" class="btn btn-orange">
-              <span>Confirm Dinner</span>
-            </button>
-          </div>
-        </div>
-
-        <div id="dishSearchView" class="col-xs-12 col-sm-12 col-md-9">
-          <div class="search-bar">
-            <h2>Find a dish</h2>
-            <div class="search-bar-container">
-              <input id="keywordInput" placeholder="Enter key word" />
-              <select id="dishTypeSelect"></select>
-              <button type="submit" id="searchDishButton" class="btn btn-orange">Search</button>
-            </div>
-          </div>
-          <div class="dish-items-container">
-            <div class="dish-items-wrapper" id="searchedDishes"></div>
-          </div>
-        </div>
-
-        <div id="dishDetailView" class="col-xs-12 col-sm-12 col-md-9">
-          <div class="dish-details-overview">
-            <div class="dish-description col-xs-12 col-sm-12 col-md-6">
-              <h2 id="dishTitle"></h2>
-              <img id="detailImg" src="" alt="">
-              <p id="detailDescription"></p>
-              <button id="backToSearchButton" class="btn btn-orange btn-pointy">back to search</button>
-            </div>
-            <div class="dish-ingredients col-xs-12 col-sm-12 col-md-6">
-              <div class="dish-ingredients-heading">
-                <span>Ingredients For </span>
-                <span class="numberOfGuests"></span>
-                <span> People</span>
-              </div>
-              <hr />
-              <table id="listOfIngredients"></table>
-              <hr />
-              <div id="ingredientTotal">
-                <button id="addToMenuButton" class="btn btn-orange">Add to menu</button>
-                <span id="dishPrice"></span>
-              </div>
-            </div>
-          </div>
-          <section id="prepSection">
-            <h2>Preparation</h2>
-            <p id="prepText"></p>
-          </section>
-        </div>
-
-        <div id="printView" class="container">
-          <ul id="orderedItemsList" class="printout-dishes"></ul>
-        </div>
+        <div id="sideBarView" class="col-xs-12 col-sm-12 col-md-3"></div>
+        <div id="dishSearchView" class="col-xs-12 col-sm-12 col-md-9"></div>
+        <div id="dishDetailView" class="col-xs-12 col-sm-12 col-md-9"></div>
+        <div id="printView" class="container"></div>
       </div>
     </div>
 
@@ -136,5 +47,4 @@
     <!-- The application JavaScript code -->
     <script src="dist/script.js.min"></script>
   </body>
-
 </html>
