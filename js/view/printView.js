@@ -1,36 +1,7 @@
 class PrintView {
   constructor(container, model) {
-    let loadOrderedItems = () => {
-      let numberOfGuests = container.find(".numberOfGuests")
-        .text(model.getNumberOfGuests());
-
-      container.html(`<ul id="orderedItemsList" class="printout-dishes"></ul>`);
-
-      let orderedItems = container.find("#orderedItemsList").html("");
-
-      model.getSelectedDishes().forEach(dish => {
-        let listItem = `
-          <li class="printout-dish">
-            <img src=${model.getImgBaseUrl() + dish.image} alt='' img>
-            <section>
-              <h2>${model.getDishName(dish)}</h2>
-              <p>${model.getDishDescription(dish)}</p>
-            </section>
-            <section>
-              <h3>Preparation</h3>
-              <p>${model.getDishPreparation(dish)}</p>
-            </section>
-          </li>`
-
-        orderedItems.append(listItem);
-      });
-    }
-
-    this.update = (model, changeDetails) => {
-      if (changeDetails == "selectedDishes") {
-        loadOrderedItems();
-      }
-    };
+    this.container = container;
+    this.model = model;
 
     this.hide = () => {
       container.hide();
@@ -40,6 +11,38 @@ class PrintView {
       container.show();
     };
 
-    model.addObserver(this.update);
+    model.addObserver(this.update.bind(this));
   }
+
+  loadOrderedItems() {
+    let numberOfGuests = this.container.find(".numberOfGuests")
+      .text(this.model.getNumberOfGuests());
+
+    this.container.html(`<ul id="orderedItemsList" class="printout-dishes"></ul>`);
+
+    let orderedItems = this.container.find("#orderedItemsList").html("");
+
+    this.model.getSelectedDishes().forEach(dish => {
+      let listItem = `
+        <li class="printout-dish">
+          <img src=${this.model.getImgBaseUrl() + dish.image} alt='' img>
+          <section>
+            <h2>${this.model.getDishName(dish)}</h2>
+            <p>${this.model.getDishDescription(dish)}</p>
+          </section>
+          <section>
+            <h3>Preparation</h3>
+            <p>${this.model.getDishPreparation(dish)}</p>
+          </section>
+        </li>`
+
+      orderedItems.append(listItem);
+    });
+  }
+
+  update(model, changeDetails) {
+    if (changeDetails == "selectedDishes") {
+      this.loadOrderedItems();
+    }
+  };
 }

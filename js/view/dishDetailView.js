@@ -30,7 +30,6 @@ class DishDetailView {
     this.backToSearchButton = container.find("#backToSearchButton");
     this.addToMenuButton = container.find("#addToMenuButton");
 
-
     this.hide = () => {
       container.hide();
     };

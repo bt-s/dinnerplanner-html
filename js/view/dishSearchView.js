@@ -1,5 +1,8 @@
 class DishSearchView {
   constructor(container, model) {
+    this.container = container;
+    this.model = model;
+
     container.html(`
       <div class="search-bar">
         <h2>Find a dish</h2>
@@ -21,29 +24,6 @@ class DishSearchView {
     this.keywordInput = container.find("#keywordInput");
     this.searchDishButton = container.find("#searchDishButton");
 
-    let listDishesTypes = () => {
-      let titalizeWords = (words) => {
-        return words
-          .split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ');
-      };
-
-      model.getDishesTypes().forEach((type) => {
-        let option = `<option value=${type}>${titalizeWords(type)}</option>`;
-        this.dishTypeSelect.append(option);
-      });
-    };
-
-    let showSearchedDishes = () => {
-      let searchedDishesContainer = container.find("#searchedDishes").html("");
-
-      model.getSearchedDishes().forEach((dish) => {
-        let dishItemView = new DishItemView(dish.id, model);
-        searchedDishesContainer.append(dishItemView.dishItem);
-      });
-    };
-
     this.getSearchCondition = () => {
       return [
         this.dishTypeSelect.prop("value"),
@@ -60,16 +40,6 @@ class DishSearchView {
       this.keywordInput.prop("value", kwd);
     };
 
-    this.update = (model, changeDetails) => {
-      if (changeDetails === "searchedDishes") {
-        showSearchedDishes();
-      }
-
-      if (changeDetails == "searchCondition") {
-        this.setSearchCondition(...model.getSearchCondition());
-      }
-    };
-
     this.hide = () => {
       container.hide();
     };
@@ -78,8 +48,43 @@ class DishSearchView {
       container.show();
     };
 
-    listDishesTypes();
+    this.listDishesTypes.bind(this);
+    this.listDishesTypes();
+
     model.operateSearch(...model.getSearchCondition());
-    model.addObserver(this.update);
+    model.addObserver(this.update.bind(this));
   }
+
+  listDishesTypes() {
+    let titalizeWords = (words) => {
+      return words
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    };
+
+    this.model.getDishesTypes().forEach((type) => {
+      let option = `<option value=${type}>${titalizeWords(type)}</option>`;
+      this.dishTypeSelect.append(option);
+    });
+  };
+
+  showSearchedDishes() {
+    let searchedDishesContainer = this.container.find("#searchedDishes").html("");
+
+    this.model.getSearchedDishes().forEach((dish) => {
+      let dishItemView = new DishItemView(dish.id, this.model);
+      searchedDishesContainer.append(dishItemView.dishItem);
+    });
+  };
+
+  update(model, changeDetails) {
+    if (changeDetails === "searchedDishes") {
+      this.showSearchedDishes();
+    }
+
+    if (changeDetails == "searchCondition") {
+      this.setSearchCondition(...this.model.getSearchCondition());
+    }
+  };
 }
