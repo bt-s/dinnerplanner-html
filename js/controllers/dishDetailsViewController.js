@@ -3,7 +3,7 @@ let DishDetailsViewController = function (view, model, generalController) {
     generalController.showScreen("SELECT_DISH");
   });
 
-  view.addToMenuButton.click((event) => {
+  view.addToMenuButton.click(() => {
     model.addDishToMenu(model.getCurrentViewingDish().id);
   });
 }
