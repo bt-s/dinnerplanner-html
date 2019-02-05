@@ -49,7 +49,7 @@ class DinnerModel {
     }
 
     this.requestRecipeInfo = (id) => {
-      let url = URLWithParams(APIRecipeInfo.replace('{id}', id), {
+      const url = URLWithParams(APIRecipeInfo.replace('{id}', id), {
         'id': id,
         'includeNutrition': false
       });

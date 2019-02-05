@@ -1,51 +1,19 @@
 class DinnerOverviewView {
   constructor(container, model) {
+    this.container = container;
+    this.model = model;
+
     container.html(`
       <div id='selectedDishesOverview'></div>
       <span id='totalCost'></span>
       <hr />
       <button id='printRecipeButton' class='btn btn-orange'>
         <span>Print Full Recipe</span>
-      </button>`);
+      </button>
+    `);
 
     this.printRecipeButton = container.find('#printRecipeButton');
 
-    let displaySelectedDishes = () => {
-      let selectedDishes = container.find('#selectedDishesOverview');
-
-      selectedDishes.html('');
-
-      model.getSelectedDishes().forEach((dish) => {
-        const alt = dish.title;
-        const src = dish.image;
-        const heading = dish.title;
-        const price = dish.pricePerServing + ' SEK';
-
-        const dishItem = `
-          <img alt=${alt} src=${src}>
-            <h3>${heading}</h3>
-            <span>${price}</span>
-          </img>`
-
-        selectedDishes.append(dishItem);
-      });
-    }
-
-    let updateTotalCost = () => {
-      let totalCost = container.find('#totalCost');
-      totalCost.html('Total' + model.getTotalMenuPrice() + ' SEK');
-    }
-
-    this.update = (model, changeDetails) => {
-      if (changeDetails == 'numberOfGuests') {
-        updateTotalCost();
-      }
-
-      if (changeDetails == 'selectedDishes') {
-        displaySelectedDishes();
-        updateTotalCost();
-      }
-    }
 
     this.hide = () => {
       container.hide();
@@ -55,6 +23,39 @@ class DinnerOverviewView {
       container.show();
     };
 
-    model.addObserver(this.update);
+    model.addObserver(this.update.bind(this));
+  }
+
+  displaySelectedDishes() {
+    let selectedDishes = this.container.find('#selectedDishesOverview');
+
+    selectedDishes.html('');
+
+    this.model.getSelectedDishes().forEach((dish) => {
+      const dishItem = `
+        <img alt=${this.model.getDishName(dish)}
+              src=${this.model.getImgBaseUrl() + dish['image']}>
+          <h3>${this.model.getDishName(dish)}</h3>
+          <span>${this.model.getDishPrice(dish) + ' SEK'}</span>
+        </img>`
+
+      selectedDishes.append(dishItem);
+    });
+  }
+
+  updateTotalCost() {
+    let totalCost = this.container.find('#totalCost');
+    totalCost.html('Total' + this.model.getTotalMenuPrice() + ' SEK');
+  }
+
+  update(model, changeDetails) {
+    if (changeDetails == 'numberOfGuests') {
+      this.updateTotalCost();
+    }
+
+    if (changeDetails == 'selectedDishes') {
+      this.displaySelectedDishes();
+      this.updateTotalCost();
+    }
   }
 }

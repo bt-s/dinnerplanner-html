@@ -1,5 +1,8 @@
 class SideBarView {
   constructor(container, model) {
+    this.container = container;
+    this.model = model;
+
     container.html(`
       <div class="side-bar-header">
         <h2>My Dinner</h2>
@@ -42,38 +45,9 @@ class SideBarView {
     this.minusButton = container.find("#minusGuest");
     this.menuButton = container.find("#menuButton");
     this.confirmationButton = container.find("#confirmationButton");
-    let numberOfGuests = container.find("#numberOfGuests")
+
+    this.numberOfGuests = container.find("#numberOfGuests")
       .html(model.getNumberOfGuests());
-
-    this.update = (model, changeDetails) => {
-      let totalPrice = container.find("#totalPrice");
-
-      let loadSelectedDishes = () => {
-        let selectedDishes = container.find("#selectedDishes").html("");
-
-        model.getSelectedDishes().forEach((dish) => {
-          let listItem = `
-            <li>
-              <span>${dish.title}</span>
-              <span>${dish.pricePerServing}</span>
-            </li>
-          `
-
-          selectedDishes.append(listItem);
-        });
-      }
-
-      if (changeDetails == "numberOfGuests") {
-        numberOfGuests.html(model.getNumberOfGuests());
-        loadSelectedDishes();
-        totalPrice.html("SEK " + model.getTotalMenuPrice());
-      }
-
-      if (changeDetails == "selectedDishes") {
-        loadSelectedDishes();
-        totalPrice.html("SEK " + model.getTotalMenuPrice());
-      }
-    }
 
     this.hide = () => {
       container.hide();
@@ -83,6 +57,36 @@ class SideBarView {
       container.show();
     };
 
-    model.addObserver(this.update);
+    model.addObserver(this.update.bind(this));
+  }
+
+  update(model, changeDetails) {
+    let totalPrice = this.container.find("#totalPrice");
+
+    let loadSelectedDishes = () => {
+      let selectedDishes = this.container.find("#selectedDishes").html("");
+
+      this.model.getSelectedDishes().forEach((dish) => {
+        let listItem = `
+          <li>
+            <span>${dish.title}</span>
+            <span>${dish.pricePerServing}</span>
+          </li>
+        `
+
+        selectedDishes.append(listItem);
+      });
+    }
+
+    if (changeDetails == "numberOfGuests") {
+      this.numberOfGuests.html(this.model.getNumberOfGuests());
+      loadSelectedDishes();
+      totalPrice.html("SEK " + this.model.getTotalMenuPrice());
+    }
+
+    if (changeDetails == "selectedDishes") {
+      loadSelectedDishes();
+      totalPrice.html("SEK " + this.model.getTotalMenuPrice());
+    }
   }
 }
