@@ -34,7 +34,7 @@ class DinnerOverviewView {
     this.model.getSelectedDishes().forEach((dish) => {
       const dishItem = `
         <img alt=${this.model.getDishName(dish)}
-              src=${this.model.getImgBaseUrl() + dish['image']}>
+              src=${dish['image']}>
           <h3>${this.model.getDishName(dish)}</h3>
           <span>${this.model.getDishPrice(dish) + ' SEK'}</span>
         </img>`

@@ -171,21 +171,21 @@ class DinnerModel {
     }
 
     // TODO, use a uniformed way to access property of dish
-    // this.getDishPrice = (dish) => {
-    //   return dish.info.pricePerServing;
-    // }
+    this.getDishPrice = (dish) => {
+      return dish.pricePerServing;
+    }
 
-    // this.getDishName = (dish) => {
-    //   return dish.title;
-    // }
+    this.getDishName = (dish) => {
+      return dish.title;
+    }
 
-    // this.getDishDescription = (dish) => {
-    //   return dish.info.instructions;
-    // }
+    this.getDishDescription = (dish) => {
+      return dish.instructions;
+    }
 
-    // this.getDishPreparation = (dish) => {
-    //   return dish.info.instructions;
-    // }
+    this.getDishPreparation = (dish) => {
+      return dish.instructions;
+    }
 
     this.getTotalMenuPrice = () => {
       let totalPrice = 0;
