@@ -1,5 +1,7 @@
-let TitleBarViewController = function (view, model, generalController) {
-  view.backButton.click(() => {
-    generalController.showScreen("SELECT_DISH");
-  });
+class TitleBarViewController {
+  constructor(view, model, generalController) {
+    view.backButton.click(() => {
+      generalController.showScreen("SELECT_DISH");
+    });
+  }
 }
