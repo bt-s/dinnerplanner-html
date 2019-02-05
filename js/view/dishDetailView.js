@@ -84,14 +84,10 @@ class DishDetailView {
     }
 
     if (changeDetails == "viewingDishDetail") {
-      console.log('viewing dish detail   detailView');
-
       loadDishInfo();
       loadIngredients();
 
     } else if (changeDetails == 'numberOfGuests') {
-      console.log('num of guest  detailView');
-
       loadIngredients();
       this.numberOfGuests.text(model.getNumberOfGuests());
     }

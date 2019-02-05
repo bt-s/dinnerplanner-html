@@ -108,7 +108,6 @@ $(function () {
     // Load data into storedDishes
     if (dataToStore['viewingDishID']) {
       const viewingId = dataToStore['viewingDishID'];
-      console.log(viewingId, 'viewingId');
       ids.push(viewingId);
     }
     if (ids.length > 0) {

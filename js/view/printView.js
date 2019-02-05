@@ -9,8 +9,6 @@ class PrintView {
       let orderedItems = container.find("#orderedItemsList").html("");
 
       model.getSelectedDishes().forEach(dish => {
-        console.log(dish, 'in get selected dishes, print view');
-
         let listItem = `
           <li class="printout-dish">
             <img src=${dish.image} alt='' img>

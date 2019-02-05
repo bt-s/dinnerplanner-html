@@ -68,7 +68,6 @@ class DinnerModel {
             }
             dish.info = json;
             storedDishes[id] = dish.info;
-            console.log('ind requestRecipeInfor', storedDishes[id]);
             this.setCurrentViewingDish(id);
             notifyObservers('viewingDishDetail');
             // return;
@@ -91,7 +90,6 @@ class DinnerModel {
         .then((dishes) => {
           dishes.forEach((dish) => {
             storedDishes[dish.id] = dish;
-            console.log(storedDishes[dish.id]);
           });
           notifyObservers('selectedDishes');
         });
@@ -148,8 +146,6 @@ class DinnerModel {
     this.setCurrentViewingDish = (id) => {
       currentViewingDish = storedDishes[id];
       notifyObservers('viewingDishDetail')
-      console.log('viewing dish is ', currentViewingDish);
-
     };
 
     this.getFullMenu = () => {
