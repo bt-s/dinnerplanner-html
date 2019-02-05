@@ -13,7 +13,7 @@ class PrintView {
 
     model.addObserver(this.update.bind(this));
   }
-
+  
   loadOrderedItems() {
     let numberOfGuests = this.container.find(".numberOfGuests")
       .text(this.model.getNumberOfGuests());
@@ -25,14 +25,14 @@ class PrintView {
     this.model.getSelectedDishes().forEach(dish => {
       let listItem = `
         <li class="printout-dish">
-          <img src=${this.model.getImgBaseUrl() + dish.image} alt='' img>
+          <img src=${dish.image} alt=''></img>
           <section>
-            <h2>${this.model.getDishName(dish)}</h2>
+            <h2>${dish.title}</h2>
             <p>${this.model.getDishDescription(dish)}</p>
           </section>
           <section>
             <h3>Preparation</h3>
-            <p>${this.model.getDishPreparation(dish)}</p>
+            <p>${dish.instructions}</p>
           </section>
         </li>`
 
