@@ -131,6 +131,7 @@ $(function () {
     }
   }
 
+  generalController.showScreen("WELCOME");
   updateViews();
 
   window.addEventListener('unload', function (event) {
