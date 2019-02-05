@@ -1,50 +1,45 @@
-let PrintView = function (container, model) {
-  let loadOrderedItems = () => {
-    let numberOfGuests = container.find(".numberOfGuests")
-      .text(model.getNumberOfGuests());
+class PrintView {
+  constructor(container, model) {
+    let loadOrderedItems = () => {
+      let numberOfGuests = container.find(".numberOfGuests")
+        .text(model.getNumberOfGuests());
 
-    let orderedItems = container.find("#orderedItemsList")
-      .html("");
+      container.html(`<ul id="orderedItemsList" class="printout-dishes"></ul>`);
 
-    model.getSelectedDishes().forEach(dish => {
-      let imgAtLeft = $("<img>").prop("src", model.getImgBaseUrl() + dish.image);
-      let name = $("<h2/>").text(model.getDishName(dish));
-      let description = $("<p/>").text(model.getDishDescription(dish));
-      let preparation = $("<h3/>").text("Preparation");
-      let prepText = $("<p/>").text(model.getDishPreparation(dish));
+      let orderedItems = container.find("#orderedItemsList").html("");
 
-      let midPart = $("<section/>")
-        .append(name)
-        .append(description);
+      model.getSelectedDishes().forEach(dish => {
+        let listItem = `
+          <li class="printout-dish">
+            <img src=${model.getImgBaseUrl() + dish.image} alt='' img>
+            <section>
+              <h2>${model.getDishName(dish)}</h2>
+              <p>${model.getDishDescription(dish)}</p>
+            </section>
+            <section>
+              <h3>Preparation</h3>
+              <p>${model.getDishPreparation(dish)}</p>
+            </section>
+          </li>`
 
-      let rightPart = $("<section/>")
-        .append(preparation)
-        .append(prepText);
-
-      let listItem = $("<li/>").prop("class", "printout-dish")
-        .append(imgAtLeft)
-        .append(midPart)
-        .append(rightPart);
-
-      orderedItems.append(listItem);
-    });
-  }
-
-  // loadOrderedItems();
-
-  this.update = (model, changeDetails) => {
-    if (changeDetails == "selectedDishes") {
-      loadOrderedItems();
+        orderedItems.append(listItem);
+      });
     }
-  };
 
-  this.hide = () => {
-    container.hide();
-  };
+    this.update = (model, changeDetails) => {
+      if (changeDetails == "selectedDishes") {
+        loadOrderedItems();
+      }
+    };
 
-  this.show = () => {
-    container.show();
-  };
+    this.hide = () => {
+      container.hide();
+    };
 
-  model.addObserver(this.update);
+    this.show = () => {
+      container.show();
+    };
+
+    model.addObserver(this.update);
+  }
 }
