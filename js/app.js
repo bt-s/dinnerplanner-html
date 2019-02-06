@@ -65,6 +65,7 @@ $(function () {
     .addScreen('DINNER_OVERVIEW', [dinnerOverviewView, titleBarView])
     .addScreen('DINNER_PRINTOUT', [printView, titleBarView]);
 
+  generalController.showScreen('WELCOME');
   updateViews();
 
 
