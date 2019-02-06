@@ -37,13 +37,14 @@
   }
 
   h3 {
-    display: flex;
+    display: block;
     justify-content: center;
     background: $grey;
     font-size: 14px;
     border: 3px solid $black;
     padding: 4px;
     width: 100%;
+    max-width: 150px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
