@@ -96,15 +96,7 @@ $(function () {
   function injectDataIntoModel() {
     const selectedDishes = dataToStore['selectedDishes'];
     const viewingDishID = dataToStore['viewingDishID'];
-    let a = dataToStore['offset'] ? dataToStore['offset'] : 0;
-    let c = null ? 1 : 0;
-    console.log(a, typeof dataToStore['offset'], dataToStore['offset'] == '', dataToStore['offset'] == null, c);
-    if (dataToStore['offset']) {
-      console.log("yes", dataToStore['offset'].length);
-
-    }
-    const offset = a;
-
+    const offset = dataToStore['offset'] ? parseInt(dataToStore['offset']) : 0;
 
     if (selectedDishes == null) {
       return;

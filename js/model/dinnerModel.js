@@ -243,8 +243,6 @@ class DinnerModel {
       notifyObservers('loadingData');
       let params = new URLSearchParams();
       params.append('number', ITEMS_PER_PAGE);
-      console.log(offset, 'get all dishes');
-
       params.append('offset', offset);
       type ? params.append('type', type) : null;
       kwd ? params.append('query', kwd) : null;
@@ -275,7 +273,8 @@ class DinnerModel {
     this.setSearchCondition = (type, kwd, offset) => {
       searchCondition[0] = type;
       searchCondition[1] = kwd;
-      searchCondition[2] = offset ? offset : 0;
+      searchCondition[2] = typeof offset === 'number' ? offset : 0;
+      this.setOffset(searchCondition[2]);
       notifyObservers('searchCondition');
     }
 
@@ -284,7 +283,6 @@ class DinnerModel {
     }
 
     this.setOffset = (num) => {
-      console.log('set offset', offset);
       offset = num >= 0 ? num : 0; // boundary check
       notifyObservers('offsetUpdate');
     }
