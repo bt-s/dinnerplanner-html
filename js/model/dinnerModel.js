@@ -39,6 +39,14 @@ class DinnerModel {
       }
     }
 
+    function handleErrors(response) {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response;
+    }
+
+
     let URLWithParams = (url, params) => {
       let urlParams = new URLSearchParams();
       for (let key in params) {
@@ -78,6 +86,7 @@ class DinnerModel {
             notifyObservers('loadedData');
           })
         })
+        .catch(error => alert(error));
     };
 
     this.requestRecipeData = (ids) => {
@@ -94,13 +103,15 @@ class DinnerModel {
       };
 
       return fetch(url, options)
+        .then(handleErrors)
         .then(res => res.json())
         .then((dishes) => {
           dishes.forEach((dish) => {
             storedDishes[dish.id] = dish;
           });
           notifyObservers('selectedDishes');
-        });
+        })
+        .catch(error => alert(error));
     };
 
     this.addObserver = (observer) => {
