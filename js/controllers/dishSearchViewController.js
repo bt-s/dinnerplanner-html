@@ -27,7 +27,7 @@ class DishSearchViewController {
       let offset = model.getOffset();
 
       if (offset !== 0) {
-        model.setOffset(offset - 10);
+        model.setOffset(offset - ITEMS_PER_PAGE);
         offset = model.getOffset();
       }
 
@@ -37,7 +37,7 @@ class DishSearchViewController {
 
     view.paginationNextButton.click((evt) => {
       const searchCond = model.getSearchCondition();
-      model.setOffset(model.getOffset() + 10);
+      model.setOffset(model.getOffset() + ITEMS_PER_PAGE);
       let offset = model.getOffset();
 
       model.setSearchCondition(searchCond[0], searchCond[1], offset);

@@ -18,10 +18,10 @@ class DishSearchView {
         <div class="dish-items-wrapper" id="searchedDishes"></div>
       </div>
       <button type="button" id="paginationPreviousButton" class="previous-button btn btn-orange">
-        Show previous 10 dishes
+        Show previous ${ITEMS_PER_PAGE} dishes
       </button>
       <button type="button" id="paginationNextButton" class="btn btn-orange">
-        Show next 10 dishes
+        Show next ${ITEMS_PER_PAGE} dishes
       </button>
     </div>`);
 

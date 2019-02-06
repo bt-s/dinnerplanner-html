@@ -242,7 +242,7 @@ class DinnerModel {
     this.getAllDishes = (type, kwd, offset) => {
       notifyObservers('loadingData');
       let params = new URLSearchParams();
-      params.append('number', 10);
+      params.append('number', ITEMS_PER_PAGE);
       console.log(offset, 'get all dishes');
 
       params.append('offset', offset);

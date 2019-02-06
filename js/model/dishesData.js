@@ -1,3 +1,6 @@
+// Temporally store GLOBAL value here
+const ITEMS_PER_PAGE = 12;
+
 const DishesData = function () {
   this.dishes = [{
     'id': 1,
