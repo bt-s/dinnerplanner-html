@@ -31,7 +31,8 @@ class DinnerModel {
     let selectedDishIDs = [];
     let storedDishes = {};
     let observers = [];
-    let searchCondition = ['', '']; // keyword, type
+    let searchCondition = ['', '', 0]; // keyword, type
+    let offset = 0;
 
     let notifyObservers = (details) => {
       for (let i = 0; i < observers.length; i++) {
@@ -238,10 +239,11 @@ class DinnerModel {
       }
     }
 
-    this.getAllDishes = (type, kwd) => {
+    this.getAllDishes = (type, kwd, offset) => {
       notifyObservers('loadingData');
       let params = new URLSearchParams();
-      params.append('number', 20);
+      params.append('number', 10);
+      params.append('offset', offset);
       type ? params.append('type', type) : null;
       kwd ? params.append('query', kwd) : null;
       let url = APISearchRecipe + '?' + params.toString();
@@ -269,10 +271,20 @@ class DinnerModel {
       return searchCondition;
     }
 
-    this.setSearchCondition = (type, kwd) => {
+    this.setSearchCondition = (type, kwd, offset) => {
       searchCondition[0] = type;
       searchCondition[1] = kwd;
+      searchCondition[2] = offset;
       notifyObservers('searchCondition');
+    }
+
+    this.getOffset = () => {
+      return offset;
+    }
+
+    this.setOffset = (num) => {
+      offset = num;
+      notifyObservers('offsetUpdate');
     }
 
     this.getSearchedDishes = () => {
@@ -286,8 +298,8 @@ class DinnerModel {
       })
     }
 
-    this.operateSearch = (type, keyword) => {
-      this.getAllDishes(type, keyword)
+    this.operateSearch = (type, keyword, offset) => {
+      this.getAllDishes(type, keyword, offset)
         .then(() => {
           notifyObservers('searchedDishes');
         })

@@ -21,5 +21,27 @@ class DishSearchViewController {
         model.operateSearch(...model.getSearchCondition());
       }
     });
+
+    view.paginationPreviousButton.click((evt) => {
+      const searchCond = model.getSearchCondition();
+      let offset = model.getOffset();
+
+      if (offset !== 0) {
+        model.setOffset(offset - 10);
+        offset = model.getOffset();
+      }
+
+      model.setSearchCondition(searchCond[0], searchCond[1], offset);
+      model.operateSearch(...model.getSearchCondition());
+    });
+
+    view.paginationNextButton.click((evt) => {
+      const searchCond = model.getSearchCondition();
+      model.setOffset(model.getOffset() + 10);
+      let offset = model.getOffset();
+
+      model.setSearchCondition(searchCond[0], searchCond[1], offset);
+      model.operateSearch(...model.getSearchCondition());
+    });
   }
 }

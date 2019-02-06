@@ -17,20 +17,29 @@ class DishSearchView {
       <div class="dish-items-container">
         <div class="dish-items-wrapper" id="searchedDishes"></div>
       </div>
+      <button type="button" id="paginationPreviousButton" class="previous-button btn btn-orange">
+        Show previous 10 dishes
+      </button>
+      <button type="button" id="paginationNextButton" class="btn btn-orange">
+        Show next 10 dishes
+      </button>
     </div>`);
 
     this.dishTypeSelect = container.find("#dishTypeSelect");
     this.keywordInput = container.find("#keywordInput");
     this.searchDishButton = container.find("#searchDishButton");
+    this.paginationPreviousButton = container.find("#paginationPreviousButton");
+    this.paginationNextButton = container.find("#paginationNextButton");
 
     this.getSearchCondition = () => {
       return [
         this.dishTypeSelect.prop("value"),
-        this.keywordInput.prop("value")
+        this.keywordInput.prop("value"),
+        model.getOffset()
       ];
     };
 
-    this.setSearchCondition = (type, kwd) => {
+    this.setSearchCondition = (type, kwd, offset) => {
       for (let i = 0; i < this.dishTypeSelect.children().length; i++) {
         if (this.dishTypeSelect.children()[i].value == type)
           this.dishTypeSelect[0].selectedIndex = i;
@@ -48,7 +57,6 @@ class DishSearchView {
 
     this.listDishesTypes.bind(this);
     this.listDishesTypes();
-
     model.operateSearch(...model.getSearchCondition());
     model.addObserver(this.update.bind(this));
   }
@@ -83,6 +91,16 @@ class DishSearchView {
 
     if (changeDetails == "searchCondition") {
       this.setSearchCondition(...this.model.getSearchCondition());
+    }
+
+    if (changeDetails = 'offsetUpdate') {
+      const previousButton = document.querySelector('.previous-button');
+
+      if (model.getOffset() !== 0) {
+        previousButton.classList.add('show');
+      } else {
+        previousButton.classList.remove('show');
+      }
     }
   };
 }

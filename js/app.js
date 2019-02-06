@@ -4,7 +4,8 @@ $(function () {
     'numberOfGuests': 1,
     'selectedDishes': [],
     'searchCondition': [],
-    'viewingDishID': ''
+    'viewingDishID': '',
+    'offset': 0
   }
 
   document.querySelector('body').hidden = false;
@@ -95,6 +96,7 @@ $(function () {
   function injectDataIntoModel() {
     const selectedDishes = dataToStore['selectedDishes'];
     const viewingDishID = dataToStore['viewingDishID'];
+    const offset = dataToStore['offset'];
 
     if (selectedDishes == null) {
       return;
@@ -131,7 +133,7 @@ $(function () {
 
     model.setNumberOfGuests(Number(dataToStore['numberOfGuests']));
     model.setSearchCondition(...dataToStore['searchCondition'].split(','));
-    // model.operateSearch(...dataToStore['searchCondition'].split(','));
+    model.setOffset(dataToStore['offset']);
   }
 
   function updateViews() {
@@ -172,10 +174,13 @@ $(function () {
     let numberOfGuests = model.getNumberOfGuests() + '';
     let searchCond = dishSearchView.getSearchCondition();
     let viewingDishID = model.getCurrentViewingDish();
+    let offset = model.getOffset();
+
     viewingDishID = viewingDishID ? viewingDishID.id : false;
 
     document.cookie = 'currentScreen=' + currentScreen;
     document.cookie = 'numberOfGuests=' + numberOfGuests;
+    document.cookie = 'offset=' + offset;
 
     if (viewingDishID) {
       document.cookie = 'viewingDishID=' + viewingDishID;
@@ -198,8 +203,9 @@ $(function () {
     localStorage.setItem('currentScreen', currentScreen);
     localStorage.setItem('numberOfGuests', numberOfGuests);
     localStorage.setItem('selectedDishes', slStr);
+    localStorage.setItem('offset', offset);
 
-    let searchCondStr = searchCond[0] + ',' + searchCond[1];
+    let searchCondStr = searchCond[0] + ',' + searchCond[1] + ',' + searchCond[2];
     localStorage.setItem('searchCondition', searchCondStr);
 
     if (viewingDishID) {

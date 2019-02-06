@@ -39,3 +39,11 @@
     }
   }
 }
+
+.previous-button {
+  display: none;
+
+  &.show {
+    display: inline-block;
+  }
+}
