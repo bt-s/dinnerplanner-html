@@ -1,6 +1,10 @@
+#### VSCode ignore
 .eslintrc.json
 launch.json
 .vscode/
+
+#### APIKey ignore
+js/model/APIKey.js
 #### NPM ignore
 node_modules/
 package-lock.json

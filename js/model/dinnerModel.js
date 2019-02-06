@@ -1,9 +1,8 @@
 class DinnerModel {
   constructor() {
-    const APIKey = '3d2a031b4cmsh5cd4e7b939ada54p19f679jsn9a775627d767';
     const APISearchRecipe = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search';
     const APIRecipeInfo = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/{id}/information';
-    const APIREcipeData = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk';
+    const APIRecipeData = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk';
 
     const _this = this;
     const dishesData = new DishesData();
@@ -82,7 +81,7 @@ class DinnerModel {
     };
 
     this.requestRecipeData = (ids) => {
-      let url = URLWithParams(APIREcipeData, {
+      let url = URLWithParams(APIRecipeData, {
         'ids': ids.toString(),
         'includeNutrition': false
       });
