@@ -92,7 +92,14 @@ $(function () {
   }
 
   function injectDataIntoModel() {
-    const ids = dataToStore['selectedDishes'].split(',');
+    const selectedDishes = dataToStore['selectedDishes'];
+    const viewingDishID = dataToStore['viewingDishID'];
+
+    if (selectedDishes == null) {
+      return;
+    }
+
+    const ids = selectedDishes.split(',');
     // delete empty items
     for (let i = 0; i < ids.length; i++) {
       if (!ids[i]) {
@@ -106,16 +113,17 @@ $(function () {
         model.addDishToMenu(id);
       }
     });
+
     // Load data into storedDishes
-    if (dataToStore['viewingDishID']) {
-      const viewingId = dataToStore['viewingDishID'];
-      ids.push(viewingId);
+    if (viewingDishID) {
+      ids.push(viewingDishID);
     }
+
     if (ids.length > 0) {
       model.requestRecipeData(ids)
         .then(param => {
-          if (dataToStore['viewingDishID']) {
-            model.setCurrentViewingDish(dataToStore['viewingDishID']);
+          if (viewingDishID) {
+            model.setCurrentViewingDish(viewingDishID);
           }
         });
     }
@@ -126,17 +134,24 @@ $(function () {
   }
 
   function updateViews() {
-    dishSearchView.setSearchCondition(...dataToStore['searchCondition'].split(','));
-    if (dataToStore['currentScreen'] == null) {
+    const searchCondition = dataToStore['searchCondition'];
+    const currentScreen = dataToStore['currentScreen'];
+
+    if (searchCondition == null) {
       return;
     }
-    generalController.setCurrentScreen(
-      SCREENS.indexOf(dataToStore['currentScreen']) === -1 ?
-      'WELCOME' : dataToStore['currentScreen']
-    );
-    if (generalController.getCurrentScreen() == 'DISH_DETAILS') {
 
+    dishSearchView.setSearchCondition(...searchCondition.split(','));
+
+    if (currentScreen == null) {
+      return;
     }
+
+    generalController.setCurrentScreen(
+      SCREENS.indexOf(currentScreen) === -1 ?
+      'WELCOME' : currentScreen
+    );
+
     generalController.showScreen(generalController.getCurrentScreen());
   }
 
@@ -149,6 +164,7 @@ $(function () {
 
     document.cookie = 'currentScreen=' + currentScreen;
     document.cookie = 'numberOfGuests=' + numberOfGuests;
+
     if (viewingDishID) {
       document.cookie = 'viewingDishID=' + viewingDishID;
     }
@@ -159,6 +175,7 @@ $(function () {
       sl.push(dish.id);
       slStr += ',' + dish.id;
     });
+
     slStr = slStr.substr(1);
 
     document.cookie = 'selectedDishes=' + sl;
@@ -169,11 +186,14 @@ $(function () {
     localStorage.setItem('currentScreen', currentScreen);
     localStorage.setItem('numberOfGuests', numberOfGuests);
     localStorage.setItem('selectedDishes', slStr);
+
     let searchCondStr = searchCond[0] + ',' + searchCond[1];
     localStorage.setItem('searchCondition', searchCondStr);
+
     if (viewingDishID) {
       localStorage.setItem('viewingDishID', viewingDishID)
     }
+
     for (let key in dataToStore) {
       dataToStore[key] = localStorage.getItem(key);
     }
