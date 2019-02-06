@@ -46,6 +46,9 @@ class DinnerModel {
       return response;
     }
 
+    const errorMsg = 'Whoops... something went wrong!\n'
+      + 'Please check your Internet connection.\n\n'
+      + 'The reported error is: '
 
     let URLWithParams = (url, params) => {
       let urlParams = new URLSearchParams();
@@ -71,6 +74,7 @@ class DinnerModel {
       };
 
       return fetch(url, options)
+        .then(handleErrors)
         .then(res => res.json())
         .then((json) => {
           searchedDishes.forEach((dish) => {
@@ -86,7 +90,7 @@ class DinnerModel {
             notifyObservers('loadedData');
           })
         })
-        .catch(error => alert(error));
+        .catch(error => alert(errorMsg + error));
     };
 
     this.requestRecipeData = (ids) => {
@@ -111,7 +115,7 @@ class DinnerModel {
           });
           notifyObservers('selectedDishes');
         })
-        .catch(error => alert(error));
+        .catch(error => alert(errorMsg + error));
     };
 
     this.addObserver = (observer) => {
@@ -250,12 +254,15 @@ class DinnerModel {
       };
 
       return fetch(url, options)
+        .then(handleErrors)
         .then(res => res.json())
         .then((json) => {
           this.setSearchedDishes(json.results)
           imgBaseUrl = json.baseUri;
           notifyObservers('loadedData');
-        });
+        })
+        .catch(error => alert(errorMsg + error)
+        );
     }
 
     this.getSearchCondition = () => {
