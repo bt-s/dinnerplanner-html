@@ -1,64 +1,105 @@
-let DishDetailView = function (container, model) {
-  let numberOfGuests = container.find(".numberOfGuests").
-    html(model.getNumberOfGuests());;
+class DishDetailView {
+  constructor(container, model) {
+    this.container = container;
+    container.html(`
+      <div class="dish-details-overview">
+        <div class="dish-description-wrapper col-xs-12 col-sm-12 col-md-6">
+          <div id='dishDescription' class="dish-description"></div>
+          <button id="backToSearchButton" class="btn btn-orange btn-pointy">
+            back to search
+          </button>
+        </div>
 
-  let loadDishInfo = () => {
-    let viewingDish = model.getCurrentViewingDish();
-    let dishTitle = container.find("#dishTitle").
-      text(viewingDish.name);
+        <div class="dish-ingredients col-xs-12 col-sm-12 col-md-6">
+          <div class="dish-ingredients-heading">
+            <span>Ingredients For </span>
+            <span id="numberOfGuests">${model.getNumberOfGuests()}</span>
+            <span> People</span>
+          </div>
+          <hr />
+          <table id="listOfIngredients"></table>
+          <hr />
+          <div id="ingredientTotal">
+            <button id="addToMenuButton" class="btn btn-orange">Add to menu</button>
+            <span id="dishPrice"></span>
+          </div>
+        </div>
+      </div>
+      <section id="prepSection"></section>`);
 
-    let detailImg = container.find("#detailImg").
-      prop("src", "images/" + viewingDish.image,
-           "alt", viewingDish.name);
+    this.numberOfGuests = container.find("#numberOfGuests");
+    this.backToSearchButton = container.find("#backToSearchButton");
+    this.addToMenuButton = container.find("#addToMenuButton");
 
-    let detailDescription = container.find("#detailDescription").
-      text(viewingDish.description);
+    this.hide = () => {
+      container.hide();
+    };
 
-    let prepText = container.find("#prepText").
-      text(viewingDish.description);
+    this.show = () => {
+      container.show();
+    };
+
+    model.addObserver(this.update.bind(this));
   }
 
-  let loadIngredients = () => {
-    let dishPrice = 0;
-    let ingredientList = container.find("#listOfIngredients").html("");
-    let viewingDish = model.getCurrentViewingDish();
+  update(model, changeDetails) {
+    const loader = document.querySelector('.loader');
 
-    viewingDish.ingredients.forEach(e => {
-      let tableItem = $("<tr/>");
+    let loadDishInfo = () => {
+      let viewingDish = model.getCurrentViewingDish();
 
-      tableItem.append($("<td/>").text(e.quantity + e.unit),
-                       $("<td/>").text(e.name),
-                       $("<td/>").text("SEK"),
-                       $("<td/>").text(e.price));
+      let dishDescription = this.container.find('#dishDescription').html(`
+        <h2 id="dishTitle">${viewingDish.title}</h2>
+        <img id="detailImg"
+            src=${viewingDish.image}
+            alt=${viewingDish.title}>
+        </img>
+        <p id='detailDescription'>${viewingDish.instructions}</p>`);
 
-      ingredientList.append(tableItem);
+      let prepSection = this.container.find("#prepSection").html(`
+        <h2>Preparation</h2>
+        <p id="prepText">${viewingDish.instructions}</p>
+      `);
+    }
 
-      dishPrice += e.price;
-    });
+    let loadIngredients = () => {
+      let dishPrice = 0;
+      let ingredientList = this.container.find("#listOfIngredients").html("");
+      let viewingDish = model.getCurrentViewingDish();
 
-    container.find("#dishPrice").text("TOTAL: SEK " + dishPrice);
-  }
+      if (!viewingDish) {
+        return
+      }
 
-  loadDishInfo();
-  loadIngredients();
+      viewingDish.extendedIngredients.forEach(ingredient => {
+        let tableItem = `
+          <tr>
+            <td>${ingredient.amount + ' ' + ingredient.measures.metric.unitShort}</td>
+            <td>${ingredient.name}</td>
+          </tr>
+        `;
 
-  this.backToSearchButton = container.find("#backToSearchButton");
-  this.addToMenuButton = container.find("#addToMenuButton");
+        ingredientList.append(tableItem);
+      });
 
-  this.update = (model, changeDetails) => {
-    if (changeDetails == "viewingDish") {
+      dishPrice = viewingDish.pricePerServing * model.getNumberOfGuests()
+      this.container.find("#dishPrice").text("TOTAL: SEK " + dishPrice);
+    }
+
+    if (changeDetails == 'loadingData') {
+      loader.classList.remove('hide');
+    }
+
+    if (changeDetails == 'loadedData') {
+      loader.classList.add('hide');
+    }
+
+    if (changeDetails == "viewingDishDetail") {
       loadDishInfo();
       loadIngredients();
+    } else if (changeDetails == 'numberOfGuests') {
+      loadIngredients();
+      this.numberOfGuests.text(model.getNumberOfGuests());
     }
   };
-
-  this.hide = () => {
-    container.hide();
-  };
-
-  this.show = () => {
-    container.show();
-  };
-
-  model.addObserver(this.update);
 }

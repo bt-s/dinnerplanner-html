@@ -1,50 +1,92 @@
-let SideBarView = function (container, model) {
-  let numberOfGuests = container.find("#numberOfGuests")
-    .html(model.getNumberOfGuests());
+class SideBarView {
+  constructor(container, model) {
+    this.container = container;
+    this.model = model;
 
-  this.plusButton = container.find("#plusGuest");
-  this.minusButton = container.find("#minusGuest");
-  this.menuButton = container.find("#menuButton");
+    container.html(`
+      <div class="side-bar-header">
+        <h2>My Dinner</h2>
+        <a id="menuButton">
+          <i class="fa fa-bars"></i>
+          <i class="fa fa-times"></i>
+        </a>
+      </div>
+      <div class="side-bar-menu">
+        <div class="people-container">
+          <span>People</span>
+          <div class="people-selector-button">
+            <span id="numberOfGuests"></span>
+            <div class="up-down-buttons">
+              <button id="plusGuest" class="btn">
+                <i class="fa fa-angle-up"></i>
+              </button>
+              <button id="minusGuest" class="btn">
+                <i class="fa fa-angle-down"></i>
+              </button>
+            </div>
+          </div>
+        </div>
 
-  let loadSelectedDishes = () => {
-    let selectedDishes = container.find("#selectedDishes").html("");
+        <div class="side-bar-sub-header">
+          <span>Dish Name</span>
+          <span>Cost</span>
+        </div>
 
-    model.getSelectedDishes().forEach((dish) => {
-      let dishSpan = $("<span/>").text(dish["name"]);
-      let priceSpan = $("<span/>").text(model.getDishPrice(dish));
-      let listItem = $("<li/>")
-        .append(dishSpan)
-        .append(priceSpan);
-      selectedDishes.append(listItem);
-    });
+        <ul id="selectedDishes"></ul>
+
+        <div id="totalPrice"></div>
+
+        <button id="confirmationButton" class="btn btn-orange">
+          <span>Confirm Dinner</span>
+        </button>
+      </div>`);
+
+    this.plusButton = container.find("#plusGuest");
+    this.minusButton = container.find("#minusGuest");
+    this.menuButton = container.find("#menuButton");
+    this.confirmationButton = container.find("#confirmationButton");
+
+    this.numberOfGuests = container.find("#numberOfGuests")
+      .html(model.getNumberOfGuests());
+
+    this.hide = () => {
+      container.hide();
+    };
+
+    this.show = () => {
+      container.show();
+    };
+
+    model.addObserver(this.update.bind(this));
   }
 
-  let totalPrice = container.find("#totalPrice")
-    .html("SEK " + model.getTotalMenuPrice());
+  update(model, changeDetails) {
+    let totalPrice = this.container.find("#totalPrice");
 
-  this.confirmationButton = container.find("#confirmationButton");
+    let loadSelectedDishes = () => {
+      let selectedDishes = this.container.find("#selectedDishes").html("");
 
-  this.update = (model, changeDetails) => {
-    if (changeDetails == "numberOfGuests") {
-      numberOfGuests.html(model.getNumberOfGuests());
-      loadSelectedDishes();
-      totalPrice.html("SEK " + model.getTotalMenuPrice());
+      this.model.getSelectedDishes().forEach((dish) => {
+        let listItem = `
+          <li>
+            <span>${dish.title}</span>
+            <span>${dish.pricePerServing}</span>
+          </li>
+        `
+
+        selectedDishes.append(listItem);
+      });
     }
+
+    if (changeDetails == "numberOfGuests") {
+      this.numberOfGuests.html(this.model.getNumberOfGuests());
+      loadSelectedDishes();
+      totalPrice.html("SEK " + this.model.getTotalMenuPrice().toFixed(2));
+    }
+
     if (changeDetails == "selectedDishes") {
       loadSelectedDishes();
-      totalPrice.html("SEK " + model.getTotalMenuPrice());
+      totalPrice.html("SEK " + this.model.getTotalMenuPrice().toFixed(2));
     }
   }
-
-  this.hide = () => {
-    container.hide();
-  };
-
-  this.show = () => {
-    container.show();
-  };
-
-  loadSelectedDishes();
-
-  model.addObserver(this.update);
 }

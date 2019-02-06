@@ -1,5 +1,7 @@
-let DinnerOverviewViewController = function (view, model, generalController) {
-  view.printRecipeButton.click(() => {
-    generalController.showScreen("DINNER_PRINTOUT");
-  });
+class DinnerOverviewViewController {
+  constructor(view, model, generalController) {
+    view.printRecipeButton.click(() => {
+      generalController.showScreen("DINNER_PRINTOUT");
+    });
+  }
 }

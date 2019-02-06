@@ -1,16 +1,12 @@
-let DishItemView = function (id, model) {
-  let dish = model.getDish(id);
-  let heading = $("<h3/>").text(dish["name"]);
+class DishItemView {
+  constructor(id, model) {
+    let dish = model.getLocalDish(id);
 
-  let image = $("<img/>")
-    .prop("alt", dish["name"])
-    .prop("src", "images/" + dish["image"]);
-
-  let dishItem = $("<a/>")
-    .prop("id", "dishItem" + id)
-    .append(image, heading);
-
-  this.getDomObj = () => {
-    return dishItem;
-  };
+    this.dishItem = `
+      <a id=${id}>
+      <img src=${model.getImgBaseUrl() + dish["image"]}
+           alt='${dish['title']}'/>
+      <h3>${dish['title']}</h3>
+      </a>`
+  }
 }

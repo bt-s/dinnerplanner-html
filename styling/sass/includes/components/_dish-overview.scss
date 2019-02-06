@@ -1,6 +1,7 @@
 #dinnerOverviewView {
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   hr {
     border-top: 3px solid $black;
@@ -12,13 +13,14 @@
   align-items: flex-end;
   display: flex;
   justify-content: center;
-
 }
 
 #selectedDishesOverview {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
+  max-width: 200px;
   border-right: 3px solid $black;
   padding-right: $padding-xs;
 
@@ -35,13 +37,14 @@
   }
 
   h3 {
-    display: flex;
+    display: block;
     justify-content: center;
     background: $grey;
     font-size: 14px;
     border: 3px solid $black;
     padding: 4px;
     width: 100%;
+    max-width: 150px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

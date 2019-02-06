@@ -1,218 +1,330 @@
-// DinnerModel Object constructor
-let DinnerModel = function () {
-  const _this = this;
+class DinnerModel {
+  constructor() {
+    const APISearchRecipe = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search';
+    const APIRecipeInfo = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/{id}/information';
+    const APIRecipeData = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk';
 
-  const dishesData = new DishesData();
-  const dishes = dishesData.dishes;
-  Object.freeze(dishes);
+    const _this = this;
+    const dishesData = new DishesData();
+    const dishes = dishesData.dishes;
+    Object.freeze(dishes);
 
-  let observers = [];
+    this.numberOfGuests = 1;
 
-  this.addObserver = (observer) => {
-    observers.push(observer);
-  }
+    let searchedDishes = [];
+    let searchedDishesMAP = {};
+    let dishTypes = [
+      'main course',
+      'side dish',
+      'dessert',
+      'appetizer',
+      'salad',
+      'bread',
+      'breakfast',
+      'soup',
+      'beverage',
+      'sauce',
+      'drink'
+    ];
 
-  let notifyObservers = (details) => {
-    for (let i = 0; i < observers.length; i++) {
-      observers[i](_this, details);
-    }
-  }
+    let imgBaseUrl = '';
+    let selectedDishIDs = [];
+    let storedDishes = {};
+    let observers = [];
+    let searchCondition = ['', '', 0]; // keyword, type
+    let offset = 0;
 
-  this.numberOfGuests = 1;
-
-  this.setNumberOfGuests = (num) => {
-    this.numberOfGuests = num;
-    notifyObservers("numberOfGuests");
-  }
-
-  this.getNumberOfGuests = () => {
-    return this.numberOfGuests;
-  }
-
-  let selectedDishIDs = [];
-  this.getSelectedDishes = () => {
-    let selectedDishes = [];
-    selectedDishIDs.forEach((id) => {
-      selectedDishes.push(this.getDish(id));
-    });
-    return selectedDishes;
-  };
-  this.clearSelectedDishes = () => {
-    selectedDishIDs = [];
-  }
-
-  // Returns the dish that is(/are) on the (selected) menu for type
-  this.getSelectedDish = (type) => {
-    let dishType;
-    selectedDishIDs.forEach((id) => {
-      let dish = this.getDish(id);
-      if (dish["type"] === type) {
-        dishType = dish;
+    let notifyObservers = (details) => {
+      for (let i = 0; i < observers.length; i++) {
+        observers[i](_this, details);
       }
-    });
-    return dishType;
-  }
+    }
 
-  let currentViewingDish = dishes[0];
+    function handleErrors(response) {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response;
+    }
 
-  this.getCurrentViewingDish = () => {
-    return currentViewingDish;
-  };
+    const errorMsg = 'Whoops... something went wrong!\n' +
+      'Please check your Internet connection.\n\n' +
+      'The reported error is: '
 
-  this.setCurrentViewingDish = (id) => {
-    currentViewingDish = this.getDish(id);
-    notifyObservers("viewingDish");
-  };
+    let URLWithParams = (url, params) => {
+      let urlParams = new URLSearchParams();
+      for (let key in params) {
+        urlParams.append(key, params[key]);
+      }
+      return url + '?' + urlParams.toString();
+    }
 
-  // Returns all the dishes on the (selected) menu.
-  this.getFullMenu = () => {
-    return this.getSelectedDishes();
-  }
+    this.requestRecipeInfo = (id) => {
+      notifyObservers('loadingData');
 
-  // Returns all types of dishes
-  this.getDishesTypes = () => {
-    let dishesTypes = [];
-
-    dishes.forEach((dish) => {
-      dishesTypes.push(dish["type"]);
-    });
-
-    return [...new Set(dishesTypes)];
-  }
-
-  // Returns all ingredients for all the dishes on the (selected) menu.
-  this.getAllIngredients = () => {
-    let ingredients = [];
-    selectedDishIDs.forEach((id) => {
-      let dish = this.getDish(id);
-      dish["ingredients"].forEach((ingredient) => {
-        ingredients.push(ingredient);
+      const url = URLWithParams(APIRecipeInfo.replace('{id}', id), {
+        'id': id,
+        'includeNutrition': false
       });
-    });
 
-    return ingredients;
-  }
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-Mashape-Key': APIKey
+        }
+      };
 
-  // Returns the price of the selected dish
-  // multiplied by the number of guests
-  this.getDishPrice = (dish) => {
-    let dishPrice = 0;
+      return fetch(url, options)
+        .then(handleErrors)
+        .then(res => res.json())
+        .then((json) => {
+          searchedDishes.forEach((dish) => {
+            if (dish.id != id) {
+              return
+            }
 
-    dish["ingredients"].forEach((ingredient) => {
-      dishPrice += ingredient["price"];
-    });
+            dish.info = json;
+            storedDishes[id] = dish.info;
+            this.setCurrentViewingDish(id);
 
-    return dishPrice * this.getNumberOfGuests();
-  }
+            notifyObservers('viewingDishDetail');
+            notifyObservers('loadedData');
+          })
+        })
+        .catch(error => alert(errorMsg + error));
+    };
 
-  // Returns the total price of the (selected) menu (all the ingredients
-  // multiplied by number of guests).
-  this.getTotalMenuPrice = () => {
-    let totalPrice = 0;
-
-    selectedDishIDs.forEach((id) => {
-      let dish = this.getDish(id);
-      dish["ingredients"].forEach((ingredient) => {
-        totalPrice += ingredient["price"];
+    this.requestRecipeData = (ids) => {
+      let url = URLWithParams(APIRecipeData, {
+        'ids': ids.toString(),
+        'includeNutrition': false
       });
-    });
 
-    return totalPrice * this.getNumberOfGuests();
-  }
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-Mashape-Key': APIKey
+        }
+      };
 
-  // Adds the passed dish to the (selected) menu. If the dish of that type
-  // already exists on the (selected) menu it is removed from the (selected)
-  // menu and the new one is added.
-  this.addDishToMenu = (id) => {
-    dishes.forEach((dish) => {
-      if (dish["id"] != id)
-        return;
-      let replaced = false;
+      return fetch(url, options)
+        .then(handleErrors)
+        .then(res => res.json())
+        .then((dishes) => {
+          dishes.forEach((dish) => {
+            storedDishes[dish.id] = dish;
+          });
+          notifyObservers('selectedDishes');
+        })
+        .catch(error => alert(errorMsg + error));
+    };
+
+    this.addObserver = (observer) => {
+      observers.push(observer);
+    }
+
+    this.getImgBaseUrl = () => {
+      return imgBaseUrl;
+    }
+
+    this.setNumberOfGuests = (num) => {
+      this.numberOfGuests = num;
+      notifyObservers('numberOfGuests');
+    }
+
+    this.getNumberOfGuests = () => {
+      return this.numberOfGuests;
+    }
+
+    this.getSelectedDishes = () => {
+      let selectedDishes = [];
+      selectedDishIDs.forEach((id) => {
+        selectedDishes.push(storedDishes[id]);
+      })
+
+      return selectedDishes;
+    };
+
+    this.clearSelectedDishes = () => {
+      selectedDishIDs = [];
+    }
+
+    this.getSelectedDish = (type) => {
+      let dishType;
+      selectedDishIDs.forEach((id) => {
+        let dish = this.getDish(id);
+        if (dish['type'] === type) {
+          dishType = dish;
+        }
+      })
+
+      return dishType;
+    }
+
+    let currentViewingDish = null;
+
+    this.getCurrentViewingDish = () => {
+      return currentViewingDish;
+    };
+
+    this.setCurrentViewingDish = (id) => {
+      currentViewingDish = storedDishes[id];
+      notifyObservers('viewingDishDetail')
+    };
+
+    this.getFullMenu = () => {
+      return this.getSelectedDishes();
+    }
+
+    this.getDishesTypes = () => {
+      return [...new Set(dishTypes)];
+    }
+
+    this.getAllIngredients = () => {
+      let ingredients = [];
+
+      selectedDishIDs.forEach((id) => {
+        let dish = this.getLocalDish(id);
+
+        dish['ingredients'].forEach((ingredient) => {
+          ingredients.push(ingredient);
+        })
+      })
+
+      return ingredients;
+    }
+
+    // TODO, use a uniformed way to access property of dish
+    this.getDishPrice = (dish) => {
+      return dish.pricePerServing;
+    }
+
+    this.getDishName = (dish) => {
+      return dish.title;
+    }
+
+    this.getDishDescription = (dish) => {
+      return dish.instructions;
+    }
+
+    this.getDishPreparation = (dish) => {
+      return dish.instructions;
+    }
+
+    this.getTotalMenuPrice = () => {
+      let totalPrice = 0;
+      selectedDishIDs.forEach((id) => {
+        totalPrice += storedDishes[id].pricePerServing;
+      })
+
+      return totalPrice * this.getNumberOfGuests();
+    }
+
+    this.addDishToMenu = (newID) => {
       for (let i = 0; i < selectedDishIDs.length; i++) {
-        if (this.getDish(selectedDishIDs[i]).type === this.getDish(id).type) {
-          selectedDishIDs[i] = id;
-          replaced = true;
-        }
-      }
-      if (!replaced) {
-        selectedDishIDs.push(id);
-      }
-      notifyObservers("selectedDishes");
-
-    });
-  }
-
-  // Removes dish from (selected) menu
-  this.removeDishFromMenu = (id) => {
-    for (let i = 0; i < selectedDishIDs.length; i++) {
-      if (selectedDishIDs[i] == id) {
-        selectedDishIDs.splice(i, 1);
-      }
-    }
-  }
-
-  // Function that returns all dishes of specific type (i.e. "starter",
-  // "main dish" or "dessert"). You can use the filter argument to filter out
-  // the dish by name or ingredient (use for search). If you don't pass any
-  // filter all the dishes of the specified type will be returned. If you
-  // don't pass any type, all the dishes will be returned.
-  this.getAllDishes = (type, filter) => {
-    return dishes.filter((dish) => {
-      let found = true;
-
-      if (filter) {
-        found = false;
-        dish.ingredients.forEach((ingredient) => {
-          if (ingredient.name.indexOf(filter) != -1) {
-            found = true;
-          }
-        });
-
-        if (dish.name.indexOf(filter) != -1) {
-          found = true;
+        if (newID == selectedDishIDs[i]) {
+          return;
         }
       }
 
-      if (type)
-        return dish.type == type && found;
+      selectedDishIDs.push(newID);
+      notifyObservers('selectedDishes')
+    }
 
-      return found;
-    });
-  }
-
-  let searchCondition = ["", ""]; // keyword, type
-  this.getSearchCondition = () => {
-    return searchCondition;
-  }
-  this.setSearchCondition = (type, kwd) => {
-    searchCondition[0] = type;
-    searchCondition[1] = kwd;
-    notifyObservers("searchCondition");
-  }
-
-  let searchedDishes = dishes;
-  this.getSearchedDishes = () => {
-    return searchedDishes;
-  };
-
-  this.operateSearch = (type, keyword) => {
-    searchedDishes = this.getAllDishes(type, keyword);
-    notifyObservers("searchedDishes");
-  };
-
-  // Function that returns a dish of specific ID
-  this.getDish = (id) => {
-    for (const key in dishes) {
-      if (dishes[key].id == id) {
-        return dishes[key];
+    this.removeDishFromMenu = (id) => {
+      for (let i = 0; i < selectedDishIDs.length; i++) {
+        if (selectedDishIDs[i] === id) {
+          selectedDishIDs.splice(i, 1);
+        }
       }
     }
-  }
 
-  // Welcome text
-  this.welcomeText = "\
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do \
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim \
-          ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut  \
-          aliquip ex ea commodo consequat."
+    this.getAllDishes = (type, kwd, offset) => {
+      notifyObservers('loadingData');
+      let params = new URLSearchParams();
+      params.append('number', ITEMS_PER_PAGE);
+      params.append('offset', offset);
+      type ? params.append('type', type) : null;
+      kwd ? params.append('query', kwd) : null;
+      let url = APISearchRecipe + '?' + params.toString();
+
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-Mashape-Key': APIKey
+        }
+      };
+
+      return fetch(url, options)
+        .then(handleErrors)
+        .then(res => res.json())
+        .then((json) => {
+          this.setSearchedDishes(json.results)
+          imgBaseUrl = json.baseUri;
+          notifyObservers('loadedData');
+        })
+        .catch(error => alert(errorMsg + error));
+    }
+
+    this.getSearchCondition = () => {
+      return searchCondition;
+    }
+
+    this.setSearchCondition = (type, kwd, offset) => {
+      searchCondition[0] = type;
+      searchCondition[1] = kwd;
+      searchCondition[2] = typeof offset === 'number' ? offset : 0;
+      this.setOffset(searchCondition[2]);
+      notifyObservers('searchCondition');
+    }
+
+    this.getOffset = () => {
+      return offset;
+    }
+
+    this.setOffset = (num) => {
+      offset = num >= 0 ? num : 0; // boundary check
+      notifyObservers('offsetUpdate');
+    }
+
+    this.getSearchedDishes = () => {
+      return searchedDishes;
+    }
+
+    this.setSearchedDishes = (dishes) => {
+      searchedDishes = dishes;
+      searchedDishes.forEach(dish => {
+        searchedDishesMAP[dish.id.toString()] = dish;
+      })
+    }
+
+    this.operateSearch = (type, keyword, offset) => {
+      this.getAllDishes(type, keyword, offset)
+        .then(() => {
+          notifyObservers('searchedDishes');
+        })
+    }
+
+    this.getLocalDish = (id) => {
+      for (let key in searchedDishes) {
+        if (searchedDishes[key].id == id) {
+          return searchedDishes[key];
+        }
+      }
+    }
+
+    this.getDish = (id) => {
+      for (let key in dishes) {
+        if (dishes[key].id == id) {
+          return dishes[key];
+        }
+      }
+    }
+
+    this.welcomeText = '\
+                       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do \
+                       eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim \
+                       ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut  \
+                       aliquip ex ea commodo consequat.'
+  }
 }
