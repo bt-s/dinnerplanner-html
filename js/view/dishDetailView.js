@@ -3,10 +3,12 @@ class DishDetailView {
     this.container = container;
     container.html(`
       <div class="dish-details-overview">
-        <div id='dishDescription' class="dish-description col-xs-12 col-sm-12 col-md-6"></div>
-        <button id="backToSearchButton" class="btn btn-orange btn-pointy">
-          back to search
-        </button>
+        <div class="dish-description-wrapper col-xs-12 col-sm-12 col-md-6">
+          <div id='dishDescription' class="dish-description"></div>
+          <button id="backToSearchButton" class="btn btn-orange btn-pointy">
+            back to search
+          </button>
+        </div>
 
         <div class="dish-ingredients col-xs-12 col-sm-12 col-md-6">
           <div class="dish-ingredients-heading">
@@ -72,7 +74,7 @@ class DishDetailView {
       viewingDish.extendedIngredients.forEach(ingredient => {
         let tableItem = `
           <tr>
-            <td>${ingredient.amount + ingredient.measures.metric.unitShort}</td>
+            <td>${ingredient.amount + ' ' + ingredient.measures.metric.unitShort}</td>
             <td>${ingredient.name}</td>
           </tr>
         `;
