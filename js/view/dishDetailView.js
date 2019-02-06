@@ -94,6 +94,10 @@ class DishDetailView {
       loader.classList.add('hide');
     }
 
+    if (changeDetails === 'dishNotFound') {
+      loader.classList.add('hide');
+    }
+
     if (changeDetails == "viewingDishDetail") {
       loadDishInfo();
       loadIngredients();
