@@ -18,5 +18,19 @@ class WelcomeView {
     this.show=()=>{
       container.show();
     };
+
+    model.addObserver(this.update.bind(this));
   }
+
+  update(model, changeDetails) {
+    const loader = document.querySelector('.loader');
+
+    if (changeDetails == 'loadingData') {
+      loader.classList.remove('hide');
+    }
+
+    if (changeDetails == 'loadedData') {
+      loader.classList.add('hide');
+    }
+  };
 }

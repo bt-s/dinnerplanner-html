@@ -66,6 +66,7 @@ $(function () {
     .addScreen('DINNER_PRINTOUT', [printView, titleBarView]);
 
   generalController.showScreen('WELCOME');
+
   updateViews();
 
 
@@ -137,20 +138,31 @@ $(function () {
     const searchCondition = dataToStore['searchCondition'];
     const currentScreen = dataToStore['currentScreen'];
 
+    const hideLoader = () => {
+      const loader = document.querySelector('.loader');
+      loader.classList.add('hide');
+    }
+
+    if (currentScreen == null) {
+      hideLoader();
+      return;
+    }
+
     if (searchCondition == null) {
       return;
     }
 
     dishSearchView.setSearchCondition(...searchCondition.split(','));
 
-    if (currentScreen == null) {
-      return;
-    }
 
     generalController.setCurrentScreen(
       SCREENS.indexOf(currentScreen) === -1 ?
       'WELCOME' : currentScreen
     );
+
+    if (generalController.getCurrentScreen() === 'WELCOME') {
+      hideLoader();
+    }
 
     generalController.showScreen(generalController.getCurrentScreen());
   }

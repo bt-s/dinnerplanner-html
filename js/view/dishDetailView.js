@@ -41,6 +41,8 @@ class DishDetailView {
   }
 
   update(model, changeDetails) {
+    const loader = document.querySelector('.loader');
+
     let loadDishInfo = () => {
       let viewingDish = model.getCurrentViewingDish();
 
@@ -82,10 +84,17 @@ class DishDetailView {
       this.container.find("#dishPrice").text("TOTAL: SEK " + dishPrice);
     }
 
+    if (changeDetails == 'loadingData') {
+      loader.classList.remove('hide');
+    }
+
+    if (changeDetails == 'loadedData') {
+      loader.classList.add('hide');
+    }
+
     if (changeDetails == "viewingDishDetail") {
       loadDishInfo();
       loadIngredients();
-
     } else if (changeDetails == 'numberOfGuests') {
       loadIngredients();
       this.numberOfGuests.text(model.getNumberOfGuests());

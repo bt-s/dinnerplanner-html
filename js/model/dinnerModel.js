@@ -49,28 +49,34 @@ class DinnerModel {
     }
 
     this.requestRecipeInfo = (id) => {
+      notifyObservers('loadingData');
+
       const url = URLWithParams(APIRecipeInfo.replace('{id}', id), {
         'id': id,
         'includeNutrition': false
       });
 
-      return fetch(url, {
-          method: 'GET',
-          headers: {
-            'X-Mashape-Key': APIKey
-          }
-        })
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-Mashape-Key': APIKey
+        }
+      };
+
+      return fetch(url, options)
         .then(res => res.json())
         .then((json) => {
           searchedDishes.forEach((dish) => {
             if (dish.id != id) {
               return
             }
+
             dish.info = json;
             storedDishes[id] = dish.info;
             this.setCurrentViewingDish(id);
+
             notifyObservers('viewingDishDetail');
-            // return;
+            notifyObservers('loadedData');
           })
         })
     };
@@ -80,12 +86,15 @@ class DinnerModel {
         'ids': ids.toString(),
         'includeNutrition': false
       });
-      return fetch(url, {
-          method: 'GET',
-          headers: {
-            'X-Mashape-Key': APIKey
-          }
-        })
+
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-Mashape-Key': APIKey
+        }
+      };
+
+      return fetch(url, options)
         .then(res => res.json())
         .then((dishes) => {
           dishes.forEach((dish) => {
@@ -216,21 +225,26 @@ class DinnerModel {
     }
 
     this.getAllDishes = (type, kwd) => {
+      notifyObservers('loadingData');
       let params = new URLSearchParams();
       params.append('number', 20);
       type ? params.append('type', type) : null;
       kwd ? params.append('query', kwd) : null;
       let url = APISearchRecipe + '?' + params.toString();
 
-      return fetch(url, {
-          method: 'GET',
-          headers: {
-            'X-Mashape-Key': APIKey
-          }
-        }).then(res => res.json())
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-Mashape-Key': APIKey
+        }
+      };
+
+      return fetch(url, options)
+        .then(res => res.json())
         .then((json) => {
           this.setSearchedDishes(json.results)
           imgBaseUrl = json.baseUri;
+          notifyObservers('loadedData');
         });
     }
 

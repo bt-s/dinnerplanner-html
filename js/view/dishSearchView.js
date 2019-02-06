@@ -63,8 +63,6 @@ class DishSearchView {
 
     this.model.getDishesTypes().forEach((type) => {
       let option = `<option value='${type}'>${titalizeWords(type)}</option>`;
-      console.log(option);
-
       this.dishTypeSelect.append(option);
     });
   };
