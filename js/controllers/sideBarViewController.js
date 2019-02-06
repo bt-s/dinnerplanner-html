@@ -9,7 +9,7 @@ class SideBarViewController {
     });
 
     view.minusButton.click(() => {
-      if (model.getNumberOfGuests() !== 0) {
+      if (model.getNumberOfGuests() !== 1) {
         model.setNumberOfGuests(model.getNumberOfGuests() - 1);
       }
     });

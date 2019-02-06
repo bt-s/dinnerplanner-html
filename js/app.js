@@ -1,7 +1,7 @@
 $(function () {
   let dataToStore = {
     'currentScreen': '',
-    'numberOfGuests': 0,
+    'numberOfGuests': 1,
     'selectedDishes': [],
     'searchCondition': [],
     'viewingDishID': ''
