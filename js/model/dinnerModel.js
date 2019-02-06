@@ -47,9 +47,9 @@ class DinnerModel {
       return response;
     }
 
-    const errorMsg = 'Whoops... something went wrong!\n'
-      + 'Please check your Internet connection.\n\n'
-      + 'The reported error is: '
+    const errorMsg = 'Whoops... something went wrong!\n' +
+      'Please check your Internet connection.\n\n' +
+      'The reported error is: '
 
     let URLWithParams = (url, params) => {
       let urlParams = new URLSearchParams();
@@ -243,6 +243,8 @@ class DinnerModel {
       notifyObservers('loadingData');
       let params = new URLSearchParams();
       params.append('number', 10);
+      console.log(offset, 'get all dishes');
+
       params.append('offset', offset);
       type ? params.append('type', type) : null;
       kwd ? params.append('query', kwd) : null;
@@ -263,8 +265,7 @@ class DinnerModel {
           imgBaseUrl = json.baseUri;
           notifyObservers('loadedData');
         })
-        .catch(error => alert(errorMsg + error)
-        );
+        .catch(error => alert(errorMsg + error));
     }
 
     this.getSearchCondition = () => {
@@ -274,7 +275,7 @@ class DinnerModel {
     this.setSearchCondition = (type, kwd, offset) => {
       searchCondition[0] = type;
       searchCondition[1] = kwd;
-      searchCondition[2] = offset;
+      searchCondition[2] = offset ? offset : 0;
       notifyObservers('searchCondition');
     }
 
@@ -283,7 +284,8 @@ class DinnerModel {
     }
 
     this.setOffset = (num) => {
-      offset = num;
+      console.log('set offset', offset);
+      offset = num >= 0 ? num : 0; // boundary check
       notifyObservers('offsetUpdate');
     }
 

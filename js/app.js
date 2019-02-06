@@ -96,7 +96,15 @@ $(function () {
   function injectDataIntoModel() {
     const selectedDishes = dataToStore['selectedDishes'];
     const viewingDishID = dataToStore['viewingDishID'];
-    const offset = dataToStore['offset'];
+    let a = dataToStore['offset'] ? dataToStore['offset'] : 0;
+    let c = null ? 1 : 0;
+    console.log(a, typeof dataToStore['offset'], dataToStore['offset'] == '', dataToStore['offset'] == null, c);
+    if (dataToStore['offset']) {
+      console.log("yes", dataToStore['offset'].length);
+
+    }
+    const offset = a;
+
 
     if (selectedDishes == null) {
       return;
@@ -133,7 +141,7 @@ $(function () {
 
     model.setNumberOfGuests(Number(dataToStore['numberOfGuests']));
     model.setSearchCondition(...dataToStore['searchCondition'].split(','));
-    model.setOffset(dataToStore['offset']);
+    model.setOffset(offset);
   }
 
   function updateViews() {
