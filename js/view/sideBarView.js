@@ -81,12 +81,12 @@ class SideBarView {
     if (changeDetails == "numberOfGuests") {
       this.numberOfGuests.html(this.model.getNumberOfGuests());
       loadSelectedDishes();
-      totalPrice.html("SEK " + this.model.getTotalMenuPrice());
+      totalPrice.html("SEK " + this.model.getTotalMenuPrice().toFixed(2));
     }
 
     if (changeDetails == "selectedDishes") {
       loadSelectedDishes();
-      totalPrice.html("SEK " + this.model.getTotalMenuPrice());
+      totalPrice.html("SEK " + this.model.getTotalMenuPrice().toFixed(2));
     }
   }
 }

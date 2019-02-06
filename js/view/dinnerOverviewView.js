@@ -45,7 +45,7 @@ class DinnerOverviewView {
 
   updateTotalCost() {
     let totalCost = this.container.find('#totalCost');
-    totalCost.html('Total' + this.model.getTotalMenuPrice() + ' SEK');
+    totalCost.html('Total ' + this.model.getTotalMenuPrice().toFixed(2) + ' SEK');
   }
 
   update(model, changeDetails) {
