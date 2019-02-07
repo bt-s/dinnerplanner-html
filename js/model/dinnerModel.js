@@ -42,6 +42,11 @@ class DinnerModel {
 
     function handleErrors(response) {
       if (!response.ok) {
+        if (response.status === 404) {
+          return Promise.reject({
+            PageNotFound: true
+          });
+        }
         throw Error(response.statusText);
       }
       return response;
@@ -61,6 +66,7 @@ class DinnerModel {
 
     this.requestRecipeInfo = (id) => {
       notifyObservers('loadingData');
+      console.log('hey');
 
       const url = URLWithParams(APIRecipeInfo.replace('{id}', id), {
         'id': id,
@@ -86,12 +92,20 @@ class DinnerModel {
             dish.info = json;
             storedDishes[id] = dish.info;
             this.setCurrentViewingDish(id);
+            console.log('jsonfied response');
 
             notifyObservers('viewingDishDetail');
             notifyObservers('loadedData');
           })
         })
-        .catch(error => alert(errorMsg + error));
+        .catch(error => {
+          if (error.PageNotFound) {
+            alert('Sorry, This dish is unvailable');
+            notifyObservers('dishNotFound');
+            throw error;
+          }
+          alert(errorMsg + error);
+        });
     };
 
     this.requestRecipeData = (ids) => {
