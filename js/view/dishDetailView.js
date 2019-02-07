@@ -83,7 +83,7 @@ class DishDetailView {
       });
 
       dishPrice = viewingDish.pricePerServing * model.getNumberOfGuests()
-      this.container.find("#dishPrice").text("TOTAL: SEK " + dishPrice);
+      this.container.find("#dishPrice").text("TOTAL: SEK " + dishPrice.toFixed(2));
     }
 
     if (changeDetails == 'loadingData') {
