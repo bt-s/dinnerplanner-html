@@ -2,6 +2,11 @@ class DishItemViewController {
   constructor(itemContainer, model, generalController) {
     itemContainer.click((event) => {
       let dishId = event.target.parentNode.id;
+
+      if (dishId === '') {
+        return
+      }
+
       model.requestRecipeInfo(dishId)
         .catch(err => {
           return Promise.reject(err);
