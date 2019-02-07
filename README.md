@@ -1,3 +1,13 @@
+NOTES Lab 3
+===========
+Note 1 (by Bas Straathof and Yao, Ming):
+Just as for Lab 2, look at index.html and make sure to run:
+$ npm install
+$ gulp
+
+Note 2 (by Bas Straathof and Yao, Ming):
+Development was done in Google Chrome and Firefox; we are not 100% sure whether the app works in Safari.
+
 NOTES Lab 2
 ===========
 Note 1 (by Bas Straathof and Yao, Ming):
