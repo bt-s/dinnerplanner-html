@@ -66,7 +66,6 @@ class DinnerModel {
 
     this.requestRecipeInfo = (id) => {
       notifyObservers('loadingData');
-      console.log('hey');
 
       const url = URLWithParams(APIRecipeInfo.replace('{id}', id), {
         'id': id,
@@ -92,7 +91,6 @@ class DinnerModel {
             dish.info = json;
             storedDishes[id] = dish.info;
             this.setCurrentViewingDish(id);
-            console.log('jsonfied response');
 
             notifyObservers('viewingDishDetail');
             notifyObservers('loadedData');
@@ -287,7 +285,7 @@ class DinnerModel {
     this.setSearchCondition = (type, kwd, offset) => {
       searchCondition[0] = type;
       searchCondition[1] = kwd;
-      searchCondition[2] = typeof offset === 'number' ? offset : 0;
+      searchCondition[2] = parseInt(offset);
       this.setOffset(searchCondition[2]);
       notifyObservers('searchCondition');
     }
