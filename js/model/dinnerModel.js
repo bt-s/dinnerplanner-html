@@ -1,5 +1,6 @@
 class DinnerModel {
   constructor() {
+    const APIKey = 0; //'your-api-key-here'
     const APISearchRecipe = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search';
     const APIRecipeInfo = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/{id}/information';
     const APIRecipeData = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk';
