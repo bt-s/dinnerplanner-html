@@ -17,34 +17,43 @@ const AUTOPREFIXER_BROWSERS = [
   'opera >= 23',
   'ios >= 7',
   'android >= 4.4',
-  'bb >= 10'
+  'bb >= 10',
 ];
 
 sass.compiler = require('node-sass');
 
-gulp.task('sass', function () {
-  return gulp.src('./styling/sass/**/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
-    .pipe(csso())
-    .pipe(gulp.dest('./dist'))
-    .pipe(gulp.dest('./styling/css'));
-});
+gulp.task(
+  'sass',
+  gulp.series(function() {
+    return gulp
+      .src('./styling/sass/**/*.scss')
+      .pipe(sass().on('error', sass.logError))
+      .pipe(autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
+      .pipe(csso())
+      .pipe(gulp.dest('./dist'))
+      .pipe(gulp.dest('./styling/css'));
+  }),
+);
 
-gulp.task('js', function() {
-  return gulp.src('./js/**/*.js')
-    .pipe(uglify())
-    .pipe(concat('script.js'))
-    .pipe(rename(function (path) {
-      path.extname = ".js.min";
-    }))
-    .pipe(gulp.dest('./dist'));
-});
+gulp.task(
+  'js',
+  gulp.series(function() {
+    return gulp
+      .src('./js/**/*.js')
+      .pipe(uglify())
+      .pipe(concat('script.js'))
+      .pipe(
+        rename(function(path) {
+          path.extname = '.js.min';
+        }),
+      )
+      .pipe(gulp.dest('./dist'));
+  }),
+);
 
-gulp.task('default', ['sass', 'js']);
+gulp.task('default', gulp.series('sass', 'js'));
 
-gulp.task('watch', function () {
+gulp.task('watch', function() {
   gulp.watch('./styling/sass/**/*.scss', ['sass']);
   gulp.watch('./js/**/*.js', ['js']);
 });
-
