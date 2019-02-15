@@ -1,6 +1,7 @@
 //APIKey= ""
 class DinnerModel {
   constructor() {
+
     const APISearchRecipe =
       "http://sunset.nada.kth.se:8080/iprog/group/30/recipes/search";
     const APIRecipeInfo =
