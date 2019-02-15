@@ -19,7 +19,7 @@
   "dependencies": {
     "autoprefixer": "^9.4.5",
     "bootstrap": "^4.2.1",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-csso": "^3.0.1",
